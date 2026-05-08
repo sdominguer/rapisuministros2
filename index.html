@@ -166,14 +166,15 @@ img { max-width:100%; }
 .detail-rating .rating-count { font-size:.82rem; }
 
 /* Reviews */
-.reviews-section { margin-top:32px; border-top:1px solid var(--border); padding-top:28px; }
-.reviews-section h3 { font-size:1.05rem; font-weight:700; margin-bottom:16px; }
-.review-form { background:var(--bg); border-radius:var(--radius); padding:20px; margin-bottom:20px; }
+.reviews-section { margin-top:40px; border-top:1px solid var(--border); padding-top:32px; }
+.reviews-section h3 { font-size:1.1rem; font-weight:700; margin-bottom:20px; }
+.reviews-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:24px; }
+.review-form { background:var(--bg); border-radius:var(--radius); padding:20px; align-self:start; }
 .review-form h4 { font-size:.88rem; font-weight:600; margin-bottom:12px; }
 .star-picker { display:flex; gap:4px; margin-bottom:12px; }
 .star-picker svg { width:28px; height:28px; cursor:pointer; fill:#E5E7EB; transition:all .15s; }
 .star-picker svg:hover,.star-picker svg.picked { fill:#FBBF24; }
-.review-form input,.review-form textarea { width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:var(--radius); font-family:var(--font); font-size:.85rem; outline:none; margin-bottom:10px; }
+.review-form input,.review-form textarea { width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:var(--radius); font-family:var(--font); font-size:.85rem; outline:none; margin-bottom:10px; background:white; }
 .review-form textarea { resize:vertical; min-height:60px; }
 .review-form input:focus,.review-form textarea:focus { border-color:var(--brand); }
 .btn-review { background:var(--brand); color:white; border:none; padding:10px 24px; border-radius:var(--radius); font-family:var(--font); font-weight:600; font-size:.84rem; cursor:pointer; transition:all .2s; }
@@ -205,7 +206,7 @@ img { max-width:100%; }
 .detail-back { display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:.85rem; text-decoration:none; margin-bottom:24px; cursor:pointer; transition:color .2s; }
 .detail-back:hover { color:var(--brand); }
 .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
-.detail-img-box { background:white; border:1px solid var(--border); border-radius:var(--radius); padding:40px; display:flex; align-items:center; justify-content:center; min-height:360px; }
+.detail-img-box { background:white; border:1px solid var(--border); border-radius:var(--radius); padding:40px; display:flex; align-items:center; justify-content:center; min-height:360px; position:sticky; top:88px; }
 .detail-img-box img { max-width:100%; max-height:320px; object-fit:contain; }
 .detail-brand { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--brand); }
 .detail-cat { font-size:.65rem; color:var(--muted); background:var(--bg); padding:3px 10px; border-radius:4px; margin-left:8px; }
@@ -340,7 +341,7 @@ img { max-width:100%; }
 .chat-input button { width:36px; height:36px; background:linear-gradient(135deg,#1B6FA8,#45C8D8); color:white; border:none; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 
 /* ===== RESPONSIVE ===== */
-@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.detail-grid{grid-template-columns:1fr;gap:24px}.checkout-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.detail-grid{grid-template-columns:1fr;gap:24px}.detail-img-box{position:static}.reviews-grid{grid-template-columns:1fr}.checkout-grid{grid-template-columns:1fr}}
 @media(max-width:768px){.navbar,.search-box{display:none}.hamburger{display:flex}.features-row{flex-direction:column;align-items:flex-start;gap:14px;padding:0 16px}.cat-grid{grid-template-columns:1fr 1fr;gap:10px}.contact-cards{grid-template-columns:1fr}}
 @media(max-width:640px){.hero h1{font-size:1.6rem}.hero-content{padding:48px 16px}.product-grid{grid-template-columns:1fr 1fr;gap:10px}.card-img{height:140px}.card-body{padding:12px 14px}.card-title{font-size:.8rem}.card-price{font-size:.9rem}.btn-add{padding:7px 10px;font-size:0;gap:0}.btn-add svg{width:16px;height:16px}.footer-grid{grid-template-columns:1fr;gap:20px}.footer-bottom{flex-direction:column;gap:6px;text-align:center}.detail-actions{flex-direction:column}.btn-add-big,.btn-wa-detail{width:100%;justify-content:center}.chat-window{width:calc(100vw - 48px)}}
 </style>
@@ -855,8 +856,9 @@ function showDetail(id) {
     '<div class="detail-stock">' + (p.stock > 0 ? '<span class="stock-ok">En stock (' + p.stock + ' disponibles)</span>' : '<span class="stock-out">Agotado</span>') + '</div>' +
     '<div class="detail-actions"><button class="btn-add-big" onclick="addToCart(' + p.id + ')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar al carrito</button>' +
     '<a class="btn-wa-detail" href="https://wa.me/' + CONFIG.WHATSAPP + '?text=' + waMsg + '" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg> WhatsApp</a></div>' +
+    '</div></div>' +
     '<div class="reviews-section"><h3>Reseñas de clientes</h3>' +
-    '<div class="review-form"><h4>Deja tu reseña</h4>' +
+    '<div class="reviews-grid"><div class="review-form"><h4>Deja tu reseña</h4>' +
     '<div class="star-picker" id="reviewStars" data-value="0">' +
     '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' +
     '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' +
@@ -869,7 +871,6 @@ function showDetail(id) {
     '<button class="btn-review" id="btnReview" onclick="submitReview(' + p.id + ')">Publicar reseña</button>' +
     '</div>' +
     '<div class="review-list" id="reviewsList"><p class="no-reviews">Cargando reseñas...</p></div>' +
-    '</div>' +
     '</div></div>';
 
   showPage('detail');
