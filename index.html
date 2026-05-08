@@ -164,6 +164,30 @@ img { max-width:100%; }
 .detail-rating .stars svg { width:20px; height:20px; }
 .detail-rating .rating-num { font-size:.9rem; font-weight:700; }
 .detail-rating .rating-count { font-size:.82rem; }
+
+/* Reviews */
+.reviews-section { margin-top:32px; border-top:1px solid var(--border); padding-top:28px; }
+.reviews-section h3 { font-size:1.05rem; font-weight:700; margin-bottom:16px; }
+.review-form { background:var(--bg); border-radius:var(--radius); padding:20px; margin-bottom:20px; }
+.review-form h4 { font-size:.88rem; font-weight:600; margin-bottom:12px; }
+.star-picker { display:flex; gap:4px; margin-bottom:12px; }
+.star-picker svg { width:28px; height:28px; cursor:pointer; fill:#E5E7EB; transition:all .15s; }
+.star-picker svg:hover,.star-picker svg.picked { fill:#FBBF24; }
+.review-form input,.review-form textarea { width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:var(--radius); font-family:var(--font); font-size:.85rem; outline:none; margin-bottom:10px; }
+.review-form textarea { resize:vertical; min-height:60px; }
+.review-form input:focus,.review-form textarea:focus { border-color:var(--brand); }
+.btn-review { background:var(--brand); color:white; border:none; padding:10px 24px; border-radius:var(--radius); font-family:var(--font); font-weight:600; font-size:.84rem; cursor:pointer; transition:all .2s; }
+.btn-review:hover { background:var(--brand-dark); }
+.btn-review:disabled { opacity:.5; cursor:not-allowed; }
+.review-list { display:flex; flex-direction:column; gap:14px; }
+.review-item { background:white; border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
+.review-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.review-author { font-weight:600; font-size:.85rem; }
+.review-date { font-size:.72rem; color:var(--muted); }
+.review-stars { margin-bottom:6px; }
+.review-stars svg { width:14px; height:14px; }
+.review-text { font-size:.84rem; color:var(--ink2); line-height:1.5; }
+.no-reviews { text-align:center; padding:20px; color:var(--muted); font-size:.85rem; }
 .card-footer { display:flex; justify-content:space-between; align-items:flex-end; }
 .card-old-price { display:block; font-size:.7rem; color:var(--muted); text-decoration:line-through; font-family:var(--mono); }
 .card-price { font-family:var(--mono); font-weight:500; font-size:1.05rem; }
@@ -592,6 +616,7 @@ function loadProducts() {
       renderProducts();
       renderFilters();
       renderCategories();
+      loadAllReviews();
     })
     .catch(err => {
       document.getElementById('productGrid').innerHTML = '<div class="no-products"><p>Error cargando productos</p></div>';
@@ -601,16 +626,7 @@ function loadProducts() {
 // ===== FORMAT =====
 function cop(n) { return '$' + Number(n).toLocaleString('es-CO', {maximumFractionDigits:0}); }
 
-// ===== STARS (genera calificación consistente por producto) =====
-function getRating(id) {
-  // Genera una calificación pseudo-aleatoria pero consistente por ID (entre 3.5 y 5.0)
-  var seed = (id * 2654435761) % 100;
-  var rating = 3.5 + (seed / 100) * 1.5;
-  rating = Math.round(rating * 10) / 10;
-  var reviews = 8 + (seed % 85);
-  return { rating, reviews };
-}
-
+// ===== STARS =====
 function starsHTML(rating, size) {
   size = size || 14;
   var html = '<div class="stars">';
@@ -625,6 +641,138 @@ function starsHTML(rating, size) {
   }
   html += '</div>';
   return html;
+}
+
+// ===== RESEÑAS =====
+let reviewsCache = {};
+
+function loadAllReviews() {
+  fetch(CONFIG.APPS_SCRIPT_URL + '?action=resenas')
+    .then(r => r.json())
+    .then(data => {
+      // Agrupar por producto
+      reviewsCache = {};
+      (data.resenas || []).forEach(r => {
+        if (!reviewsCache[r.producto_id]) reviewsCache[r.producto_id] = { resenas: [], suma: 0 };
+        reviewsCache[r.producto_id].resenas.push(r);
+        reviewsCache[r.producto_id].suma += r.estrellas;
+      });
+      // Actualizar estrellas en las cards
+      updateCardRatings();
+    })
+    .catch(() => {});
+}
+
+function updateCardRatings() {
+  allProducts.forEach(p => {
+    var el = document.getElementById('card-rating-' + p.id);
+    if (!el) return;
+    var cache = reviewsCache[p.id];
+    if (cache && cache.resenas.length > 0) {
+      var avg = Math.round((cache.suma / cache.resenas.length) * 10) / 10;
+      el.innerHTML = starsHTML(avg, 14) + '<span class="rating-num">' + avg.toFixed(1) + '</span><span class="rating-count">(' + cache.resenas.length + ')</span>';
+    } else {
+      el.innerHTML = '<span class="rating-count" style="font-size:.72rem;color:#9CA3AF">Sin reseñas aún</span>';
+    }
+  });
+}
+
+function loadProductReviews(productoId) {
+  fetch(CONFIG.APPS_SCRIPT_URL + '?action=resenas&producto_id=' + productoId)
+    .then(r => r.json())
+    .then(data => {
+      renderReviews(productoId, data);
+    })
+    .catch(() => {
+      document.getElementById('reviewsList').innerHTML = '<p class="no-reviews">Error cargando reseñas</p>';
+    });
+}
+
+function renderReviews(productoId, data) {
+  var container = document.getElementById('reviewsList');
+  var ratingEl = document.getElementById('detailRating');
+  
+  if (data.total > 0) {
+    ratingEl.innerHTML = starsHTML(data.promedio, 20) + '<span class="rating-num">' + data.promedio.toFixed(1) + '</span><span class="rating-count">(' + data.total + ' reseñas)</span>';
+    container.innerHTML = data.resenas.map(r =>
+      '<div class="review-item"><div class="review-header"><span class="review-author">' + r.nombre + '</span><span class="review-date">' + r.fecha + '</span></div>' +
+      '<div class="review-stars">' + starsHTML(r.estrellas, 14) + '</div>' +
+      (r.comentario ? '<p class="review-text">' + r.comentario + '</p>' : '') +
+      '</div>'
+    ).join('');
+  } else {
+    ratingEl.innerHTML = '<span class="rating-count">Sin reseñas aún — ¡sé el primero!</span>';
+    container.innerHTML = '<p class="no-reviews">Este producto aún no tiene reseñas</p>';
+  }
+}
+
+function submitReview(productoId) {
+  var stars = document.getElementById('reviewStars').dataset.value;
+  var nombre = document.getElementById('reviewNombre').value.trim();
+  var comentario = document.getElementById('reviewComentario').value.trim();
+  
+  if (!stars || stars === '0') { toast('Selecciona una calificación'); return; }
+  if (!nombre) { toast('Escribe tu nombre'); return; }
+  
+  var btn = document.getElementById('btnReview');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  
+  fetch(CONFIG.APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'resena',
+      producto_id: productoId,
+      nombre: nombre,
+      estrellas: Number(stars),
+      comentario: comentario
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      toast('¡Reseña publicada!');
+      document.getElementById('reviewNombre').value = '';
+      document.getElementById('reviewComentario').value = '';
+      document.getElementById('reviewStars').dataset.value = '0';
+      document.querySelectorAll('.star-picker svg').forEach(s => s.classList.remove('picked'));
+      loadProductReviews(productoId);
+      // Actualizar cache
+      loadAllReviews();
+    } else {
+      toast(data.error || 'Error al enviar');
+    }
+    btn.disabled = false;
+    btn.textContent = 'Publicar reseña';
+  })
+  .catch(() => {
+    toast('Error de conexión');
+    btn.disabled = false;
+    btn.textContent = 'Publicar reseña';
+  });
+}
+
+function setupStarPicker() {
+  document.querySelectorAll('.star-picker svg').forEach((star, idx) => {
+    star.addEventListener('click', () => {
+      document.getElementById('reviewStars').dataset.value = idx + 1;
+      document.querySelectorAll('.star-picker svg').forEach((s, i) => {
+        s.classList.toggle('picked', i <= idx);
+      });
+    });
+    star.addEventListener('mouseenter', () => {
+      document.querySelectorAll('.star-picker svg').forEach((s, i) => {
+        s.style.fill = i <= idx ? '#FBBF24' : '#E5E7EB';
+      });
+    });
+    star.addEventListener('mouseleave', () => {
+      var val = Number(document.getElementById('reviewStars').dataset.value) || 0;
+      document.querySelectorAll('.star-picker svg').forEach((s, i) => {
+        s.style.fill = '';
+        s.classList.toggle('picked', i < val);
+      });
+    });
+  });
 }
 
 // ===== RENDER CATEGORIES =====
@@ -677,13 +825,12 @@ function renderProducts() {
   document.getElementById('productGrid').innerHTML = list.map(p => {
     const enOferta = p.precio_anterior && p.precio_anterior > p.precio;
     const descuento = enOferta ? Math.round((1 - p.precio / p.precio_anterior) * 100) : 0;
-    const r = getRating(p.id);
     return '<article class="card" onclick="showDetail(' + p.id + ')">' +
       (enOferta ? '<span class="card-badge sale">-' + descuento + '%</span>' : '') +
       '<div class="card-img">' + (p.imagen ? '<img src="' + p.imagen + '" alt="' + p.nombre + '" loading="lazy">' : '<svg class="card-placeholder" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>') + '</div>' +
       '<div class="card-body"><div><span class="card-brand">' + p.marca + '</span><span class="card-cat">' + p.categoria + '</span></div>' +
       '<h3 class="card-title">' + p.nombre + '</h3>' +
-      '<div class="card-rating">' + starsHTML(r.rating, 14) + '<span class="rating-num">' + r.rating.toFixed(1) + '</span><span class="rating-count">(' + r.reviews + ')</span></div>' +
+      '<div class="card-rating" id="card-rating-' + p.id + '"></div>' +
       (p.compatibilidad ? '<p class="card-compat">' + p.compatibilidad + '</p>' : '') +
       '<div class="card-footer"><div>' + (enOferta ? '<span class="card-old-price">' + cop(p.precio_anterior) + '</span>' : '') + '<span class="card-price">' + cop(p.precio) + '</span></div>' +
       '<button class="btn-add" onclick="event.stopPropagation();addToCart(' + p.id + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar</button>' +
@@ -697,21 +844,37 @@ function showDetail(id) {
   if (!p) return;
   const enOferta = p.precio_anterior && p.precio_anterior > p.precio;
   const waMsg = encodeURIComponent('Hola, me interesa: ' + p.nombre);
-  const r = getRating(p.id);
 
   document.getElementById('detailContent').innerHTML =
     '<div class="detail-grid"><div class="detail-img-box">' + (p.imagen ? '<img src="' + p.imagen + '" alt="' + p.nombre + '">' : '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>') + '</div><div>' +
     '<div><span class="detail-brand">' + p.marca + '</span><span class="detail-cat">' + p.categoria + '</span></div>' +
     '<h1 class="detail-title">' + p.nombre + '</h1>' +
-    '<div class="detail-rating">' + starsHTML(r.rating, 20) + '<span class="rating-num">' + r.rating.toFixed(1) + '</span><span class="rating-count">(' + r.reviews + ' reseñas)</span></div>' +
+    '<div class="detail-rating" id="detailRating"><span class="rating-count">Cargando reseñas...</span></div>' +
     (p.compatibilidad ? '<div class="detail-compat"><strong>Compatible con:</strong><span>' + p.compatibilidad + '</span></div>' : '') +
     '<div style="margin-bottom:8px">' + (enOferta ? '<span class="detail-old-price">' + cop(p.precio_anterior) + '</span>' : '') + '<span class="detail-price">' + cop(p.precio) + '</span></div>' +
     '<div class="detail-stock">' + (p.stock > 0 ? '<span class="stock-ok">En stock (' + p.stock + ' disponibles)</span>' : '<span class="stock-out">Agotado</span>') + '</div>' +
     '<div class="detail-actions"><button class="btn-add-big" onclick="addToCart(' + p.id + ')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar al carrito</button>' +
     '<a class="btn-wa-detail" href="https://wa.me/' + CONFIG.WHATSAPP + '?text=' + waMsg + '" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg> WhatsApp</a></div>' +
+    '<div class="reviews-section"><h3>Reseñas de clientes</h3>' +
+    '<div class="review-form"><h4>Deja tu reseña</h4>' +
+    '<div class="star-picker" id="reviewStars" data-value="0">' +
+    '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' +
+    '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' +
+    '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' +
+    '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' +
+    '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' +
+    '</div>' +
+    '<input type="text" id="reviewNombre" placeholder="Tu nombre">' +
+    '<textarea id="reviewComentario" placeholder="Tu comentario (opcional)"></textarea>' +
+    '<button class="btn-review" id="btnReview" onclick="submitReview(' + p.id + ')">Publicar reseña</button>' +
+    '</div>' +
+    '<div class="review-list" id="reviewsList"><p class="no-reviews">Cargando reseñas...</p></div>' +
+    '</div>' +
     '</div></div>';
 
   showPage('detail');
+  setupStarPicker();
+  loadProductReviews(p.id);
 }
 
 // ===== CART =====
