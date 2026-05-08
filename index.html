@@ -316,11 +316,11 @@ img { max-width:100%; }
      ============================================================ -->
 <script>
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbznFew5hbFPDnwrJNA8GqhkmwVdPDWxz6_ILXfmdCGXtODloJLpWCnZCq03Tb809yTWfA/exec',
+    APPS_SCRIPT_URL: 'PEGA_TU_URL_DE_APPS_SCRIPT_AQUI',
     WOMPI_PUBLIC_KEY: 'PEGA_TU_LLAVE_PUBLICA_DE_WOMPI',
     WHATSAPP: '573001234567',
-    HERO_IMAGE: '', // URL de tu imagen hero (la de tintas)
-    LOGO_URL: '',   // URL de tu logo colibrí
+    HERO_IMAGE: 'pexels-enginakyurt-6749428.jpg',
+    LOGO_URL: 'logo.webp',
   };
 </script>
 
@@ -331,6 +331,7 @@ img { max-width:100%; }
 <header class="header">
   <div class="container header-inner">
     <a href="#" class="logo" onclick="showPage('home')">
+      <img class="logo-img" id="logoImg" src="logo.webp" alt="Rapisuministros">
       <div><span class="logo-name">Rapisuministros</span><span class="logo-tag">Tóners &amp; Impresoras</span></div>
     </a>
     <nav class="navbar">
@@ -478,7 +479,7 @@ img { max-width:100%; }
 <!-- Footer -->
 <footer class="footer">
   <div class="container footer-grid">
-    <div class="footer-about"><div><span class="logo-name" style="color:var(--brand)">Rapisuministros</span><span class="logo-tag">Tóners &amp; Impresoras</span></div><p>Tu aliado en suministros de impresión en Colombia.</p></div>
+    <div class="footer-about"><div style="display:flex;align-items:center;gap:10px"><img src="logo.webp" alt="" style="width:36px;height:36px;object-fit:contain"><div><span class="logo-name" style="color:var(--brand)">Rapisuministros</span><span class="logo-tag">Tóners &amp; Impresoras</span></div></div><p>Tu aliado en suministros de impresión en Colombia.</p></div>
     <div class="footer-col"><h4>Categorías</h4><a onclick="filterAndShow('Tóner Original')">Tóner Original</a><a onclick="filterAndShow('Tóner Genérico')">Tóner Genérico</a><a onclick="filterAndShow('Suministros')">Suministros</a><a onclick="filterAndShow('Impresoras Nuevas')">Impresoras Nuevas</a></div>
     <div class="footer-col"><h4>Servicio</h4><a href="#">Envíos y Devoluciones</a><a href="#">Garantía</a><a href="#">Preguntas Frecuentes</a></div>
     <div class="footer-col"><h4>Contacto</h4><a href="" target="_blank" id="waFooterBtn">WhatsApp: 300 123 4567</a><a href="mailto:ventas@rapisuministros.com">ventas@rapisuministros.com</a><a>Medellín, Colombia</a></div>
