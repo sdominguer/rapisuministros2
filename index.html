@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapisuministros — Tóners e Impresoras en Medellín</title>
+<meta name="description" content="Tóners originales y genéricos, impresoras nuevas y reacondicionadas. Envío rápido en Medellín y todo Colombia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   RAPISUMINISTROS — Tienda Online
+   Stack: HTML + Google Sheets + Wompi
+   ============================================= */
+
+:root {
+  --brand: #1B6FA8;
+  --brand-dark: #14507A;
+  --brand-light: #EBF4FA;
+  --accent: #E85D3A;
+  --green: #2A9D6E;
+  --ink: #111827;
+  --ink2: #4B5563;
+  --muted: #9CA3AF;
+  --border: #E5E7EB;
+  --bg: #F8F9FB;
+  --surface: #FFFFFF;
+  --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.6; }
+.container { max-width:1200px; margin:0 auto; padding:0 24px; }
+a { color:inherit; }
+img { max-width:100%; }
+
+/* ===== TOPBAR ===== */
+.topbar { background:var(--ink); color:#E5E7EB; font-size:.78rem; padding:8px 0; text-align:center; }
+.topbar strong { color:#FBBF24; }
+
+/* ===== HEADER ===== */
+.header { background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+.header-inner { display:flex; align-items:center; gap:24px; height:64px; }
+.logo { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
+.logo-img { width:40px; height:40px; object-fit:contain; }
+.logo-name { font-weight:700; font-size:1.15rem; color:var(--brand); line-height:1.2; }
+.logo-tag { display:block; font-size:.6rem; font-weight:500; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+
+.navbar { display:flex; gap:4px; }
+.nav-link { text-decoration:none; color:var(--ink2); font-weight:500; font-size:.88rem; padding:8px 14px; border-radius:var(--radius); transition:all .2s; cursor:pointer; }
+.nav-link:hover,.nav-link.active { color:var(--brand); background:var(--brand-light); }
+
+.search-box { flex:1; max-width:380px; position:relative; }
+.search-box input { width:100%; padding:9px 14px 9px 38px; border:1.5px solid var(--border); border-radius:var(--radius); font-family:var(--font); font-size:.85rem; background:var(--bg); outline:none; transition:all .2s; }
+.search-box input:focus { border-color:var(--brand); background:white; }
+.search-box svg { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
+
+.header-right { display:flex; align-items:center; gap:8px; margin-left:auto; flex-shrink:0; }
+.btn-cart { position:relative; background:none; border:1.5px solid var(--border); border-radius:var(--radius); width:42px; height:42px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink); transition:all .2s; }
+.btn-cart:hover { border-color:var(--brand); color:var(--brand); }
+.cart-badge { position:absolute; top:-6px; right:-6px; background:var(--accent); color:white; font-size:.6rem; font-weight:700; min-width:18px; height:18px; border-radius:9px; display:flex; align-items:center; justify-content:center; padding:0 4px; }
+
+.hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; }
+.hamburger span { width:22px; height:2px; background:var(--ink); border-radius:2px; }
+.mobile-menu { display:none; flex-direction:column; background:white; border-bottom:1px solid var(--border); padding:8px 24px 16px; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { text-decoration:none; color:var(--ink); font-weight:500; padding:12px 0; border-bottom:1px solid var(--border); font-size:.95rem; cursor:pointer; }
+
+/* ===== PAGES (show/hide) ===== */
+.page { display:none; }
+.page.active { display:block; }
+
+/* ===== HERO ===== */
+.hero { position:relative; overflow:hidden; min-height:440px; display:flex; align-items:center; }
+.hero-bg { position:absolute; inset:0; background:url('') center/cover no-repeat; z-index:0; }
+.hero-overlay { position:absolute; inset:0; background:linear-gradient(135deg,rgba(17,24,39,.82),rgba(20,80,122,.75),rgba(17,24,39,.8)); z-index:1; }
+.hero-content { position:relative; z-index:2; max-width:680px; margin:0 auto; text-align:center; padding:72px 24px; }
+.hero h1 { font-size:2.5rem; font-weight:800; color:white; line-height:1.12; margin-bottom:16px; letter-spacing:-.5px; }
+.hero h1 em { font-style:normal; background:linear-gradient(135deg,#45C8D8,#3BBF9E); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero-content>p { font-size:1.05rem; color:#CBD5E1; line-height:1.65; max-width:520px; margin:0 auto 28px; }
+.hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:8px; padding:12px 28px; border-radius:var(--radius); font-family:var(--font); font-weight:600; font-size:.9rem; text-decoration:none; cursor:pointer; transition:all .2s; border:none; }
+.btn-hero { background:linear-gradient(135deg,#E85D3A,#F5851F); color:white; box-shadow:0 4px 20px rgba(232,93,58,.35); font-weight:700; }
+.btn-hero:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(232,93,58,.45); }
+.btn-ghost { color:white; border:1.5px solid rgba(255,255,255,.3); background:rgba(255,255,255,.06); }
+.btn-ghost:hover { border-color:#45C8D8; color:#45C8D8; }
+
+/* Features */
+.features { background:var(--surface); border-bottom:1px solid var(--border); padding:20px 0; }
+.features-row { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; }
+.feature { display:flex; align-items:center; gap:12px; }
+.feature svg { color:var(--brand); flex-shrink:0; }
+.feature strong { display:block; font-size:.82rem; }
+.feature span { display:block; font-size:.72rem; color:var(--muted); }
+
+/* Categories */
+.cat-section { padding:56px 0; }
+.cat-section h2 { font-size:1.5rem; font-weight:700; margin-bottom:28px; }
+.cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.cat-card { display:block; background:white; border:1px solid var(--border); border-left:4px solid var(--brand); border-radius:var(--radius); padding:22px; text-decoration:none; transition:all .2s; cursor:pointer; }
+.cat-card:hover { border-color:var(--brand); box-shadow:var(--shadow-md); transform:translateY(-2px); }
+.cat-card:nth-child(1){border-left-color:#1B6FA8}.cat-card:nth-child(2){border-left-color:#45C8D8}.cat-card:nth-child(3){border-left-color:#3BBF9E}.cat-card:nth-child(4){border-left-color:#F5851F}.cat-card:nth-child(5){border-left-color:#E85D3A}.cat-card:nth-child(6){border-left-color:#F5C518}.cat-card:nth-child(7){border-left-color:#8B5FA0}
+.cat-card strong { display:block; font-size:.92rem; font-weight:600; margin-bottom:2px; }
+.cat-card span { font-size:.76rem; color:var(--muted); }
+
+/* Promo */
+.promo { background:linear-gradient(135deg,#1B6FA8 0%,#45C8D8 40%,#3BBF9E 70%,#F5851F 100%); border-radius:var(--radius); padding:52px 44px; margin:20px 0 48px; position:relative; overflow:hidden; }
+.promo::before { content:''; position:absolute; top:-80px; right:-80px; width:300px; height:300px; background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%); border-radius:50%; }
+.promo-content { position:relative; z-index:1; max-width:520px; }
+.promo h3 { font-size:1.5rem; font-weight:800; color:white; margin-bottom:10px; }
+.promo p { color:rgba(255,255,255,.85); line-height:1.65; margin-bottom:24px; }
+.btn-cotizar { display:inline-flex; align-items:center; gap:8px; background:white; color:var(--brand); padding:13px 30px; border-radius:50px; font-weight:700; font-size:.92rem; text-decoration:none; box-shadow:0 4px 20px rgba(0,0,0,.15); transition:all .25s; }
+.btn-cotizar:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,.2); }
+.btn-cotizar::before { content:''; display:inline-block; width:10px; height:10px; background:#25D366; border-radius:50%; }
+
+/* Payment */
+.payment-section { padding:0 0 56px; }
+.payment-box { background:linear-gradient(180deg,white,#F0F9FF); border:1px solid rgba(27,111,168,.1); border-radius:16px; padding:40px; text-align:center; }
+.payment-box h3 { font-size:1.15rem; font-weight:700; margin-bottom:6px; }
+.payment-box>p { color:var(--muted); font-size:.85rem; margin-bottom:24px; }
+.pay-grid { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+.pay-item { display:flex; flex-direction:column; align-items:center; gap:8px; padding:18px 22px; border-radius:12px; min-width:100px; color:white; font-size:.8rem; font-weight:600; transition:all .2s; }
+.pay-item:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.15); }
+.pay-visa{background:linear-gradient(135deg,#1B6FA8,#14507A)}.pay-pse{background:linear-gradient(135deg,#45C8D8,#1B6FA8)}.pay-nequi{background:linear-gradient(135deg,#3BBF9E,#2A9D6E)}.pay-daviplata{background:linear-gradient(135deg,#8B5FA0,#6B4580)}.pay-efecty{background:linear-gradient(135deg,#F5851F,#E85D3A)}
+
+/* ===== PRODUCTS PAGE ===== */
+.products-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+.products-top h2 { font-size:1.4rem; font-weight:700; }
+.products-count { color:var(--muted); font-size:.85rem; margin-left:8px; }
+.sort-select { padding:8px 14px; border:1.5px solid var(--border); border-radius:var(--radius); font-family:var(--font); font-size:.82rem; background:white; cursor:pointer; }
+.filters { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
+.filter-chip { padding:8px 18px; border:1.5px solid var(--border); border-radius:50px; font-size:.82rem; font-weight:500; cursor:pointer; color:var(--ink2); transition:all .2s; background:white; }
+.filter-chip:hover { border-color:var(--brand); color:var(--brand); }
+.filter-chip.active { background:var(--brand); border-color:var(--brand); color:white; }
+
+.product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px; min-height:200px; }
+.card { background:white; border-radius:var(--radius); border:2px solid var(--border); overflow:hidden; transition:all .25s; position:relative; cursor:pointer; }
+.card:hover { border-color:transparent; box-shadow:var(--shadow-md); transform:translateY(-3px); background:linear-gradient(white,white) padding-box,linear-gradient(135deg,#1B6FA8,#45C8D8,#3BBF9E,#F5851F,#E85D3A) border-box; border:2px solid transparent; }
+.card-badge { position:absolute; top:10px; left:10px; z-index:2; padding:3px 10px; border-radius:6px; font-size:.66rem; font-weight:700; text-transform:uppercase; }
+.card-badge.sale { background:var(--accent); color:white; }
+.card-badge.new { background:var(--green); color:white; }
+.card-img { height:180px; background:var(--bg); display:flex; align-items:center; justify-content:center; padding:16px; border-bottom:1px solid #F3F4F6; }
+.card-img img { max-height:100%; max-width:100%; object-fit:contain; }
+.card-placeholder { color:#D1D5DB; }
+.card-body { padding:16px 18px 18px; }
+.card-brand { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--brand); }
+.card-cat { font-size:.6rem; color:var(--muted); background:var(--bg); padding:2px 7px; border-radius:4px; margin-left:6px; }
+.card-title { font-size:.9rem; font-weight:600; line-height:1.35; margin:6px 0 4px; }
+.card-compat { font-size:.74rem; color:var(--muted); margin-bottom:12px; }
+.card-footer { display:flex; justify-content:space-between; align-items:flex-end; }
+.card-old-price { display:block; font-size:.7rem; color:var(--muted); text-decoration:line-through; font-family:var(--mono); }
+.card-price { font-family:var(--mono); font-weight:500; font-size:1.05rem; }
+.btn-add { background:var(--brand); color:white; border:none; padding:8px 14px; border-radius:var(--radius); font-family:var(--font); font-weight:600; font-size:.76rem; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:5px; }
+.btn-add:hover { background:var(--brand-dark); transform:translateY(-1px); }
+
+.no-products { grid-column:1/-1; text-align:center; padding:48px 20px; color:var(--muted); }
+
+/* Loading */
+.loading { grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--muted); }
+.spinner { width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--brand); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 12px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* ===== DETAIL ===== */
+.detail-back { display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:.85rem; text-decoration:none; margin-bottom:24px; cursor:pointer; transition:color .2s; }
+.detail-back:hover { color:var(--brand); }
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+.detail-img-box { background:white; border:1px solid var(--border); border-radius:var(--radius); padding:40px; display:flex; align-items:center; justify-content:center; min-height:360px; }
+.detail-img-box img { max-width:100%; max-height:320px; object-fit:contain; }
+.detail-brand { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--brand); }
+.detail-cat { font-size:.65rem; color:var(--muted); background:var(--bg); padding:3px 10px; border-radius:4px; margin-left:8px; }
+.detail-title { font-size:1.5rem; font-weight:700; line-height:1.25; margin:10px 0 14px; }
+.detail-compat { background:var(--brand-light); border-radius:var(--radius); padding:14px 18px; margin-bottom:16px; }
+.detail-compat strong { display:block; font-size:.76rem; color:var(--brand-dark); margin-bottom:3px; }
+.detail-compat span { font-size:.86rem; color:var(--ink2); }
+.detail-old-price { font-family:var(--mono); font-size:.88rem; color:var(--muted); text-decoration:line-through; margin-right:8px; }
+.detail-price { font-family:var(--mono); font-size:1.7rem; font-weight:500; }
+.detail-stock { margin:8px 0 20px; font-size:.82rem; }
+.stock-ok { color:var(--green); font-weight:500; }
+.stock-out { color:var(--accent); font-weight:500; }
+.detail-actions { display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap; }
+.btn-add-big { background:var(--brand); color:white; border:none; padding:14px 28px; border-radius:var(--radius); font-family:var(--font); font-weight:700; font-size:.92rem; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:8px; }
+.btn-add-big:hover { background:var(--brand-dark); transform:translateY(-1px); }
+.btn-wa-detail { display:inline-flex; align-items:center; gap:8px; background:#25D366; color:white; padding:14px 24px; border-radius:var(--radius); font-weight:600; font-size:.86rem; text-decoration:none; transition:all .2s; }
+.btn-wa-detail:hover { background:#1DB954; }
+
+/* ===== ABOUT ===== */
+.page-header { background:var(--ink); padding:48px 0; }
+.page-header h1 { color:white; font-size:1.8rem; font-weight:800; }
+.about-body { padding:48px 0 80px; }
+.about-body h2 { font-size:1.2rem; font-weight:700; margin:28px 0 12px; position:relative; display:inline-block; }
+.about-body h2::after { content:''; position:absolute; bottom:-4px; left:0; width:40px; height:3px; background:linear-gradient(90deg,#1B6FA8,#45C8D8); border-radius:2px; }
+.about-body p { color:var(--ink2); line-height:1.7; max-width:680px; margin-bottom:12px; }
+.values-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin-top:32px; }
+.value-card { background:white; border:1px solid var(--border); border-radius:var(--radius); padding:24px; transition:all .25s; }
+.value-card:hover { border-color:var(--brand); box-shadow:var(--shadow-md); }
+.value-card svg { color:var(--brand); margin-bottom:10px; }
+.value-card strong { display:block; font-size:.92rem; margin-bottom:4px; }
+.value-card span { font-size:.8rem; color:var(--ink2); line-height:1.5; }
+
+/* ===== CONTACT ===== */
+.contact-body { padding:48px 0 80px; }
+.contact-body>p { color:var(--ink2); font-size:1rem; line-height:1.65; margin-bottom:32px; max-width:520px; }
+.contact-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin-bottom:40px; }
+.contact-card { display:flex; flex-direction:column; align-items:center; text-align:center; padding:32px 20px; border-radius:var(--radius); text-decoration:none; color:white; transition:all .25s; }
+.contact-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,0,0,.15); }
+.contact-card svg { margin-bottom:12px; }
+.contact-card strong { font-size:1rem; margin-bottom:4px; }
+.contact-card span { font-size:.85rem; opacity:.9; }
+.contact-card em { font-style:normal; font-size:.72rem; opacity:.7; margin-top:6px; }
+.card-wa{background:linear-gradient(135deg,#25D366,#128C7E)}.card-email{background:linear-gradient(135deg,#1B6FA8,#45C8D8)}.card-ubi{background:linear-gradient(135deg,#F5851F,#E85D3A)}
+.schedule { background:white; border:1px solid var(--border); border-radius:var(--radius); padding:28px; max-width:380px; }
+.schedule h3 { font-size:.95rem; font-weight:700; margin-bottom:10px; }
+.schedule p { color:var(--ink2); font-size:.85rem; margin-bottom:3px; }
+
+/* ===== FOOTER ===== */
+.footer { background:var(--ink); color:white; padding:48px 0 20px; }
+.footer-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:36px; }
+.footer-about p { color:#94A3B8; font-size:.82rem; line-height:1.6; margin-top:10px; }
+.footer-col h4 { font-size:.82rem; font-weight:600; margin-bottom:12px; }
+.footer-col a { display:block; color:#94A3B8; text-decoration:none; font-size:.8rem; padding:2px 0; transition:color .2s; cursor:pointer; }
+.footer-col a:hover { color:white; }
+.footer-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:32px; padding-top:16px; border-top:1px solid rgba(255,255,255,.06); font-size:.72rem; color:#6B7280; }
+
+/* ===== CART DRAWER ===== */
+.overlay { position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:200; opacity:0; pointer-events:none; transition:opacity .3s; backdrop-filter:blur(2px); }
+.overlay.open { opacity:1; pointer-events:all; }
+.drawer { position:fixed; top:0; right:-420px; width:400px; max-width:92vw; height:100vh; background:white; z-index:201; transition:right .3s cubic-bezier(.4,0,.2,1); display:flex; flex-direction:column; border-left:1px solid var(--border); }
+.drawer.open { right:0; }
+.drawer-head { padding:18px 22px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.drawer-head h3 { font-size:1rem; font-weight:700; }
+.drawer-close { background:var(--bg); border:none; width:32px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink2); }
+.drawer-body { flex:1; overflow-y:auto; padding:12px 22px; }
+.drawer-empty { text-align:center; padding:48px 16px; color:var(--muted); }
+.cart-item { display:flex; gap:12px; padding:12px 0; border-bottom:1px solid #F3F4F6; align-items:center; }
+.cart-thumb { width:52px; height:52px; background:var(--bg); border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; }
+.cart-thumb img { max-width:42px; max-height:42px; object-fit:contain; }
+.ci-info { flex:1; min-width:0; }
+.ci-name { font-weight:600; font-size:.8rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; }
+.ci-price { font-family:var(--mono); font-size:.82rem; font-weight:500; display:block; margin-top:2px; }
+.ci-qty { display:flex; align-items:center; gap:5px; margin-top:4px; }
+.q-btn { width:24px; height:24px; border:1px solid var(--border); border-radius:6px; background:white; cursor:pointer; font-size:.8rem; display:flex; align-items:center; justify-content:center; }
+.q-btn:hover { border-color:var(--brand); color:var(--brand); }
+.q-num { font-weight:600; font-size:.8rem; min-width:16px; text-align:center; }
+.ci-remove { background:none; border:none; cursor:pointer; color:#D1D5DB; padding:4px; border-radius:6px; }
+.ci-remove:hover { color:var(--accent); }
+.drawer-foot { padding:18px 22px; border-top:1px solid var(--border); background:var(--bg); }
+.drawer-total { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.drawer-total span { font-weight:500; color:var(--ink2); font-size:.88rem; }
+.drawer-total strong { font-family:var(--mono); font-size:1.1rem; }
+.btn-checkout { display:block; width:100%; padding:13px; background:var(--brand); color:white; border:none; border-radius:var(--radius); font-family:var(--font); font-weight:700; font-size:.9rem; text-align:center; cursor:pointer; transition:all .2s; }
+.btn-checkout:hover { background:var(--brand-dark); }
+.btn-checkout:disabled { opacity:.4; cursor:not-allowed; }
+.drawer-secure { text-align:center; font-size:.68rem; color:var(--muted); margin-top:8px; }
+
+/* ===== CHECKOUT PAGE ===== */
+.checkout-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:28px; margin-top:28px; }
+.checkout-box { background:white; border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+.checkout-box h3 { font-size:.95rem; font-weight:700; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #F3F4F6; }
+.summary-item { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #F3F4F6; font-size:.85rem; }
+.summary-total { display:flex; justify-content:space-between; margin-top:12px; padding-top:12px; border-top:2px solid var(--ink); font-weight:700; font-size:1.05rem; }
+.form-group { margin-bottom:14px; }
+.form-group label { display:block; font-size:.76rem; font-weight:600; color:var(--ink2); margin-bottom:5px; }
+.form-group input { width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:var(--radius); font-family:var(--font); font-size:.86rem; outline:none; }
+.form-group input:focus { border-color:var(--brand); }
+.form-2col { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.btn-pay { width:100%; padding:14px; background:linear-gradient(135deg,#E85D3A,#F5851F); color:white; border:none; border-radius:var(--radius); font-family:var(--font); font-weight:700; font-size:.95rem; cursor:pointer; margin-top:16px; transition:all .2s; }
+.btn-pay:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(232,93,58,.3); }
+.btn-pay:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* ===== TOAST ===== */
+.toast { position:fixed; bottom:24px; right:80px; background:var(--ink); color:white; padding:12px 20px; border-radius:var(--radius); font-size:.85rem; font-weight:500; box-shadow:var(--shadow-lg); z-index:300; transform:translateY(80px); opacity:0; transition:all .3s; }
+.toast.show { transform:translateY(0); opacity:1; }
+
+/* ===== WHATSAPP FLOAT ===== */
+.wa-float { position:fixed; bottom:24px; right:24px; width:56px; height:56px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(37,211,102,.4); z-index:150; text-decoration:none; transition:all .3s; }
+.wa-float:hover { transform:scale(1.1); }
+.wa-float svg { width:28px; height:28px; fill:white; }
+
+/* ===== CHATBOT ===== */
+.chat-widget { position:fixed; bottom:24px; left:24px; z-index:9999; }
+.chat-bubble { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#1B6FA8,#45C8D8); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(27,111,168,.35); position:relative; z-index:2; }
+.chat-bubble:hover { transform:scale(1.1); }
+.chat-window { position:absolute; bottom:70px; left:0; width:360px; max-height:500px; background:white; border-radius:16px; box-shadow:0 12px 48px rgba(0,0,0,.15); display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border); }
+.chat-window.open { display:flex; }
+.chat-header { background:linear-gradient(135deg,#1B6FA8,#45C8D8); color:white; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+.chat-header-info { display:flex; align-items:center; gap:8px; }
+.chat-avatar { width:32px; height:32px; background:rgba(255,255,255,.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.8rem; }
+.chat-header-info strong { font-size:.85rem; }
+.chat-header-info span { display:block; font-size:.65rem; opacity:.8; }
+.chat-x { background:rgba(255,255,255,.15); border:none; border-radius:6px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:white; }
+.chat-msgs { flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:10px; max-height:300px; min-height:180px; }
+.chat-msg { max-width:85%; padding:9px 13px; border-radius:12px; font-size:.83rem; line-height:1.5; }
+.chat-msg p { margin:0; }
+.chat-msg.bot { background:var(--bg); color:var(--ink); align-self:flex-start; border-bottom-left-radius:4px; }
+.chat-msg.user { background:linear-gradient(135deg,#1B6FA8,#45C8D8); color:white; align-self:flex-end; border-bottom-right-radius:4px; }
+.chat-input { padding:10px 12px; border-top:1px solid var(--border); display:flex; gap:6px; }
+.chat-input input { flex:1; padding:9px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:var(--font); font-size:.83rem; outline:none; }
+.chat-input input:focus { border-color:var(--brand); }
+.chat-input button { width:36px; height:36px; background:linear-gradient(135deg,#1B6FA8,#45C8D8); color:white; border:none; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.detail-grid{grid-template-columns:1fr;gap:24px}.checkout-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.navbar,.search-box{display:none}.hamburger{display:flex}.features-row{flex-direction:column;align-items:flex-start;gap:14px;padding:0 16px}.cat-grid{grid-template-columns:1fr 1fr;gap:10px}.contact-cards{grid-template-columns:1fr}}
+@media(max-width:640px){.hero h1{font-size:1.6rem}.hero-content{padding:48px 16px}.product-grid{grid-template-columns:1fr 1fr;gap:10px}.card-img{height:140px}.card-body{padding:12px 14px}.card-title{font-size:.8rem}.card-price{font-size:.9rem}.btn-add{padding:7px 10px;font-size:0;gap:0}.btn-add svg{width:16px;height:16px}.footer-grid{grid-template-columns:1fr;gap:20px}.footer-bottom{flex-direction:column;gap:6px;text-align:center}.detail-actions{flex-direction:column}.btn-add-big,.btn-wa-detail{width:100%;justify-content:center}.chat-window{width:calc(100vw - 48px)}}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     CONFIGURACIÓN: Cambia esta URL por tu Apps Script desplegado
+     ============================================================ -->
+<script>
+  const CONFIG = {
+    APPS_SCRIPT_URL: 'PEGA_TU_URL_DE_APPS_SCRIPT_AQUI',
+    WOMPI_PUBLIC_KEY: 'PEGA_TU_LLAVE_PUBLICA_DE_WOMPI',
+    WHATSAPP: '573001234567',
+    HERO_IMAGE: '', // URL de tu imagen hero (la de tintas)
+    LOGO_URL: '',   // URL de tu logo colibrí
+  };
+</script>
+
+<!-- Topbar -->
+<div class="topbar"><div class="container">Envío <strong>gratis</strong> en Medellín · Compras mayores a $150.000</div></div>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="#" class="logo" onclick="showPage('home')">
+      <div><span class="logo-name">Rapisuministros</span><span class="logo-tag">Tóners &amp; Impresoras</span></div>
+    </a>
+    <nav class="navbar">
+      <a class="nav-link active" data-page="home" onclick="showPage('home')">Inicio</a>
+      <a class="nav-link" data-page="shop" onclick="showPage('shop')">Productos</a>
+      <a class="nav-link" data-page="about" onclick="showPage('about')">Nosotros</a>
+      <a class="nav-link" data-page="contact" onclick="showPage('contact')">Contacto</a>
+    </nav>
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Buscar tóner, impresora, marca..." id="searchInput">
+    </div>
+    <div class="header-right">
+      <button class="btn-cart" id="cartBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="showPage('home')">Inicio</a>
+  <a onclick="showPage('shop')">Productos</a>
+  <a onclick="showPage('about')">Nosotros</a>
+  <a onclick="showPage('contact')">Contacto</a>
+</div>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1>Suministros de impresión<br>para <em>tu empresa</em></h1>
+      <p>Tóners originales y genéricos, impresoras nuevas y reacondicionadas. Envío rápido en Medellín y todo Colombia.</p>
+      <div class="hero-actions">
+        <a class="btn btn-hero" onclick="showPage('shop')">Ver productos</a>
+        <a class="btn btn-ghost" href="" target="_blank" id="waHeroBtn">Cotizar por volumen</a>
+      </div>
+    </div>
+  </section>
+  <div class="features"><div class="container features-row">
+    <div class="feature"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg><div><strong>Envío rápido</strong><span>Mismo día en Medellín</span></div></div>
+    <div class="feature"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><strong>Pago seguro</strong><span>PSE, tarjetas, Nequi</span></div></div>
+    <div class="feature"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><div><strong>Garantía</strong><span>En todos los productos</span></div></div>
+    <div class="feature"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg><div><strong>Factura electrónica</strong><span>Para tu contabilidad</span></div></div>
+  </div></div>
+  <section class="cat-section"><div class="container">
+    <h2>Nuestras categorías</h2>
+    <div class="cat-grid" id="catGrid"><div class="loading"><div class="spinner"></div>Cargando categorías...</div></div>
+  </div></section>
+  <section><div class="container">
+    <div class="promo"><div class="promo-content">
+      <h3>¿Compras para tu empresa?</h3>
+      <p>Precios por volumen, crédito directo y factura electrónica. Atendemos empresas, colegios e instituciones.</p>
+      <a class="btn-cotizar" href="" target="_blank" id="waPromoBtn">Solicitar cotización</a>
+    </div></div>
+  </div></section>
+  <section class="payment-section"><div class="container"><div class="payment-box">
+    <h3>Métodos de pago seguros</h3>
+    <p>Todas las transacciones protegidas por Wompi (Bancolombia)</p>
+    <div class="pay-grid">
+      <div class="pay-item pay-visa"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Visa / MC</div>
+      <div class="pay-item pay-pse"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>PSE</div>
+      <div class="pay-item pay-nequi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Nequi</div>
+      <div class="pay-item pay-daviplata"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="11" r="3"/></svg>Daviplata</div>
+      <div class="pay-item pay-efecty"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg>Efecty</div>
+    </div>
+  </div></div></section>
+</div>
+
+<!-- ==================== PRODUCTS PAGE ==================== -->
+<div class="page" id="page-shop" style="padding:40px 0 80px">
+  <div class="container">
+    <div class="products-top">
+      <div><h2>Productos <span class="products-count" id="prodCount"></span></h2></div>
+      <select class="sort-select" id="sortSelect"><option value="">Ordenar por</option><option value="precio-asc">Precio: menor a mayor</option><option value="precio-desc">Precio: mayor a menor</option><option value="nombre">Nombre A–Z</option></select>
+    </div>
+    <div class="filters" id="filtersBar"></div>
+    <div class="product-grid" id="productGrid"><div class="loading"><div class="spinner"></div>Cargando productos...</div></div>
+  </div>
+</div>
+
+<!-- ==================== DETAIL PAGE ==================== -->
+<div class="page" id="page-detail" style="padding:32px 0 80px">
+  <div class="container">
+    <a class="detail-back" onclick="showPage('shop')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Volver a productos</a>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<!-- ==================== CHECKOUT PAGE ==================== -->
+<div class="page" id="page-checkout" style="padding:32px 0 80px">
+  <div class="container">
+    <a class="detail-back" onclick="showPage('shop')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Volver a la tienda</a>
+    <h2 style="margin-bottom:8px">Finalizar compra</h2>
+    <div class="checkout-grid">
+      <div class="checkout-box" id="checkoutSummary"></div>
+      <div class="checkout-box">
+        <h3>Datos de envío</h3>
+        <div class="form-group"><label>Nombre completo</label><input type="text" id="chkNombre" required></div>
+        <div class="form-2col">
+          <div class="form-group"><label>Email</label><input type="email" id="chkEmail" required></div>
+          <div class="form-group"><label>Teléfono</label><input type="tel" id="chkTel" required></div>
+        </div>
+        <div class="form-group"><label>Dirección</label><input type="text" id="chkDir" required></div>
+        <div class="form-group"><label>Ciudad</label><input type="text" id="chkCiudad" value="Medellín" required></div>
+        <div id="wompiWidget"></div>
+        <button class="btn-pay" id="btnPay" onclick="procesarPago()">Confirmar y pagar</button>
+        <p style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:10px">Pago seguro con Wompi — Bancolombia</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ABOUT PAGE ==================== -->
+<div class="page" id="page-about">
+  <div class="page-header"><div class="container"><h1>Sobre Rapisuministros</h1></div></div>
+  <div class="about-body"><div class="container">
+    <h2>¿Quiénes somos?</h2>
+    <p>Somos una empresa especializada en suministros de impresión en Medellín y toda Colombia. Ofrecemos tóners originales y genéricos, impresoras nuevas y reacondicionadas, suministros y polvo para recarga.</p>
+    <h2>Nuestro compromiso</h2>
+    <p>Ofrecer productos de calidad a precios competitivos con despacho rápido y asesoría personalizada para empresas, colegios e instituciones.</p>
+    <div class="values-grid">
+      <div class="value-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><strong>Calidad garantizada</strong><span>Todos nuestros productos cuentan con garantía.</span></div>
+      <div class="value-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg><strong>Envío rápido</strong><span>Mismo día en Medellín, 24-48h nacional.</span></div>
+      <div class="value-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><strong>Atención personalizada</strong><span>Asesoría para empresas e instituciones.</span></div>
+      <div class="value-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg><strong>Factura electrónica</strong><span>Para tu contabilidad empresarial.</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ==================== CONTACT PAGE ==================== -->
+<div class="page" id="page-contact">
+  <div class="page-header"><div class="container"><h1>Contacto</h1></div></div>
+  <div class="contact-body"><div class="container">
+    <p>¿Tienes preguntas o necesitas una cotización? Respondemos en menos de 1 hora en horario laboral.</p>
+    <div class="contact-cards">
+      <a href="" target="_blank" class="contact-card card-wa" id="waContactBtn"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><strong>WhatsApp</strong><span>300 123 4567</span><em>Respuesta inmediata</em></a>
+      <a href="mailto:ventas@rapisuministros.com" class="contact-card card-email"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><strong>Email</strong><span>ventas@rapisuministros.com</span><em>Respuesta en menos de 1 hora</em></a>
+      <div class="contact-card card-ubi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><strong>Ubicación</strong><span>Medellín, Colombia</span><em>Envíos a todo el país</em></div>
+    </div>
+    <div class="schedule"><h3>Horario de atención</h3><p>Lunes a Viernes: 8:00 AM — 6:00 PM</p><p>Sábados: 8:00 AM — 1:00 PM</p></div>
+  </div></div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-about"><div><span class="logo-name" style="color:var(--brand)">Rapisuministros</span><span class="logo-tag">Tóners &amp; Impresoras</span></div><p>Tu aliado en suministros de impresión en Colombia.</p></div>
+    <div class="footer-col"><h4>Categorías</h4><a onclick="filterAndShow('Tóner Original')">Tóner Original</a><a onclick="filterAndShow('Tóner Genérico')">Tóner Genérico</a><a onclick="filterAndShow('Suministros')">Suministros</a><a onclick="filterAndShow('Impresoras Nuevas')">Impresoras Nuevas</a></div>
+    <div class="footer-col"><h4>Servicio</h4><a href="#">Envíos y Devoluciones</a><a href="#">Garantía</a><a href="#">Preguntas Frecuentes</a></div>
+    <div class="footer-col"><h4>Contacto</h4><a href="" target="_blank" id="waFooterBtn">WhatsApp: 300 123 4567</a><a href="mailto:ventas@rapisuministros.com">ventas@rapisuministros.com</a><a>Medellín, Colombia</a></div>
+  </div>
+  <div class="container footer-bottom"><span>© 2026 Rapisuministros</span><span>Pagos seguros con <strong style="color:#94A3B8">Wompi</strong></span></div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head"><h3>Tu Carrito</h3><button class="drawer-close" id="drawerClose"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+  <div class="drawer-body" id="drawerBody"><div class="drawer-empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg><p>Tu carrito está vacío</p></div></div>
+  <div class="drawer-foot">
+    <div class="drawer-total"><span>Total</span><strong id="drawerTotal">$0</strong></div>
+    <button class="btn-checkout" id="btnCheckout" disabled onclick="irACheckout()">Ir a pagar</button>
+    <p class="drawer-secure">Pago seguro con Wompi — Bancolombia</p>
+  </div>
+</aside>
+<div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+<!-- WhatsApp float -->
+<a href="" target="_blank" class="wa-float" id="waFloat"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<!-- Chatbot -->
+<div class="chat-widget">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header"><div class="chat-header-info"><div class="chat-avatar">R</div><div><strong>Rapisuministros</strong><span>Asistente virtual</span></div></div><button class="chat-x" id="chatClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+    <div class="chat-msgs" id="chatMsgs"><div class="chat-msg bot"><p>¡Hola! Dime qué impresora tienes y te recomiendo el tóner ideal.</p></div></div>
+    <div class="chat-input"><input type="text" id="chatIn" placeholder="Ej: HP LaserJet M1132..." autocomplete="off"><button id="chatSend"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>
+  </div>
+  <button class="chat-bubble" id="chatBubble"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
+</div>
+
+<!-- Wompi SDK -->
+<script src="https://checkout.wompi.co/widget.js"></script>
+
+<script>
+// ================================================
+// RAPISUMINISTROS — App Logic
+// ================================================
+
+let allProducts = [];
+let cart = JSON.parse(localStorage.getItem('rapiCart') || '[]');
+let currentFilter = '';
+let currentSort = '';
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  setupWhatsappLinks();
+  setupHeroImage();
+  loadProducts();
+  updateCartUI();
+  setupEventListeners();
+});
+
+function setupWhatsappLinks() {
+  const waUrl = 'https://wa.me/' + CONFIG.WHATSAPP;
+  document.querySelectorAll('#waFloat,#waHeroBtn,#waPromoBtn,#waContactBtn,#waFooterBtn').forEach(el => {
+    el.href = waUrl;
+  });
+}
+
+function setupHeroImage() {
+  if (CONFIG.HERO_IMAGE) {
+    document.getElementById('heroBg').style.backgroundImage = "url('" + CONFIG.HERO_IMAGE + "')";
+  }
+}
+
+// ===== NAVIGATION =====
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.querySelector('[data-page="' + page + '"]')?.classList.add('active');
+  document.getElementById('mobileMenu').classList.remove('open');
+  window.scrollTo(0, 0);
+}
+
+function filterAndShow(cat) {
+  currentFilter = cat;
+  showPage('shop');
+  renderProducts();
+  renderFilters();
+}
+
+// ===== LOAD PRODUCTS =====
+function loadProducts() {
+  if (CONFIG.APPS_SCRIPT_URL === 'PEGA_TU_URL_DE_APPS_SCRIPT_AQUI') {
+    document.getElementById('productGrid').innerHTML = '<div class="no-products"><p>Configura la URL del Apps Script en el código</p></div>';
+    document.getElementById('catGrid').innerHTML = '<div class="no-products"><p>Configura la URL del Apps Script</p></div>';
+    return;
+  }
+
+  fetch(CONFIG.APPS_SCRIPT_URL + '?action=productos')
+    .then(r => r.json())
+    .then(data => {
+      allProducts = data.productos || [];
+      renderProducts();
+      renderFilters();
+      renderCategories();
+    })
+    .catch(err => {
+      document.getElementById('productGrid').innerHTML = '<div class="no-products"><p>Error cargando productos</p></div>';
+    });
+}
+
+// ===== FORMAT =====
+function cop(n) { return '$' + Number(n).toLocaleString('es-CO', {maximumFractionDigits:0}); }
+
+// ===== RENDER CATEGORIES =====
+function renderCategories() {
+  const cats = [...new Set(allProducts.map(p => p.categoria))].sort();
+  const descs = {
+    'Tóner Original': 'HP, Samsung, Kyocera, Lexmark, Ricoh, Xerox',
+    'Tóner Genérico': 'HP, Samsung, Kyocera, Lexmark, Ricoh, Xerox',
+    'Suministros': 'Acetatos, rodillos, fusoras',
+    'Impresoras Tercera': 'Reacondicionadas de todas las marcas',
+    'Impresoras Nuevas': 'Últimos modelos con garantía',
+    'Polvo Monocromático': 'Para recarga de tóners',
+    'Polvo Color': 'Cian, Magenta, Amarillo, Negro',
+  };
+  document.getElementById('catGrid').innerHTML = cats.map(c =>
+    '<div class="cat-card" onclick="filterAndShow(\'' + c + '\')"><strong>' + c + '</strong><span>' + (descs[c] || '') + '</span></div>'
+  ).join('');
+}
+
+// ===== RENDER FILTERS =====
+function renderFilters() {
+  const cats = [...new Set(allProducts.map(p => p.categoria))].sort();
+  let html = '<span class="filter-chip ' + (!currentFilter ? 'active' : '') + '" onclick="currentFilter=\'\';renderProducts();renderFilters()">Todos</span>';
+  cats.forEach(c => {
+    html += '<span class="filter-chip ' + (currentFilter === c ? 'active' : '') + '" onclick="currentFilter=\'' + c + '\';renderProducts();renderFilters()">' + c + '</span>';
+  });
+  document.getElementById('filtersBar').innerHTML = html;
+}
+
+// ===== RENDER PRODUCTS =====
+function renderProducts() {
+  let list = [...allProducts];
+  const q = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+
+  if (currentFilter) list = list.filter(p => p.categoria === currentFilter);
+  if (q) list = list.filter(p => p.nombre.toLowerCase().includes(q) || p.marca.toLowerCase().includes(q) || (p.compatibilidad || '').toLowerCase().includes(q));
+
+  const sort = document.getElementById('sortSelect')?.value || '';
+  if (sort === 'precio-asc') list.sort((a,b) => a.precio - b.precio);
+  else if (sort === 'precio-desc') list.sort((a,b) => b.precio - a.precio);
+  else if (sort === 'nombre') list.sort((a,b) => a.nombre.localeCompare(b.nombre));
+
+  document.getElementById('prodCount').textContent = '(' + list.length + ')';
+
+  if (list.length === 0) {
+    document.getElementById('productGrid').innerHTML = '<div class="no-products"><p>No se encontraron productos</p><span class="filter-chip" onclick="currentFilter=\'\';renderProducts();renderFilters()" style="margin-top:12px;display:inline-block">Ver todos</span></div>';
+    return;
+  }
+
+  document.getElementById('productGrid').innerHTML = list.map(p => {
+    const enOferta = p.precio_anterior && p.precio_anterior > p.precio;
+    const descuento = enOferta ? Math.round((1 - p.precio / p.precio_anterior) * 100) : 0;
+    return '<article class="card" onclick="showDetail(' + p.id + ')">' +
+      (enOferta ? '<span class="card-badge sale">-' + descuento + '%</span>' : '') +
+      '<div class="card-img">' + (p.imagen ? '<img src="' + p.imagen + '" alt="' + p.nombre + '" loading="lazy">' : '<svg class="card-placeholder" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>') + '</div>' +
+      '<div class="card-body"><div><span class="card-brand">' + p.marca + '</span><span class="card-cat">' + p.categoria + '</span></div>' +
+      '<h3 class="card-title">' + p.nombre + '</h3>' +
+      (p.compatibilidad ? '<p class="card-compat">' + p.compatibilidad + '</p>' : '') +
+      '<div class="card-footer"><div>' + (enOferta ? '<span class="card-old-price">' + cop(p.precio_anterior) + '</span>' : '') + '<span class="card-price">' + cop(p.precio) + '</span></div>' +
+      '<button class="btn-add" onclick="event.stopPropagation();addToCart(' + p.id + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar</button>' +
+      '</div></div></article>';
+  }).join('');
+}
+
+// ===== DETAIL =====
+function showDetail(id) {
+  const p = allProducts.find(x => x.id == id);
+  if (!p) return;
+  const enOferta = p.precio_anterior && p.precio_anterior > p.precio;
+  const waMsg = encodeURIComponent('Hola, me interesa: ' + p.nombre);
+
+  document.getElementById('detailContent').innerHTML =
+    '<div class="detail-grid"><div class="detail-img-box">' + (p.imagen ? '<img src="' + p.imagen + '" alt="' + p.nombre + '">' : '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>') + '</div><div>' +
+    '<div><span class="detail-brand">' + p.marca + '</span><span class="detail-cat">' + p.categoria + '</span></div>' +
+    '<h1 class="detail-title">' + p.nombre + '</h1>' +
+    (p.compatibilidad ? '<div class="detail-compat"><strong>Compatible con:</strong><span>' + p.compatibilidad + '</span></div>' : '') +
+    '<div style="margin-bottom:8px">' + (enOferta ? '<span class="detail-old-price">' + cop(p.precio_anterior) + '</span>' : '') + '<span class="detail-price">' + cop(p.precio) + '</span></div>' +
+    '<div class="detail-stock">' + (p.stock > 0 ? '<span class="stock-ok">En stock (' + p.stock + ' disponibles)</span>' : '<span class="stock-out">Agotado</span>') + '</div>' +
+    '<div class="detail-actions"><button class="btn-add-big" onclick="addToCart(' + p.id + ')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar al carrito</button>' +
+    '<a class="btn-wa-detail" href="https://wa.me/' + CONFIG.WHATSAPP + '?text=' + waMsg + '" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg> WhatsApp</a></div>' +
+    '</div></div>';
+
+  showPage('detail');
+}
+
+// ===== CART =====
+function addToCart(id) {
+  const p = allProducts.find(x => x.id == id);
+  if (!p) return;
+  const existing = cart.find(x => x.id == id);
+  if (existing) existing.cantidad++;
+  else cart.push({ id: p.id, nombre: p.nombre, precio: p.precio, imagen: p.imagen, cantidad: 1 });
+  saveCart();
+  updateCartUI();
+  toast(p.nombre + ' agregado');
+}
+
+function removeFromCart(id) { cart = cart.filter(x => x.id != id); saveCart(); updateCartUI(); }
+function changeQty(id, d) {
+  const item = cart.find(x => x.id == id);
+  if (!item) return;
+  item.cantidad += d;
+  if (item.cantidad <= 0) removeFromCart(id);
+  else { saveCart(); updateCartUI(); }
+}
+
+function saveCart() { localStorage.setItem('rapiCart', JSON.stringify(cart)); }
+
+function updateCartUI() {
+  // Badge
+  const total = cart.reduce((s, i) => s + i.cantidad, 0);
+  let badge = document.querySelector('.cart-badge');
+  if (total > 0) {
+    if (!badge) { badge = document.createElement('span'); badge.className = 'cart-badge'; document.getElementById('cartBtn').appendChild(badge); }
+    badge.textContent = total;
+  } else if (badge) badge.remove();
+
+  // Drawer
+  const body = document.getElementById('drawerBody');
+  const totalPrice = cart.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  document.getElementById('drawerTotal').textContent = cop(totalPrice);
+  document.getElementById('btnCheckout').disabled = cart.length === 0;
+
+  if (cart.length === 0) {
+    body.innerHTML = '<div class="drawer-empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg><p>Tu carrito está vacío</p></div>';
+    return;
+  }
+
+  body.innerHTML = cart.map(i =>
+    '<div class="cart-item"><div class="cart-thumb">' + (i.imagen ? '<img src="' + i.imagen + '">' : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>') + '</div>' +
+    '<div class="ci-info"><span class="ci-name">' + i.nombre + '</span><span class="ci-price">' + cop(i.precio * i.cantidad) + '</span>' +
+    '<div class="ci-qty"><button class="q-btn" onclick="changeQty(' + i.id + ',-1)">−</button><span class="q-num">' + i.cantidad + '</span><button class="q-btn" onclick="changeQty(' + i.id + ',1)">+</button></div></div>' +
+    '<button class="ci-remove" onclick="removeFromCart(' + i.id + ')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>'
+  ).join('');
+}
+
+// ===== CHECKOUT =====
+function irACheckout() {
+  if (cart.length === 0) return;
+  closeDrawer();
+
+  const totalPrice = cart.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  let html = '<h3>Resumen del pedido</h3>';
+  cart.forEach(i => {
+    html += '<div class="summary-item"><span>' + i.cantidad + 'x ' + i.nombre + '</span><span>' + cop(i.precio * i.cantidad) + '</span></div>';
+  });
+  html += '<div class="summary-total"><span>Total</span><span>' + cop(totalPrice) + '</span></div>';
+  document.getElementById('checkoutSummary').innerHTML = html;
+
+  showPage('checkout');
+}
+
+function procesarPago() {
+  const nombre = document.getElementById('chkNombre').value.trim();
+  const email = document.getElementById('chkEmail').value.trim();
+  const tel = document.getElementById('chkTel').value.trim();
+  const dir = document.getElementById('chkDir').value.trim();
+  const ciudad = document.getElementById('chkCiudad').value.trim();
+
+  if (!nombre || !email || !tel || !dir || !ciudad) { toast('Llena todos los campos'); return; }
+
+  const totalPrice = cart.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const ref = 'RAPI-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+
+  // 1. Guardar orden en Google Sheets
+  const btn = document.getElementById('btnPay');
+  btn.disabled = true;
+  btn.textContent = 'Procesando...';
+
+  fetch(CONFIG.APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'orden',
+      nombre, email, telefono: tel, direccion: dir, ciudad,
+      productos: cart,
+      total: totalPrice,
+      referencia: ref
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    // 2. Abrir Wompi checkout
+    if (CONFIG.WOMPI_PUBLIC_KEY && CONFIG.WOMPI_PUBLIC_KEY !== 'PEGA_TU_LLAVE_PUBLICA_DE_WOMPI') {
+      var checkout = new WidgetCheckout({
+        currency: 'COP',
+        amountInCents: totalPrice * 100,
+        reference: ref,
+        publicKey: CONFIG.WOMPI_PUBLIC_KEY,
+        redirectUrl: window.location.origin,
+        customerData: {
+          email: email,
+          fullName: nombre,
+          phoneNumber: tel,
+        }
+      });
+      checkout.open(function(result) {
+        var transaction = result.transaction;
+        if (transaction && transaction.status === 'APPROVED') {
+          cart = [];
+          saveCart();
+          updateCartUI();
+          toast('¡Pago aprobado! Referencia: ' + ref);
+          showPage('home');
+        } else {
+          toast('Pago no completado. Intenta de nuevo.');
+        }
+        btn.disabled = false;
+        btn.textContent = 'Confirmar y pagar';
+      });
+    } else {
+      // Sin Wompi configurado
+      cart = [];
+      saveCart();
+      updateCartUI();
+      toast('Pedido registrado: ' + ref);
+      showPage('home');
+      btn.disabled = false;
+      btn.textContent = 'Confirmar y pagar';
+    }
+  })
+  .catch(err => {
+    toast('Error al procesar. Intenta de nuevo.');
+    btn.disabled = false;
+    btn.textContent = 'Confirmar y pagar';
+  });
+}
+
+// ===== DRAWER =====
+function openDrawer() { document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeDrawer() { document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+// ===== TOAST =====
+function toast(msg) { const t = document.getElementById('toast'); document.getElementById('toastMsg').textContent = msg; t.classList.add('show'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2500); }
+
+// ===== EVENT LISTENERS =====
+function setupEventListeners() {
+  document.getElementById('cartBtn').addEventListener('click', openDrawer);
+  document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+  document.getElementById('overlay').addEventListener('click', closeDrawer);
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('open'));
+  document.getElementById('searchInput').addEventListener('input', () => { showPage('shop'); renderProducts(); });
+  document.getElementById('sortSelect').addEventListener('change', renderProducts);
+
+  // Chat
+  document.getElementById('chatBubble').addEventListener('click', () => document.getElementById('chatWindow').classList.toggle('open'));
+  document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatWindow').classList.remove('open'));
+  document.getElementById('chatSend').addEventListener('click', sendChat);
+  document.getElementById('chatIn').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+}
+
+// ===== CHATBOT =====
+let chatHistory = [];
+function sendChat() {
+  const input = document.getElementById('chatIn');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+
+  addChatMsg(msg, 'user');
+  chatHistory.push({ role: 'user', content: msg });
+
+  addChatMsg('Escribiendo...', 'bot', 'chatTyping');
+
+  fetch(CONFIG.APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'chat', mensaje: msg, historial: chatHistory })
+  })
+  .then(r => r.json())
+  .then(data => {
+    const el = document.getElementById('chatTyping'); if (el) el.remove();
+    const resp = data.respuesta || 'Error. Escríbenos por WhatsApp.';
+    addChatMsg(resp, 'bot');
+    chatHistory.push({ role: 'model', content: resp });
+  })
+  .catch(() => {
+    const el = document.getElementById('chatTyping'); if (el) el.remove();
+    addChatMsg('Error de conexión. Escríbenos por WhatsApp.', 'bot');
+  });
+}
+
+function addChatMsg(text, role, id) {
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + role;
+  if (id) div.id = id;
+  div.innerHTML = '<p>' + text + '</p>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+</script>
+</body>
+</html>
