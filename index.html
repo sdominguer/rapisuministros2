@@ -964,6 +964,7 @@ function procesarPago() {
 
   fetch(CONFIG.APPS_SCRIPT_URL, {
     method: 'POST',
+    redirect: 'follow',
     body: JSON.stringify({
       action: 'orden',
       nombre, email, telefono: tel, direccion: dir, ciudad,
@@ -972,36 +973,46 @@ function procesarPago() {
       referencia: ref
     })
   })
-  .then(r => r.json())
-  .then(data => {
+  .then(r => r.text())
+  .then(txt => {
+    console.log('Apps Script response:', txt);
+    var data = {};
+    try { data = JSON.parse(txt); } catch(e) { console.log('Parse error, continuing anyway'); }
     // 2. Abrir Wompi checkout
     if (CONFIG.WOMPI_PUBLIC_KEY && CONFIG.WOMPI_PUBLIC_KEY !== 'PEGA_TU_LLAVE_PUBLICA_DE_WOMPI') {
-      var checkout = new WidgetCheckout({
-        currency: 'COP',
-        amountInCents: totalPrice * 100,
-        reference: ref,
-        publicKey: CONFIG.WOMPI_PUBLIC_KEY,
-        redirectUrl: window.location.origin,
-        customerData: {
-          email: email,
-          fullName: nombre,
-          phoneNumber: tel,
-        }
-      });
-      checkout.open(function(result) {
-        var transaction = result.transaction;
-        if (transaction && transaction.status === 'APPROVED') {
-          cart = [];
-          saveCart();
-          updateCartUI();
-          toast('¡Pago aprobado! Referencia: ' + ref);
-          showPage('home');
-        } else {
-          toast('Pago no completado. Intenta de nuevo.');
-        }
+      try {
+        var checkout = new WidgetCheckout({
+          currency: 'COP',
+          amountInCents: totalPrice * 100,
+          reference: ref,
+          publicKey: CONFIG.WOMPI_PUBLIC_KEY,
+          redirectUrl: window.location.href,
+          customerData: {
+            email: email,
+            fullName: nombre,
+            phoneNumber: tel,
+          }
+        });
+        checkout.open(function(result) {
+          var transaction = result.transaction;
+          if (transaction && transaction.status === 'APPROVED') {
+            cart = [];
+            saveCart();
+            updateCartUI();
+            toast('¡Pago aprobado! Referencia: ' + ref);
+            showPage('home');
+          } else {
+            toast('Pago no completado. Intenta de nuevo.');
+          }
+          btn.disabled = false;
+          btn.textContent = 'Confirmar y pagar';
+        });
+      } catch(err) {
+        console.error('Wompi error:', err);
+        toast('Error al abrir el pago: ' + err.message);
         btn.disabled = false;
         btn.textContent = 'Confirmar y pagar';
-      });
+      }
     } else {
       // Sin Wompi configurado
       cart = [];
