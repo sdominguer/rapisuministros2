@@ -47,7 +47,7 @@ img { max-width:100%; }
 .header { background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
 .header-inner { display:flex; align-items:center; gap:24px; height:64px; }
 .logo { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
-.logo-img { width:46px; height:46px; object-fit:contain; }
+.logo-img { width:56px; height:56px; object-fit:contain; }
 .logo-name { font-weight:700; font-size:1.15rem; color:var(--brand); line-height:1.2; }
 .logo-tag { display:block; font-size:.6rem; font-weight:500; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
 
@@ -376,8 +376,8 @@ img { max-width:100%; }
      ============================================================ -->
 <script>
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxk8RJJxDeXLNJkoGi6_TFVgzVfcWwfd60NVFLZEFHoTYA6kDNoIExvFLJHD-rLEDCQ1w/exec',
-    WOMPI_PUBLIC_KEY: 'pub_prod_LAu8UyNHVIyZ4slMU4znj7b9WS6nC8OA',
+    APPS_SCRIPT_URL: 'PEGA_TU_URL_DE_APPS_SCRIPT_AQUI',
+    WOMPI_PUBLIC_KEY: 'PEGA_TU_LLAVE_PUBLICA_DE_WOMPI',
     WHATSAPP: '573204713536',
     HERO_IMAGE: 'pexels-enginakyurt-6749428.jpg',
     LOGO_URL: 'logo.png',
@@ -385,14 +385,14 @@ img { max-width:100%; }
 </script>
 
 <!-- Topbar -->
-<div class="topbar"><div class="container">Envío <strong>gratis</strong> en Medellín · Compras mayores a $150.000</div></div>
+<div class="topbar"><div class="container">Envío <strong>gratis</strong> en Medellín en compras mayores a $50.000 · Envío nacional gratis desde $200.000</div></div>
 
 <!-- Header -->
 <header class="header">
   <div class="container header-inner">
     <a href="#" class="logo" onclick="showPage('home')">
-      <img class="logo-img" id="logoImg" src="logo.png" alt="ReToner">
-      <div><span class="logo-name">ReToner</span><span class="logo-tag">Tóners &amp; Impresoras</span></div>
+      <img class="logo-img" id="logoImg" src="logo.png" alt="Rapisuministros">
+      <div><span class="logo-name">Rapisuministros</span><span class="logo-tag">Tóners &amp; Impresoras</span></div>
     </a>
     <nav class="navbar">
       <a class="nav-link active" data-page="home" onclick="showPage('home')">Inicio</a>
@@ -489,14 +489,64 @@ img { max-width:100%; }
     <div class="checkout-grid">
       <div class="checkout-box" id="checkoutSummary"></div>
       <div class="checkout-box">
-        <h3>Datos de envío</h3>
-        <div class="form-group"><label>Nombre completo</label><input type="text" id="chkNombre" required></div>
+        <h3>Datos personales</h3>
+        <div class="form-group"><label>Nombre completo *</label><input type="text" id="chkNombre" placeholder="Nombre y apellido" required></div>
         <div class="form-2col">
-          <div class="form-group"><label>Email</label><input type="email" id="chkEmail" required></div>
-          <div class="form-group"><label>Teléfono</label><input type="tel" id="chkTel" required></div>
+          <div class="form-group"><label>Email *</label><input type="email" id="chkEmail" placeholder="tucorreo@ejemplo.com" required></div>
+          <div class="form-group"><label>Teléfono *</label><input type="tel" id="chkTel" placeholder="320 471 3536" required></div>
         </div>
-        <div class="form-group"><label>Dirección</label><input type="text" id="chkDir" required></div>
-        <div class="form-group"><label>Ciudad</label><input type="text" id="chkCiudad" value="Medellín" required></div>
+        <div class="form-group"><label>Cédula / NIT</label><input type="text" id="chkDocumento" placeholder="Para factura electrónica"></div>
+        
+        <h3 style="margin-top:20px">Dirección de envío</h3>
+        <div class="form-group">
+          <label>Departamento *</label>
+          <select id="chkDepto" class="sort-select" style="width:100%;padding:10px 14px" onchange="actualizarCiudades()">
+            <option value="">Selecciona departamento</option>
+            <option value="Antioquia">Antioquia</option>
+            <option value="Atlántico">Atlántico</option>
+            <option value="Bogotá D.C.">Bogotá D.C.</option>
+            <option value="Bolívar">Bolívar</option>
+            <option value="Boyacá">Boyacá</option>
+            <option value="Caldas">Caldas</option>
+            <option value="Caquetá">Caquetá</option>
+            <option value="Casanare">Casanare</option>
+            <option value="Cauca">Cauca</option>
+            <option value="Cesar">Cesar</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Cundinamarca">Cundinamarca</option>
+            <option value="Huila">Huila</option>
+            <option value="La Guajira">La Guajira</option>
+            <option value="Magdalena">Magdalena</option>
+            <option value="Meta">Meta</option>
+            <option value="Nariño">Nariño</option>
+            <option value="Norte de Santander">Norte de Santander</option>
+            <option value="Quindío">Quindío</option>
+            <option value="Risaralda">Risaralda</option>
+            <option value="Santander">Santander</option>
+            <option value="Sucre">Sucre</option>
+            <option value="Tolima">Tolima</option>
+            <option value="Valle del Cauca">Valle del Cauca</option>
+            <option value="Otro">Otro departamento</option>
+          </select>
+        </div>
+        <div class="form-2col">
+          <div class="form-group"><label>Ciudad / Municipio *</label><input type="text" id="chkCiudad" placeholder="Ej: Medellín, Envigado..." required></div>
+          <div class="form-group"><label>Barrio *</label><input type="text" id="chkBarrio" placeholder="Nombre del barrio" required></div>
+        </div>
+        <div class="form-group"><label>Dirección completa *</label><input type="text" id="chkDir" placeholder="Ej: Cra 65E #24-57, Apto 301" required></div>
+        <div class="form-group"><label>Indicaciones adicionales</label><input type="text" id="chkIndicaciones" placeholder="Torre, apartamento, punto de referencia..."></div>
+        
+        <div id="shippingInfo" style="background:var(--bg);border-radius:var(--radius);padding:14px 18px;margin:16px 0;display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <span style="font-size:.78rem;font-weight:600;color:var(--ink2)">Costo de envío</span>
+              <span style="display:block;font-size:.72rem;color:var(--muted)" id="shippingNote"></span>
+            </div>
+            <strong id="shippingCost" style="font-family:var(--mono);font-size:1rem"></strong>
+          </div>
+        </div>
+        <div class="summary-total" id="checkoutTotal" style="display:none"><span>Total con envío</span><span id="totalConEnvio"></span></div>
+        
         <div id="wompiWidget"></div>
         <button class="btn-pay" id="btnPay" onclick="procesarPago()">Confirmar y pagar</button>
         <p style="text-align:center;font-size:.72rem;color:var(--muted);margin-top:10px">Pago seguro con Wompi — Bancolombia</p>
@@ -507,7 +557,7 @@ img { max-width:100%; }
 
 <!-- ==================== ABOUT PAGE ==================== -->
 <div class="page" id="page-about">
-  <div class="page-header"><div class="container"><h1>Sobre ReToner</h1></div></div>
+  <div class="page-header"><div class="container"><h1>Sobre Rapisuministros</h1></div></div>
   <div class="about-body"><div class="container">
     <h2>¿Quiénes somos?</h2>
     <p>Somos una empresa especializada en suministros de impresión en Medellín y toda Colombia. Ofrecemos tóners originales y genéricos, impresoras nuevas y reacondicionadas, suministros y polvo para recarga.</p>
@@ -539,7 +589,7 @@ img { max-width:100%; }
       <div class="contact-info-side">
         <a href="" target="_blank" class="btn-wa-contact" id="waContactBtn2"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg> Envíanos un mensaje por WhatsApp</a>
         <div class="contact-info-card">
-          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Tóner e Impresiones ReToner</h3>
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Tóner e Impresiones Rapisuministros</h3>
           <p>CRA 65E #24-57</p>
           <p>Medellín, Colombia</p>
         </div>
@@ -564,12 +614,12 @@ img { max-width:100%; }
 <!-- Footer -->
 <footer class="footer">
   <div class="container footer-grid">
-    <div class="footer-about"><div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" style="width:36px;height:36px;object-fit:contain"><div><span class="logo-name" style="color:var(--brand)">ReToner</span><span class="logo-tag">Tóners &amp; Impresoras</span></div></div><p>Tu aliado en suministros de impresión en Colombia.</p></div>
+    <div class="footer-about"><div style="display:flex;align-items:center;gap:10px"><img src="logo.png" alt="" style="width:48px;height:48px;object-fit:contain"><div><span class="logo-name" style="color:var(--brand)">Rapisuministros</span><span class="logo-tag">Tóners &amp; Impresoras</span></div></div><p>Tu aliado en suministros de impresión en Colombia.</p></div>
     <div class="footer-col"><h4>Categorías</h4><a onclick="filterAndShow('Tóner Original')">Tóner Original</a><a onclick="filterAndShow('Tóner Genérico')">Tóner Genérico</a><a onclick="filterAndShow('Suministros')">Suministros</a><a onclick="filterAndShow('Impresoras Nuevas')">Impresoras Nuevas</a></div>
     <div class="footer-col"><h4>Servicio</h4><a href="#">Envíos y Devoluciones</a><a href="#">Garantía</a><a href="#">Preguntas Frecuentes</a></div>
     <div class="footer-col"><h4>Contacto</h4><a href="" target="_blank" id="waFooterBtn">WhatsApp: 320 471 3536</a><a href="mailto:rapisuministros@gmail.com">rapisuministros@gmail.com</a><a>Medellín, Colombia</a></div>
   </div>
-  <div class="container footer-bottom"><span>© 2026 ReToner</span><span>Pagos seguros con <strong style="color:#94A3B8">Wompi</strong></span></div>
+  <div class="container footer-bottom"><span>© 2026 Rapisuministros</span><span>Pagos seguros con <strong style="color:#94A3B8">Wompi</strong></span></div>
 </footer>
 
 <!-- Cart Drawer -->
@@ -591,7 +641,7 @@ img { max-width:100%; }
 <!-- Chatbot -->
 <div class="chat-widget">
   <div class="chat-window" id="chatWindow">
-    <div class="chat-header"><div class="chat-header-info"><div class="chat-avatar">R</div><div><strong>ReToner</strong><span>Asistente virtual</span></div></div><button class="chat-x" id="chatClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+    <div class="chat-header"><div class="chat-header-info"><div class="chat-avatar">R</div><div><strong>Rapisuministros</strong><span>Asistente virtual</span></div></div><button class="chat-x" id="chatClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
     <div class="chat-msgs" id="chatMsgs"><div class="chat-msg bot"><p>¡Hola! Dime qué impresora tienes y te recomiendo el tóner ideal.</p></div></div>
     <div class="chat-input"><input type="text" id="chatIn" placeholder="Ej: HP LaserJet M1132..." autocomplete="off"><button id="chatSend"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div>
   </div>
@@ -977,6 +1027,106 @@ function updateCartUI() {
   ).join('');
 }
 
+// ===== SHIPPING =====
+let costoEnvio = 0;
+
+function calcularEnvio() {
+  const ciudad = document.getElementById('chkCiudad').value.trim().toLowerCase();
+  const depto = document.getElementById('chkDepto').value;
+  const subtotal = cart.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  
+  const ciudadesMedellin = ['medellín', 'medellin', 'envigado', 'itagüí', 'itagui', 'bello', 'sabaneta', 'la estrella', 'caldas', 'copacabana', 'barbosa', 'girardota'];
+  const esMedellin = ciudadesMedellin.some(c => ciudad.includes(c)) || (depto === 'Antioquia' && ciudadesMedellin.some(c => ciudad.includes(c)));
+  
+  const shippingBox = document.getElementById('shippingInfo');
+  const shippingCost = document.getElementById('shippingCost');
+  const shippingNote = document.getElementById('shippingNote');
+  const totalBox = document.getElementById('checkoutTotal');
+  const totalConEnvio = document.getElementById('totalConEnvio');
+  
+  if (!ciudad || !depto) {
+    shippingBox.style.display = 'none';
+    totalBox.style.display = 'none';
+    costoEnvio = 0;
+    return;
+  }
+  
+  if (esMedellin) {
+    if (subtotal >= 50000) {
+      costoEnvio = 0;
+      shippingCost.textContent = 'GRATIS';
+      shippingCost.style.color = '#2A9D6E';
+      shippingNote.textContent = 'Envío gratis en Medellín y área metropolitana (compra mayor a $50.000)';
+    } else {
+      costoEnvio = 10000;
+      shippingCost.textContent = cop(10000);
+      shippingCost.style.color = 'var(--ink)';
+      shippingNote.textContent = 'Medellín y área metropolitana · Gratis en compras desde $50.000';
+    }
+  } else {
+    if (subtotal >= 200000) {
+      costoEnvio = 0;
+      shippingCost.textContent = 'GRATIS';
+      shippingCost.style.color = '#2A9D6E';
+      shippingNote.textContent = 'Envío nacional gratis (compra mayor a $200.000)';
+    } else {
+      costoEnvio = -1; // Precio varía
+      shippingCost.textContent = 'Por confirmar';
+      shippingCost.style.color = 'var(--accent)';
+      shippingNote.textContent = 'El costo depende de tu ciudad · Te confirmamos por WhatsApp · Gratis desde $200.000';
+    }
+  }
+  
+  shippingBox.style.display = 'block';
+  totalBox.style.display = 'flex';
+  
+  if (costoEnvio >= 0) {
+    totalConEnvio.textContent = cop(subtotal + costoEnvio);
+  } else {
+    totalConEnvio.textContent = cop(subtotal) + ' + envío';
+  }
+}
+
+function actualizarCiudades() {
+  var depto = document.getElementById('chkDepto').value;
+  var ciudadInput = document.getElementById('chkCiudad');
+  
+  var ciudadesPrincipales = {
+    'Antioquia': 'Medellín',
+    'Atlántico': 'Barranquilla',
+    'Bogotá D.C.': 'Bogotá',
+    'Bolívar': 'Cartagena',
+    'Boyacá': 'Tunja',
+    'Caldas': 'Manizales',
+    'Valle del Cauca': 'Cali',
+    'Santander': 'Bucaramanga',
+    'Risaralda': 'Pereira',
+    'Quindío': 'Armenia',
+    'Norte de Santander': 'Cúcuta',
+    'Nariño': 'Pasto',
+    'Meta': 'Villavicencio',
+    'Magdalena': 'Santa Marta',
+    'Huila': 'Neiva',
+    'Tolima': 'Ibagué',
+    'Córdoba': 'Montería',
+    'Cesar': 'Valledupar',
+    'Cundinamarca': 'Zipaquirá',
+    'Cauca': 'Popayán',
+    'Sucre': 'Sincelejo',
+    'La Guajira': 'Riohacha',
+    'Caquetá': 'Florencia',
+    'Casanare': 'Yopal',
+  };
+  
+  if (ciudadesPrincipales[depto]) {
+    ciudadInput.value = ciudadesPrincipales[depto];
+  } else {
+    ciudadInput.value = '';
+  }
+  
+  calcularEnvio();
+}
+
 // ===== CHECKOUT =====
 function irACheckout() {
   if (cart.length === 0) return;
@@ -987,10 +1137,20 @@ function irACheckout() {
   cart.forEach(i => {
     html += '<div class="summary-item"><span>' + i.cantidad + 'x ' + i.nombre + '</span><span>' + cop(i.precio * i.cantidad) + '</span></div>';
   });
-  html += '<div class="summary-total"><span>Total</span><span>' + cop(totalPrice) + '</span></div>';
+  html += '<div class="summary-total"><span>Subtotal</span><span>' + cop(totalPrice) + '</span></div>';
+  html += '<p style="font-size:.72rem;color:var(--muted);margin-top:8px;text-align:center">El costo de envío se calcula al ingresar tu dirección</p>';
   document.getElementById('checkoutSummary').innerHTML = html;
+  
+  // Reset shipping
+  costoEnvio = 0;
+  document.getElementById('shippingInfo').style.display = 'none';
+  document.getElementById('checkoutTotal').style.display = 'none';
 
   showPage('checkout');
+  
+  // Add shipping listeners
+  document.getElementById('chkCiudad').addEventListener('input', calcularEnvio);
+  document.getElementById('chkDepto').addEventListener('change', calcularEnvio);
 }
 
 function procesarPago() {
@@ -999,11 +1159,23 @@ function procesarPago() {
   const tel = document.getElementById('chkTel').value.trim();
   const dir = document.getElementById('chkDir').value.trim();
   const ciudad = document.getElementById('chkCiudad').value.trim();
+  const depto = document.getElementById('chkDepto').value;
+  const barrio = document.getElementById('chkBarrio').value.trim();
+  const indicaciones = document.getElementById('chkIndicaciones').value.trim();
+  const documento = document.getElementById('chkDocumento').value.trim();
 
-  if (!nombre || !email || !tel || !dir || !ciudad) { toast('Llena todos los campos'); return; }
+  if (!nombre || !email || !tel || !dir || !ciudad || !depto || !barrio) { toast('Llena todos los campos obligatorios (*)'); return; }
+  
+  if (costoEnvio === -1) {
+    // Envío por confirmar — guardar pedido como "Pendiente envío" y avisar
+    toast('Te confirmaremos el costo de envío por WhatsApp');
+  }
 
-  const totalPrice = cart.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const subtotal = cart.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const totalConEnvio = costoEnvio > 0 ? subtotal + costoEnvio : subtotal;
   const ref = 'RAPI-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+  
+  const direccionCompleta = dir + ', ' + barrio + ', ' + ciudad + ', ' + depto + (indicaciones ? ' (' + indicaciones + ')' : '');
 
   // 1. Guardar orden en Google Sheets
   const btn = document.getElementById('btnPay');
@@ -1015,9 +1187,13 @@ function procesarPago() {
     redirect: 'follow',
     body: JSON.stringify({
       action: 'orden',
-      nombre, email, telefono: tel, direccion: dir, ciudad,
+      nombre, email, telefono: tel, 
+      direccion: direccionCompleta, 
+      ciudad: ciudad + ', ' + depto,
       productos: cart,
-      total: totalPrice,
+      total: totalConEnvio,
+      envio: costoEnvio === -1 ? 'Por confirmar' : costoEnvio,
+      documento: documento,
       referencia: ref
     })
   })
@@ -1026,12 +1202,27 @@ function procesarPago() {
     console.log('Apps Script response:', txt);
     var data = {};
     try { data = JSON.parse(txt); } catch(e) { console.log('Parse error, continuing anyway'); }
+    
+    if (costoEnvio === -1) {
+      // No abrir Wompi, enviar a WhatsApp
+      cart = [];
+      saveCart();
+      updateCartUI();
+      toast('Pedido registrado: ' + ref + '. Te contactaremos para confirmar el envío.');
+      var waMsg = encodeURIComponent('Hola, hice el pedido ' + ref + ' y necesito confirmar el costo de envío a ' + ciudad + ', ' + depto);
+      window.open('https://wa.me/' + CONFIG.WHATSAPP + '?text=' + waMsg, '_blank');
+      showPage('home');
+      btn.disabled = false;
+      btn.textContent = 'Confirmar y pagar';
+      return;
+    }
+    
     // 2. Abrir Wompi checkout
     if (CONFIG.WOMPI_PUBLIC_KEY && CONFIG.WOMPI_PUBLIC_KEY !== 'PEGA_TU_LLAVE_PUBLICA_DE_WOMPI') {
       try {
         var checkout = new WidgetCheckout({
           currency: 'COP',
-          amountInCents: totalPrice * 100,
+          amountInCents: totalConEnvio * 100,
           reference: ref,
           publicKey: CONFIG.WOMPI_PUBLIC_KEY,
           redirectUrl: window.location.href,
