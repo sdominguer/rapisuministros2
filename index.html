@@ -1283,19 +1283,15 @@ function enviarContacto() {
   btn.disabled = true;
   btn.textContent = 'Enviando...';
   
-  // Enviar como orden con estado "Contacto"
   fetch(CONFIG.APPS_SCRIPT_URL, {
     method: 'POST',
     redirect: 'follow',
     body: JSON.stringify({
-      action: 'orden',
+      action: 'contacto',
       nombre: nombre || 'Sin nombre',
       email: email,
-      telefono: tel || 'N/A',
-      direccion: msg || 'Mensaje de contacto',
-      ciudad: 'Contacto web',
-      productos: [{nombre: 'Consulta desde formulario de contacto', precio: 0, cantidad: 1}],
-      total: 0
+      telefono: tel || '',
+      mensaje: msg || ''
     })
   })
   .then(r => r.text())
