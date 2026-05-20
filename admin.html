@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapisuministros — Panel de Pedidos</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand:#1B6FA8;--dark:#0F172A;--surface:#fff;--bg:#F1F5F9;
+  --border:#E2E8F0;--ink:#0F172A;--ink2:#334155;--muted:#94A3B8;
+  --font:'Plus Jakarta Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.setup{min-height:100vh;background:var(--dark);display:flex;align-items:center;justify-content:center;padding:20px}
+.setup-box{background:#1E293B;border-radius:16px;padding:40px;max-width:500px;width:100%;border:1px solid #334155}
+.setup-box h1{color:#fff;font-size:24px;font-weight:800;margin-bottom:4px}
+.setup-box p{color:#94A3B8;font-size:14px;margin-bottom:24px}
+.setup-box label{color:#CBD5E1;font-size:13px;font-weight:600;display:block;margin-bottom:6px}
+.setup-box input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid #475569;background:#0F172A;color:#fff;font-size:14px;outline:none;margin-bottom:16px}
+.setup-box button{width:100%;padding:14px;background:linear-gradient(135deg,#1B6FA8,#45C8D8);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer}
+.setup-box .hint{color:#64748B;font-size:11px;margin-top:12px;text-align:center}
+
+/* Header */
+.topbar{background:var(--dark);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.topbar h1{color:#fff;font-size:18px;font-weight:800}
+.topbar .tag{color:#64748B;font-size:12px;margin-left:8px}
+.topbar-actions{display:flex;gap:8px}
+.topbar-actions button{padding:8px 16px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.btn-active{background:var(--brand);color:#fff}
+.btn-dark{background:#1E293B;color:#94A3B8}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;padding:16px 24px}
+.stat{background:#fff;border-radius:12px;padding:16px 18px;border:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.stat-icon{font-size:22px}
+.stat-val{font-size:20px;font-weight:700}
+.stat-label{font-size:11px;color:var(--muted);font-weight:500}
+
+/* Content */
+.content{padding:0 24px 40px}
+.filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.chip{padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:#fff;color:#64748B;font-family:var(--font)}
+.chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.search-input{margin-left:auto;padding:8px 16px;border-radius:10px;border:1px solid var(--border);font-size:13px;outline:none;min-width:240px;background:#fff;font-family:var(--font)}
+
+/* Layout */
+.main-layout{display:flex;gap:20px}
+.order-list{flex:1;display:flex;flex-direction:column;gap:8px}
+.order-card{background:#fff;border-radius:12px;padding:14px 18px;border:1px solid var(--border);cursor:pointer;transition:all .15s}
+.order-card:hover{border-color:#CBD5E1}
+.order-card.selected{background:#EFF6FF;border:2px solid var(--brand)}
+.order-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.order-ref{font-weight:700;font-size:14px}
+.badge{font-size:12px;padding:3px 10px;border-radius:6px;font-weight:700}
+.order-name{font-size:13px;color:var(--ink2);font-weight:500}
+.order-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.order-city{font-size:12px;color:var(--muted)}
+.order-total{font-size:15px;font-weight:700;color:var(--brand)}
+.order-date{font-size:11px;color:#CBD5E1;margin-top:4px}
+
+/* Detail panel */
+.detail-panel{width:420px;flex-shrink:0;position:sticky;top:80px;align-self:start}
+.detail-box{background:#fff;border-radius:14px;border:1px solid var(--border);overflow:hidden}
+.detail-header{background:var(--dark);padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.detail-header .ref{color:#fff;font-size:16px;font-weight:700}
+.detail-header .date{color:#94A3B8;font-size:12px}
+.detail-close{background:#1E293B;border:none;color:#94A3B8;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px}
+.detail-body{padding:20px}
+.section-title{font-size:11px;color:var(--muted);font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.section{margin-bottom:14px}
+.info-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px}
+.info-label{color:var(--muted)}
+.info-value{color:var(--ink2);font-weight:500}
+.info-link{color:var(--brand);text-decoration:none;font-weight:500}
+.estado-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.estado-btn{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);border:1px solid var(--border);background:#fff}
+.estado-btn.current{border-width:2px}
+.totals-box{background:#F8FAFC;border-radius:10px;padding:14px;margin-top:12px}
+.total-row{display:flex;justify-content:space-between;font-size:13px;color:#64748B;margin-bottom:4px}
+.total-final{display:flex;justify-content:space-between;font-size:18px;font-weight:800;color:var(--ink);border-top:2px solid var(--border);padding-top:8px;margin-top:4px}
+.quick-actions{display:flex;gap:8px;margin-top:14px}
+.quick-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;color:#fff;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;text-align:center}
+.empty-detail{background:#fff;border-radius:14px;border:1px solid var(--border);padding:40px;text-align:center}
+.empty-icon{font-size:32px;margin-bottom:8px}
+.empty-text{color:var(--muted);font-size:14px}
+.loading{text-align:center;padding:60px;color:var(--muted)}
+.error{margin:0 24px;padding:14px;background:#FEF2F2;border-radius:10px;color:#DC2626;font-size:13px;margin-bottom:12px}
+.no-orders{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+.address-text{font-size:13px;color:var(--ink2);line-height:1.6;white-space:pre-wrap}
+.products-text{font-size:13px;color:var(--ink2);line-height:1.7;white-space:pre-wrap}
+
+/* Summary */
+.summary-box{background:#fff;border-radius:14px;padding:28px;border:1px solid var(--border)}
+.summary-box h2{font-size:18px;font-weight:700;margin-bottom:20px}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.summary-card{background:#F8FAFC;border-radius:10px;padding:20px}
+.summary-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.summary-val{font-size:28px;font-weight:800}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.bar-icon{font-size:14px;width:24px;text-align:center}
+.bar-name{font-size:13px;font-weight:600;width:100px}
+.bar-track{flex:1;height:8px;background:#F1F5F9;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .3s}
+.bar-count{font-size:13px;font-weight:700;color:var(--ink2);width:30px;text-align:right}
+
+@media(max-width:900px){
+  .main-layout{flex-direction:column}
+  .detail-panel{width:100%;position:static}
+  .search-input{margin-left:0;min-width:100%}
+  .summary-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// ==========================================
+// RAPISUMINISTROS — Panel de Pedidos
+// ==========================================
+
+const ESTADOS = {
+  Pendiente: { color:'#F59E0B', bg:'#FFFBEB', icon:'⏳' },
+  Preparando: { color:'#3B82F6', bg:'#EFF6FF', icon:'📦' },
+  Enviado: { color:'#8B5CF6', bg:'#F5F3FF', icon:'🚚' },
+  Entregado: { color:'#10B981', bg:'#ECFDF5', icon:'✅' },
+  Cancelado: { color:'#EF4444', bg:'#FEF2F2', icon:'❌' },
+};
+
+let state = {
+  url: localStorage.getItem('rapiAdminUrl') || 'https://script.google.com/macros/s/AKfycbzgEqQTJm9JEc_slv8d0VvoqXqZnsU2ncU1FlUpIIlk2nOmjC-tpZNac8Q-2ys6NwXymA/exec',
+  ordenes: [],
+  loading: false,
+  error: '',
+  filtro: 'Todos',
+  busqueda: '',
+  selected: null,
+  vista: 'ordenes',
+};
+
+function cop(n) { return '$' + Number(n||0).toLocaleString('es-CO',{maximumFractionDigits:0}); }
+
+function render() {
+  const app = document.getElementById('app');
+  if (!state.url) { app.innerHTML = renderSetup(); return; }
+  
+  const stats = calcStats();
+  const filtradas = getFiltered();
+  
+  app.innerHTML = `
+    <div class="topbar">
+      <div style="display:flex;align-items:center">
+        <h1>🛒 Rapisuministros</h1><span class="tag">Admin</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="${state.vista==='ordenes'?'btn-active':'btn-dark'}" onclick="setVista('ordenes')">Pedidos</button>
+        <button class="${state.vista==='stats'?'btn-active':'btn-dark'}" onclick="setVista('stats')">Resumen</button>
+        <button class="btn-dark" onclick="cargar()">↻ Actualizar</button>
+        <button class="btn-dark" onclick="desconectar()">Salir</button>
+      </div>
+    </div>
+    <div class="stats">
+      ${renderStat('⏳',stats.pendientes,'Pendientes','#F59E0B')}
+      ${renderStat('📦',stats.preparando,'Preparando','#3B82F6')}
+      ${renderStat('🚚',stats.enviados,'Enviados','#8B5CF6')}
+      ${renderStat('✅',stats.entregados,'Entregados','#10B981')}
+      ${renderStat('🧾',stats.total,'Total pedidos','#64748B')}
+      ${renderStat('💰',cop(stats.totalVentas),'Ventas totales','#1B6FA8')}
+    </div>
+    ${state.error ? '<div class="error">'+state.error+'</div>' : ''}
+    ${state.vista === 'stats' ? renderSummary(stats) : renderOrdenes(filtradas)}
+  `;
+}
+
+function renderSetup() {
+  return `<div class="setup"><div class="setup-box">
+    <h1>🛒 Rapisuministros</h1>
+    <p>Panel de administración de pedidos</p>
+    <label>URL de tu Apps Script</label>
+    <input id="urlIn" placeholder="https://script.google.com/macros/s/..." value="">
+    <button onclick="conectar()">Conectar</button>
+    <p class="hint">Pega la URL del Apps Script de tu tienda</p>
+  </div></div>`;
+}
+
+function renderStat(icon,val,label,color) {
+  return `<div class="stat"><span class="stat-icon">${icon}</span><div><div class="stat-val" style="color:${color}">${val}</div><div class="stat-label">${label}</div></div></div>`;
+}
+
+function renderOrdenes(list) {
+  const chips = ['Todos',...Object.keys(ESTADOS)].map(e => 
+    `<button class="chip ${state.filtro===e?'active':''}" onclick="setFiltro('${e}')">${e==='Todos'?'Todos':(ESTADOS[e]?.icon+' '+e)}</button>`
+  ).join('');
+  
+  const cards = list.length === 0 ? '<div class="no-orders">No hay pedidos</div>' :
+    list.map(o => {
+      const est = ESTADOS[o.estado] || ESTADOS.Pendiente;
+      const sel = state.selected?.referencia === o.referencia;
+      return `<div class="order-card ${sel?'selected':''}" onclick="selectOrder('${o.referencia}')">
+        <div class="order-top"><span class="order-ref">${o.referencia}</span><span class="badge" style="background:${est.bg};color:${est.color}">${est.icon} ${o.estado}</span></div>
+        <div class="order-name">${o.nombre||'Sin nombre'}</div>
+        <div class="order-bottom"><span class="order-city">${o.ciudad||'Sin ciudad'}</span><span class="order-total">${cop(o.total)}</span></div>
+        <div class="order-date">${o.fecha||''}</div>
+      </div>`;
+    }).join('');
+  
+  return `<div class="content">
+    <div class="filters">${chips}<input class="search-input" placeholder="Buscar nombre, ref, ciudad..." value="${state.busqueda}" oninput="setBusqueda(this.value)"></div>
+    ${state.loading ? '<div class="loading">Cargando pedidos...</div>' : `<div class="main-layout"><div class="order-list">${cards}</div><div class="detail-panel">${state.selected ? renderDetail() : '<div class="empty-detail"><div class="empty-icon">📋</div><div class="empty-text">Selecciona un pedido</div></div>'}</div></div>`}
+  </div>`;
+}
+
+function renderDetail() {
+  const o = state.selected;
+  if (!o) return '';
+  const est = ESTADOS[o.estado] || ESTADOS.Pendiente;
+  const tel = (o.telefono||'').replace(/\D/g,'');
+  
+  const estadoBtns = Object.entries(ESTADOS).map(([e,cfg]) => 
+    `<button class="estado-btn ${o.estado===e?'current':''}" style="color:${cfg.color};${o.estado===e?'border-color:'+cfg.color+';background:'+cfg.bg:''}" onclick="cambiarEstado('${o.referencia}','${e}')">${cfg.icon} ${e}</button>`
+  ).join('');
+  
+  return `<div class="detail-box">
+    <div class="detail-header"><div><div class="ref">${o.referencia}</div><div class="date">${o.fecha}</div></div><button class="detail-close" onclick="closeDetail()">✕</button></div>
+    <div class="detail-body">
+      <div class="section"><div class="section-title">Cambiar estado</div><div class="estado-btns">${estadoBtns}</div></div>
+      <div class="section"><div class="section-title">Cliente</div>
+        <div class="info-row"><span class="info-label">Nombre</span><span class="info-value">${o.nombre||''}</span></div>
+        <div class="info-row"><span class="info-label">Email</span><a class="info-link" href="mailto:${o.email}">${o.email||''}</a></div>
+        <div class="info-row"><span class="info-label">Teléfono</span><a class="info-link" href="tel:${o.telefono}">${o.telefono||''}</a></div>
+        ${o.cedula_nit ? '<div class="info-row"><span class="info-label">Cédula/NIT</span><span class="info-value">'+o.cedula_nit+'</span></div>' : ''}
+      </div>
+      <div class="section"><div class="section-title">Dirección de envío</div><div class="address-text">${o.direccion||'Sin dirección'}</div><div style="font-size:13px;color:#64748B;margin-top:4px">${o.ciudad||''}</div></div>
+      <div class="section"><div class="section-title">Productos</div><div class="products-text">${(o.productos_detalle||'Sin detalle').replace(/\n/g,'<br>')}</div></div>
+      <div class="totals-box">
+        <div class="total-row"><span>Subtotal</span><span>${cop(o.subtotal)}</span></div>
+        <div class="total-row"><span>Envío</span><span>${Number(o.envio)===0?'<span style="color:#10B981;font-weight:700">GRATIS</span>':cop(o.envio)}</span></div>
+        <div class="total-final"><span>Total</span><span>${cop(o.total)}</span></div>
+      </div>
+      <div class="quick-actions">
+        <a class="quick-btn" style="background:#25D366" href="https://wa.me/57${tel}" target="_blank">💬 WhatsApp</a>
+        <a class="quick-btn" style="background:#1B6FA8" href="mailto:${o.email}" target="_blank">✉ Email</a>
+      </div>
+      ${o.notas ? '<div class="section" style="margin-top:14px"><div class="section-title">Notas</div><div class="address-text">'+o.notas+'</div></div>' : ''}
+    </div>
+  </div>`;
+}
+
+function renderSummary(stats) {
+  const bars = Object.entries(ESTADOS).map(([e,cfg]) => {
+    const count = state.ordenes.filter(o=>o.estado===e).length;
+    const pct = state.ordenes.length > 0 ? (count/state.ordenes.length)*100 : 0;
+    return `<div class="bar-row"><span class="bar-icon">${cfg.icon}</span><span class="bar-name" style="color:${cfg.color}">${e}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${cfg.color}"></div></div><span class="bar-count">${count}</span></div>`;
+  }).join('');
+  
+  return `<div class="content"><div class="summary-box">
+    <h2>Resumen de ventas</h2>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-label">VENTAS TOTALES</div><div class="summary-val" style="color:#1B6FA8">${cop(stats.totalVentas)}</div></div>
+      <div class="summary-card"><div class="summary-label">TOTAL PEDIDOS</div><div class="summary-val" style="color:#0F172A">${stats.total}</div></div>
+    </div>
+    <h3 style="font-size:14px;font-weight:600;margin:24px 0 12px">Estado de pedidos</h3>
+    ${bars}
+  </div></div>`;
+}
+
+// ===== ACTIONS =====
+function calcStats() {
+  const o = state.ordenes;
+  return {
+    pendientes: o.filter(x=>x.estado==='Pendiente').length,
+    preparando: o.filter(x=>x.estado==='Preparando').length,
+    enviados: o.filter(x=>x.estado==='Enviado').length,
+    entregados: o.filter(x=>x.estado==='Entregado').length,
+    total: o.length,
+    totalVentas: o.reduce((s,x)=>s+(Number(x.total)||0),0),
+  };
+}
+
+function getFiltered() {
+  return state.ordenes.filter(o => {
+    if (state.filtro !== 'Todos' && o.estado !== state.filtro) return false;
+    if (state.busqueda) {
+      const q = state.busqueda.toLowerCase();
+      return (o.nombre||'').toLowerCase().includes(q) || (o.referencia||'').toLowerCase().includes(q) || (o.ciudad||'').toLowerCase().includes(q) || (o.productos_detalle||'').toLowerCase().includes(q);
+    }
+    return true;
+  });
+}
+
+async function cargar() {
+  state.loading = true; state.error = ''; render();
+  try {
+    const r = await fetch(state.url + '?action=ordenes_admin');
+    const data = await r.json();
+    if (data.ordenes) { state.ordenes = data.ordenes; }
+    else { state.error = 'No se encontraron órdenes.'; }
+  } catch(e) { state.error = 'Error de conexión.'; }
+  state.loading = false; render();
+}
+
+async function cambiarEstado(ref, nuevoEstado) {
+  try {
+    await fetch(state.url, { method:'POST', redirect:'follow', body: JSON.stringify({action:'actualizar_estado',referencia:ref,estado:nuevoEstado}) });
+    state.ordenes = state.ordenes.map(o => o.referencia===ref ? {...o,estado:nuevoEstado} : o);
+    if (state.selected?.referencia===ref) state.selected = {...state.selected, estado:nuevoEstado};
+  } catch(e) {}
+  render();
+}
+
+function conectar() {
+  const v = document.getElementById('urlIn').value.trim();
+  if (v) { state.url = v; localStorage.setItem('rapiAdminUrl',v); cargar(); }
+}
+
+function desconectar() { state.url=''; localStorage.removeItem('rapiAdminUrl'); state.ordenes=[]; state.selected=null; render(); }
+function setVista(v) { state.vista=v; render(); }
+function setFiltro(f) { state.filtro=f; render(); }
+function setBusqueda(q) { state.busqueda=q; render(); }
+function selectOrder(ref) { state.selected = state.ordenes.find(o=>o.referencia===ref)||null; render(); }
+function closeDetail() { state.selected=null; render(); }
+
+// Init
+render();
+if (state.url) cargar();
+</script>
+</body>
+</html>
