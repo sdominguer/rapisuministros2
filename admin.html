@@ -196,11 +196,11 @@ function renderOrdenes(list) {
   ).join('');
   
   const cards = list.length === 0 ? '<div class="no-orders">No hay pedidos</div>' :
-    list.map(o => {
+    list.map((o,idx) => {
       const est = ESTADOS[o.estado] || ESTADOS.Pendiente;
       const sel = state.selected?.referencia === o.referencia;
-      return `<div class="order-card ${sel?'selected':''}" onclick="selectOrder('${o.referencia}')">
-        <div class="order-top"><span class="order-ref">${o.referencia}</span><span class="badge" style="background:${est.bg};color:${est.color}">${est.icon} ${o.estado}</span></div>
+      return `<div class="order-card ${sel?'selected':''}" onclick="selectOrderIdx(${state.ordenes.indexOf(o)})">
+        <div class="order-top"><span class="order-ref">${o.referencia||'Sin ref'}</span><span class="badge" style="background:${est.bg};color:${est.color}">${est.icon} ${o.estado||'Pendiente'}</span></div>
         <div class="order-name">${o.nombre||'Sin nombre'}</div>
         <div class="order-bottom"><span class="order-city">${o.ciudad||'Sin ciudad'}</span><span class="order-total">${cop(o.total)}</span></div>
         <div class="order-date">${o.fecha||''}</div>
@@ -321,6 +321,7 @@ function setVista(v) { state.vista=v; render(); }
 function setFiltro(f) { state.filtro=f; render(); }
 function setBusqueda(q) { state.busqueda=q; render(); }
 function selectOrder(ref) { state.selected = state.ordenes.find(o=>o.referencia===ref)||null; render(); }
+function selectOrderIdx(idx) { state.selected = state.ordenes[idx]||null; render(); }
 function closeDetail() { state.selected=null; render(); }
 
 // Init
