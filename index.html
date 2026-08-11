@@ -165,6 +165,16 @@ img { max-width:100%; }
 .detail-rating .rating-num { font-size:.9rem; font-weight:700; }
 .detail-rating .rating-count { font-size:.82rem; }
 
+/* Specs (fichas técnicas) */
+.detail-specs { margin:24px 0; background:var(--bg); border-radius:var(--radius); padding:20px 22px; }
+.detail-specs h3 { font-size:.95rem; font-weight:700; margin-bottom:12px; }
+.specs-table { width:100%; border-collapse:collapse; font-size:.84rem; }
+.specs-table tr { border-bottom:1px solid var(--border); }
+.specs-table tr:last-child { border-bottom:none; }
+.specs-table td { padding:8px 4px; vertical-align:top; }
+.specs-table td:first-child { color:var(--muted); font-weight:600; width:42%; padding-right:12px; }
+.specs-table td:last-child { color:var(--ink2); }
+
 /* Reviews */
 .reviews-section { margin-top:40px; border-top:1px solid var(--border); padding-top:32px; }
 .reviews-section h3 { font-size:1.1rem; font-weight:700; margin-bottom:20px; }
@@ -376,7 +386,7 @@ img { max-width:100%; }
      ============================================================ -->
 <script>
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw1rxJg7dz6jaDfr0_I2XvPF3YEOLpCgOhxu5tTMXXzGXTSsEwxCyPivPCwGa-CsA-Oig/exec',
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzApjW0el76IdEtAcG8_635Xs6Yx9cwdkhrh8Bqe6-wdQJHpwc-Hmsw1kskUivsxnxa2Q/exec',
     WOMPI_PUBLIC_KEY: 'PEGA_TU_LLAVE_PUBLICA_DE_WOMPI',
     WHATSAPP: '573204713536',
     HERO_IMAGE: 'pexels-enginakyurt-6749428.jpg',
@@ -638,8 +648,8 @@ img { max-width:100%; }
 <!-- WhatsApp float -->
 <a href="" target="_blank" class="wa-float" id="waFloat"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
 
-<!-- Chatbot -->
-<div class="chat-widget">
+<!-- Chatbot (desactivado temporalmente: sin API de IA configurada) -->
+<div class="chat-widget" id="chatWidget" style="display:none">
   <div class="chat-window" id="chatWindow">
     <div class="chat-header"><div class="chat-header-info"><div class="chat-avatar">R</div><div><strong>ReToner</strong><span>Asistente virtual</span></div></div><button class="chat-x" id="chatClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
     <div class="chat-msgs" id="chatMsgs"><div class="chat-msg bot"><p>¡Hola! Dime qué impresora tienes y te recomiendo el tóner ideal.</p></div></div>
@@ -924,7 +934,7 @@ function renderProducts() {
   document.getElementById('productGrid').innerHTML = list.map(p => {
     const enOferta = p.precio_anterior && p.precio_anterior > p.precio;
     const descuento = enOferta ? Math.round((1 - p.precio / p.precio_anterior) * 100) : 0;
-    return '<article class="card" onclick="showDetail(' + p.id + ')">' +
+    return '<article class="card" onclick="showDetail(\'' + p.id + '\')">' +
       (enOferta ? '<span class="card-badge sale">-' + descuento + '%</span>' : '') +
       '<div class="card-img">' + (p.imagen ? '<img src="' + p.imagen + '" alt="' + p.nombre + '" loading="lazy">' : '<svg class="card-placeholder" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>') + '</div>' +
       '<div class="card-body"><div><span class="card-brand">' + p.marca + '</span><span class="card-cat">' + p.categoria + '</span></div>' +
@@ -932,7 +942,7 @@ function renderProducts() {
       '<div class="card-rating" id="card-rating-' + p.id + '"></div>' +
       (p.compatibilidad ? '<p class="card-compat">' + p.compatibilidad + '</p>' : '') +
       '<div class="card-footer"><div>' + (enOferta ? '<span class="card-old-price">' + cop(p.precio_anterior) + '</span>' : '') + '<span class="card-price">' + cop(p.precio) + '</span></div>' +
-      '<button class="btn-add" onclick="event.stopPropagation();addToCart(' + p.id + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar</button>' +
+      '<button class="btn-add" onclick="event.stopPropagation();addToCart(\'' + p.id + '\')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar</button>' +
       '</div></div></article>';
   }).join('');
 }
@@ -943,6 +953,11 @@ function showDetail(id) {
   if (!p) return;
   const enOferta = p.precio_anterior && p.precio_anterior > p.precio;
   const waMsg = encodeURIComponent('Hola, me interesa: ' + p.nombre);
+  const specsHTML = (p.especificaciones && p.especificaciones.length)
+    ? '<div class="detail-specs"><h3>Especificaciones técnicas</h3><table class="specs-table">' +
+      p.especificaciones.map(s => '<tr><td>' + s.label + '</td><td>' + s.valor + '</td></tr>').join('') +
+      '</table></div>'
+    : '';
 
   document.getElementById('detailContent').innerHTML =
     '<div class="detail-grid"><div class="detail-img-box">' + (p.imagen ? '<img src="' + p.imagen + '" alt="' + p.nombre + '">' : '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>') + '</div><div>' +
@@ -952,8 +967,9 @@ function showDetail(id) {
     (p.compatibilidad ? '<div class="detail-compat"><strong>Compatible con:</strong><span>' + p.compatibilidad + '</span></div>' : '') +
     '<div style="margin-bottom:8px">' + (enOferta ? '<span class="detail-old-price">' + cop(p.precio_anterior) + '</span>' : '') + '<span class="detail-price">' + cop(p.precio) + '</span></div>' +
     '<div class="detail-stock">' + (p.stock > 0 ? '<span class="stock-ok">En stock (' + p.stock + ' disponibles)</span>' : '<span class="stock-out">Agotado</span>') + '</div>' +
-    '<div class="detail-actions"><button class="btn-add-big" onclick="addToCart(' + p.id + ')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar al carrito</button>' +
+    '<div class="detail-actions"><button class="btn-add-big" onclick="addToCart(\'' + p.id + '\')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg> Agregar al carrito</button>' +
     '<a class="btn-wa-detail" href="https://wa.me/' + CONFIG.WHATSAPP + '?text=' + waMsg + '" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg> WhatsApp</a></div>' +
+    specsHTML +
     '</div></div>' +
     '<div class="reviews-section"><h3>Reseñas de clientes</h3>' +
     '<div class="reviews-grid"><div class="review-form"><h4>Deja tu reseña</h4>' +
@@ -966,7 +982,7 @@ function showDetail(id) {
     '</div>' +
     '<input type="text" id="reviewNombre" placeholder="Tu nombre">' +
     '<textarea id="reviewComentario" placeholder="Tu comentario (opcional)"></textarea>' +
-    '<button class="btn-review" id="btnReview" onclick="submitReview(' + p.id + ')">Publicar reseña</button>' +
+    '<button class="btn-review" id="btnReview" onclick="submitReview(\'' + p.id + '\')">Publicar reseña</button>' +
     '</div>' +
     '<div class="review-list" id="reviewsList"><p class="no-reviews">Cargando reseñas...</p></div>' +
     '</div></div>';
@@ -1022,8 +1038,8 @@ function updateCartUI() {
   body.innerHTML = cart.map(i =>
     '<div class="cart-item"><div class="cart-thumb">' + (i.imagen ? '<img src="' + i.imagen + '">' : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>') + '</div>' +
     '<div class="ci-info"><span class="ci-name">' + i.nombre + '</span><span class="ci-price">' + cop(i.precio * i.cantidad) + '</span>' +
-    '<div class="ci-qty"><button class="q-btn" onclick="changeQty(' + i.id + ',-1)">−</button><span class="q-num">' + i.cantidad + '</span><button class="q-btn" onclick="changeQty(' + i.id + ',1)">+</button></div></div>' +
-    '<button class="ci-remove" onclick="removeFromCart(' + i.id + ')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>'
+    '<div class="ci-qty"><button class="q-btn" onclick="changeQty(\'' + i.id + '\',-1)">−</button><span class="q-num">' + i.cantidad + '</span><button class="q-btn" onclick="changeQty(\'' + i.id + '\',1)">+</button></div></div>' +
+    '<button class="ci-remove" onclick="removeFromCart(\'' + i.id + '\')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>'
   ).join('');
 }
 
@@ -1270,11 +1286,13 @@ function setupEventListeners() {
   document.getElementById('searchInput').addEventListener('input', () => { showPage('shop'); renderProducts(); });
   document.getElementById('sortSelect').addEventListener('change', renderProducts);
 
-  // Chat
-  document.getElementById('chatBubble').addEventListener('click', () => document.getElementById('chatWindow').classList.toggle('open'));
-  document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatWindow').classList.remove('open'));
-  document.getElementById('chatSend').addEventListener('click', sendChat);
-  document.getElementById('chatIn').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+  // Chat (desactivado, ver comentario junto al widget)
+  if (document.getElementById('chatWidget').style.display !== 'none') {
+    document.getElementById('chatBubble').addEventListener('click', () => document.getElementById('chatWindow').classList.toggle('open'));
+    document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatWindow').classList.remove('open'));
+    document.getElementById('chatSend').addEventListener('click', sendChat);
+    document.getElementById('chatIn').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+  }
 }
 
 // ===== CONTACT FORM =====
