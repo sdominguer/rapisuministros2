@@ -249,6 +249,40 @@ button{font-family:inherit}
 .filter-chip{padding:8px 18px;border:1.5px solid var(--border);border-radius:50px;font-size:.82rem;font-weight:600;color:var(--ink2);transition:all .2s;background:#fff;text-decoration:none}
 .filter-chip:hover{border-color:var(--brand);color:var(--brand)}
 .filter-chip.active{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn-filter{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid var(--border);border-radius:var(--radius);background:#fff;font-weight:700;font-size:.84rem;color:var(--ink);cursor:pointer;transition:all .2s}
+.btn-filter:hover{border-color:var(--brand);color:var(--brand)}
+.filter-count{background:var(--brand);color:#fff;font-size:.68rem;min-width:20px;height:20px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;padding:0 6px}
+.filter-count[hidden]{display:none}
+.active-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.active-filters:empty{display:none}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 7px 6px 14px;background:var(--brand-light);color:var(--brand-dark);border:none;border-radius:50px;font-size:.8rem;font-weight:600;cursor:pointer}
+.pill span{width:20px;height:20px;border-radius:50%;background:rgba(58,79,224,.14);display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;line-height:1}
+.pill:hover span{background:var(--brand);color:#fff}
+.pill.pill-clear{background:none;color:var(--muted);text-decoration:underline;padding:6px 8px}
+.f-overlay{position:fixed;inset:0;background:rgba(12,18,51,.45);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.f-overlay.open{opacity:1;pointer-events:auto}
+.f-drawer{position:fixed;top:0;right:0;height:100%;width:380px;max-width:92vw;background:#fff;z-index:201;display:flex;flex-direction:column;transform:translateX(105%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:var(--shadow-lg);visibility:hidden}
+.f-drawer.open{transform:none;visibility:visible}
+.f-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--border)}
+.f-head h3{font-size:1.05rem;font-weight:800}
+.f-close{width:34px;height:34px;border-radius:8px;border:none;background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink2)}
+.f-body{flex:1;overflow-y:auto;padding:4px 22px 20px}
+.f-group{padding:18px 0;border-bottom:1px solid var(--border)}
+.f-group:last-child{border-bottom:none}
+.f-group[hidden]{display:none}
+.f-group h4{font-size:.86rem;font-weight:800;margin-bottom:8px}
+.f-option{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:.88rem;color:var(--ink2);cursor:pointer}
+.f-option input{accent-color:var(--brand);width:17px;height:17px;flex-shrink:0}
+.f-option em{margin-left:auto;font-style:normal;font-size:.75rem;color:var(--muted)}
+.f-price{display:flex;align-items:center;gap:8px}
+.f-price input{flex:1;min-width:0;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font);font-size:.86rem;outline:none}
+.f-price input:focus{border-color:var(--brand)}
+.f-price span{color:var(--muted)}
+.f-foot{display:flex;gap:10px;padding:16px 22px;border-top:1px solid var(--border);background:var(--bg)}
+.f-clear{padding:13px 18px;border:1.5px solid var(--border);background:#fff;border-radius:var(--radius);font-weight:700;font-size:.86rem;cursor:pointer;color:var(--ink2)}
+.f-clear:hover{border-color:var(--ink2)}
+.f-apply{flex:1;padding:13px;border:none;background:var(--brand);color:#fff;border-radius:var(--radius);font-weight:800;font-size:.9rem;cursor:pointer}
+.f-apply:hover{background:var(--brand-dark)}
 .no-products,.loading{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
 .no-products small{display:block;margin-top:6px;font-size:.8rem}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
@@ -347,7 +381,7 @@ button{font-family:inherit}
   .hero-inner{padding:64px 20px 72px}
   .cat-grid{grid-template-columns:1fr 1fr;gap:10px}
   .cat-card{flex-direction:column;align-items:flex-start;gap:10px;padding:16px}
-  .shop-search{min-width:0;flex:1}.products-tools{width:100%}
+  .shop-search{min-width:0;flex:1 1 100%}.products-tools{width:100%}.btn-filter,.products-tools .sort-select{flex:1;justify-content:center}
   .section{padding:56px 0}
   .promo{padding:36px 26px}
 }
@@ -546,6 +580,10 @@ button{font-family:inherit}
       <span class="products-count" id="prodCount"></span>
       <div class="products-tools">
         <input type="search" class="shop-search" id="shopSearch" placeholder="Buscar en el catálogo..." aria-label="Buscar productos" autocomplete="off">
+        <button class="btn-filter" id="btnFilter" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          Filtrar <span class="filter-count" id="filterCount" hidden></span>
+        </button>
         <select class="sort-select" id="sortSelect" aria-label="Ordenar">
           <option value="">Ordenar por</option>
           <option value="precio-asc">Precio: menor a mayor</option>
@@ -554,7 +592,7 @@ button{font-family:inherit}
         </select>
       </div>
     </div>
-    <div class="filters" id="filtersBar"></div>
+    <div class="active-filters" id="activeFilters"></div>
     <div class="product-grid" id="productGrid"><div class="loading"><div class="spinner"></div>Cargando productos...</div></div>
   </div>
 </div>
@@ -634,6 +672,31 @@ button{font-family:inherit}
   <div class="container footer-bottom"><span>© 2026 NovaTek</span><span>Medellín, Colombia</span></div>
 </footer>
 
+<!-- Panel de filtros -->
+<div class="f-overlay" id="fOverlay"></div>
+<aside class="f-drawer" id="fDrawer" aria-label="Filtrar productos">
+  <div class="f-head">
+    <h3>Filtrar productos</h3>
+    <button class="f-close" id="fClose" type="button" aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="f-body">
+    <div class="f-group"><h4>Categoría</h4><div id="fCats"></div></div>
+    <div class="f-group" id="fBrandsGroup"><h4>Marca</h4><div id="fBrands"></div></div>
+    <div class="f-group"><h4>Precio</h4>
+      <div class="f-price">
+        <input type="text" inputmode="numeric" id="fMin" placeholder="Mínimo" aria-label="Precio mínimo">
+        <span>–</span>
+        <input type="text" inputmode="numeric" id="fMax" placeholder="Máximo" aria-label="Precio máximo">
+      </div>
+    </div>
+    <div class="f-group"><h4>Disponibilidad</h4><label class="f-option"><input type="checkbox" id="fStock"> Solo productos disponibles</label></div>
+  </div>
+  <div class="f-foot">
+    <button class="f-clear" id="fClear" type="button">Limpiar</button>
+    <button class="f-apply" id="fApply" type="button">Ver productos</button>
+  </div>
+</aside>
+
 <a class="wa-float wa-link" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
 
 <script>
@@ -646,6 +709,10 @@ let loadError = '';
 let currentFilter = '';
 let searchQuery = '';
 let currentPage = '';
+let filterBrands = [];
+let filterMin = 0;
+let filterMax = 0;
+let filterStock = false;
 
 // ---------- utilidades ----------
 function esc(s) {
@@ -708,6 +775,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Búsqueda dentro del catálogo (filtra en vivo)
   document.getElementById('shopSearch').addEventListener('input', e => { searchQuery = e.target.value; renderProducts(); });
+
+  // Panel de filtros
+  document.getElementById('btnFilter').addEventListener('click', openFilters);
+  ['fClose', 'fOverlay', 'fApply'].forEach(id => document.getElementById(id).addEventListener('click', closeFilters));
+  document.getElementById('fClear').addEventListener('click', clearFilters);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFilters(); });
+  document.getElementById('fCats').addEventListener('change', e => setCategory(e.target.value));
+  document.getElementById('fBrands').addEventListener('change', () => {
+    filterBrands = [...document.querySelectorAll('#fBrands input:checked')].map(i => i.value);
+    renderProducts();
+  });
+  document.getElementById('fMin').addEventListener('input', e => { filterMin = toNum(e.target.value); renderProducts(); });
+  document.getElementById('fMax').addEventListener('input', e => { filterMax = toNum(e.target.value); renderProducts(); });
+  document.getElementById('fStock').addEventListener('change', e => { filterStock = e.target.checked; renderProducts(); });
+  document.getElementById('activeFilters').addEventListener('click', e => {
+    const pill = e.target.closest('.pill');
+    if (pill) removeFilter(pill.dataset.k, pill.dataset.v);
+  });
 
   // Flechas de los carruseles
   document.addEventListener('click', e => {
@@ -822,12 +907,101 @@ function renderCategories() {
     '<a href="' + catUrl(c.nombre) + '">' + esc(c.nombre) + '</a>').join('') + '<a href="#/productos">Ver todo</a>';
 }
 
+// ---------- filtros ----------
+function toNum(v) { return Number(String(v || '').replace(/\D/g, '')) || 0; }
+
+// Arma las opciones del panel (categorías y marcas) según los productos
 function renderFilters() {
   const cats = getCategories();
-  document.getElementById('filtersBar').innerHTML =
-    '<a class="filter-chip' + (!currentFilter ? ' active' : '') + '" href="#/productos">Todos</a>' +
-    cats.map(c => '<a class="filter-chip' + (currentFilter === c.nombre ? ' active' : '') + '" href="' + catUrl(c.nombre) + '">' + esc(c.nombre) + '</a>').join('');
+  document.getElementById('fCats').innerHTML =
+    '<label class="f-option"><input type="radio" name="fcat" value=""' + (!currentFilter ? ' checked' : '') + '> Todas <em>' + allProducts.length + '</em></label>' +
+    cats.map(c => '<label class="f-option"><input type="radio" name="fcat" value="' + esc(c.nombre) + '"' + (currentFilter === c.nombre ? ' checked' : '') + '> ' +
+      esc(c.nombre) + ' <em>' + c.total + '</em></label>').join('');
+
+  const brands = {};
+  allProducts.forEach(p => { if (p.marca) brands[p.marca] = (brands[p.marca] || 0) + 1; });
+  const names = Object.keys(brands).sort((a, b) => a.localeCompare(b, 'es'));
+  document.getElementById('fBrandsGroup').hidden = names.length === 0;
+  document.getElementById('fBrands').innerHTML = names.map(b =>
+    '<label class="f-option"><input type="checkbox" value="' + esc(b) + '"' + (filterBrands.includes(b) ? ' checked' : '') + '> ' +
+    esc(b) + ' <em>' + brands[b] + '</em></label>').join('');
+
+  document.getElementById('fMin').value = filterMin ? filterMin.toLocaleString('es-CO') : '';
+  document.getElementById('fMax').value = filterMax ? filterMax.toLocaleString('es-CO') : '';
+  document.getElementById('fStock').checked = filterStock;
   document.getElementById('shopTitle').textContent = currentFilter || 'Catálogo';
+}
+
+function openFilters() {
+  document.getElementById('fDrawer').classList.add('open');
+  document.getElementById('fOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeFilters() {
+  document.getElementById('fDrawer').classList.remove('open');
+  document.getElementById('fOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function setCategory(c) {
+  currentFilter = c;
+  history.replaceState(null, '', c ? catUrl(c) : '#/productos');
+  document.getElementById('shopTitle').textContent = c || 'Catálogo';
+  renderProducts();
+}
+
+function clearFilters() {
+  currentFilter = '';
+  filterBrands = [];
+  filterMin = 0;
+  filterMax = 0;
+  filterStock = false;
+  history.replaceState(null, '', '#/productos');
+  renderFilters();
+  renderProducts();
+}
+
+function removeFilter(k, v) {
+  if (k === 'cat') { setCategory(''); renderFilters(); return; }
+  if (k === 'brand') filterBrands = filterBrands.filter(b => b !== v);
+  if (k === 'price') { filterMin = 0; filterMax = 0; }
+  if (k === 'stock') filterStock = false;
+  if (k === 'q') { clearSearch(); return; }
+  if (k === 'all') { searchQuery = ''; ['headerSearch', 'heroSearch', 'shopSearch'].forEach(id => { document.getElementById(id).value = ''; }); clearFilters(); return; }
+  renderFilters();
+  renderProducts();
+}
+
+function filteredList() {
+  let list = searchProducts(searchQuery);
+  if (currentFilter) list = list.filter(p => p.categoria === currentFilter);
+  if (filterBrands.length) list = list.filter(p => filterBrands.includes(p.marca));
+  if (filterMin) list = list.filter(p => p.precio >= filterMin);
+  if (filterMax) list = list.filter(p => p.precio <= filterMax);
+  if (filterStock) list = list.filter(p => p.stock > 0);
+  return list;
+}
+
+// Etiquetas de filtros activos (con × para quitarlos) y contador del botón
+function renderFilterSummary(count) {
+  const pills = [];
+  if (searchQuery) pills.push(['q', '', 'Búsqueda: "' + searchQuery + '"']);
+  if (currentFilter) pills.push(['cat', '', currentFilter]);
+  filterBrands.forEach(b => pills.push(['brand', b, b]));
+  if (filterMin || filterMax) pills.push(['price', '',
+    filterMin && filterMax ? cop(filterMin) + ' – ' + cop(filterMax) : filterMin ? 'Desde ' + cop(filterMin) : 'Hasta ' + cop(filterMax)]);
+  if (filterStock) pills.push(['stock', '', 'Solo disponibles']);
+
+  document.getElementById('activeFilters').innerHTML =
+    pills.map(([k, v, label]) => '<button class="pill" type="button" data-k="' + k + '" data-v="' + esc(v) + '" aria-label="Quitar filtro ' + esc(label) + '">' +
+      esc(label) + '<span aria-hidden="true">×</span></button>').join('') +
+    (pills.length > 1 ? '<button class="pill pill-clear" type="button" data-k="all">Limpiar todo</button>' : '');
+
+  const n = pills.filter(p => p[0] !== 'q').length;
+  const badge = document.getElementById('filterCount');
+  badge.textContent = n;
+  badge.hidden = n === 0;
+  document.getElementById('fApply').textContent = 'Ver ' + count + (count === 1 ? ' producto' : ' productos');
 }
 
 // ---------- portada: destacados, atajos y marcas ----------
@@ -935,21 +1109,20 @@ function renderProducts() {
     return;
   }
 
-  let list = searchProducts(searchQuery);
-  if (currentFilter) list = list.filter(p => p.categoria === currentFilter);
+  let list = filteredList();
 
   const sort = document.getElementById('sortSelect').value;
   if (sort === 'precio-asc') list.sort((a, b) => a.precio - b.precio);
   else if (sort === 'precio-desc') list.sort((a, b) => b.precio - a.precio);
   else if (sort === 'nombre') list.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
 
-  document.getElementById('prodCount').textContent = list.length + (list.length === 1 ? ' producto' : ' productos') +
-    (searchQuery ? ' para "' + searchQuery + '"' : '');
+  document.getElementById('prodCount').textContent = list.length + (list.length === 1 ? ' producto' : ' productos');
+  renderFilterSummary(list.length);
 
   if (!list.length) {
-    grid.innerHTML = '<div class="no-products"><p>No encontramos productos con esa búsqueda.</p>' +
+    grid.innerHTML = '<div class="no-products"><p>No hay productos con estos filtros.</p>' +
       '<small>Escríbenos por <a href="' + waUrl('Hola, estoy buscando: ' + searchQuery) + '" target="_blank" rel="noopener" style="color:var(--brand);font-weight:600">WhatsApp</a> y te ayudamos a conseguirlo.</small>' +
-      '<a class="filter-chip" href="#/productos" style="margin-top:16px;display:inline-block" onclick="clearSearch()">Ver todos los productos</a></div>';
+      '<button class="filter-chip" type="button" style="margin-top:16px;display:inline-block;cursor:pointer" onclick="removeFilter(\'all\')">Quitar filtros y ver todo</button></div>';
     return;
   }
   grid.innerHTML = list.map(cardHTML).join('');
