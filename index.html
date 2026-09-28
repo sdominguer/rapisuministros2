@@ -13,7 +13,7 @@
      ============================================================ -->
 <script>
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbz2Z5M64SkfadBWHrByAvX4PHG1wgVin_XwkSXjqovCH7vpdIKhOmso9_40av1k2nO0/exec',  // la URL de tu Apps Script (termina en /exec)
+    APPS_SCRIPT_URL: 'PEGA_TU_URL_DE_APPS_SCRIPT_AQUI',  // la URL de tu Apps Script (termina en /exec)
     WHATSAPP: '573332382163',
     HERO_VIDEO: 'hero.mp4',                    // video de fondo de la portada (MP4)
     HERO_POSTER: 'pexels-diva-35113641.jpg',   // imagen que se ve mientras carga el video
@@ -142,8 +142,25 @@ button{font-family:inherit}
 .cat-card:nth-child(5n+3) .cat-icon{background:linear-gradient(135deg,#7B2FF7,#4B1FA8)}
 .cat-card:nth-child(5n+4) .cat-icon{background:linear-gradient(135deg,#B026C7,#7B2FF7)}
 .cat-card:nth-child(5n+5) .cat-icon{background:linear-gradient(135deg,#D91FC4,#B026C7)}
+.cat-card.cat-more{border-style:dashed;border-color:#C7CCE8;background:var(--brand-light)}
+.cat-card.cat-more .cat-icon{background:#fff;color:var(--brand);border:1.5px solid #C7CCE8}
+.cat-card.cat-more strong{color:var(--brand)}
 .cat-card strong{display:block;font-size:.92rem;font-weight:700;line-height:1.3}
 .cat-card span{font-size:.76rem;color:var(--muted)}
+
+/* Escritorio interactivo */
+.desk-wrap{background:linear-gradient(180deg,#F5F6FF,#ECEFFB);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 16px 6px}
+.desk{width:100%;height:auto;display:block}
+.spot{cursor:pointer}
+.spot .halo{opacity:0;transition:opacity .2s}
+.spot:hover .halo,.spot:focus .halo{opacity:1}
+.spot:focus{outline:none}
+.spot .pin circle{fill:var(--brand);transition:fill .2s}
+.spot .pin path{stroke:#fff;stroke-width:2.6;stroke-linecap:round}
+.spot:hover .pin circle,.spot:focus .pin circle{fill:var(--accent)}
+.spot.off{opacity:.4;pointer-events:none;filter:grayscale(.9)}
+.spot.off .pin{display:none}
+.desk-caption{text-align:center;font-size:.86rem;font-weight:600;color:var(--ink2);padding:12px 4px 6px;min-height:26px}
 
 /* Product rails (carousels) */
 .rail-wrap{position:relative}
@@ -380,7 +397,7 @@ button{font-family:inherit}
   .hero-overlay{background:linear-gradient(180deg,rgba(12,18,51,.75) 0%,rgba(20,32,92,.82) 60%,rgba(12,18,51,.95) 100%)}
   .hero-inner{padding:64px 20px 72px}
   .cat-grid{grid-template-columns:1fr 1fr;gap:10px}
-  .cat-card{flex-direction:column;align-items:flex-start;gap:10px;padding:16px}
+  .cat-card{flex-direction:column;align-items:flex-start;gap:10px;padding:16px}.cat-extra{display:none}
   .shop-search{min-width:0;flex:1 1 100%}.products-tools{width:100%}.btn-filter,.products-tools .sort-select{flex:1;justify-content:center}
   .section{padding:56px 0}
   .promo{padding:36px 26px}
@@ -470,6 +487,130 @@ button{font-family:inherit}
   <section class="section">
     <div class="container">
       <div class="section-head">
+        <div><h2>Explora nuestro escritorio</h2><p>Toca cualquier equipo y te mostramos todo lo que tenemos de esa categoría.</p></div>
+        <a class="link-more" href="#/productos">Ver todo el catálogo</a>
+      </div>
+      <div class="desk-wrap">
+        <svg class="desk" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Escritorio interactivo con nuestros productos">
+          <defs>
+            <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F6FF"/><stop offset="1" stop-color="#E7EAFB"/></linearGradient>
+            <linearGradient id="gScreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14205C"/><stop offset=".55" stop-color="#3A4FE0"/><stop offset="1" stop-color="#7B2FF7"/></linearGradient>
+          </defs>
+          <rect width="1000" height="560" rx="18" fill="url(#gWall)"/>
+
+          <!-- repisa y escritorio -->
+          <rect x="60" y="196" width="250" height="12" rx="6" fill="#C6B9A9"/>
+          <rect x="0" y="528" width="1000" height="32" fill="#DCE0F2"/>
+          <rect x="30" y="430" width="830" height="16" rx="8" fill="#D9CFC2"/>
+          <rect x="30" y="446" width="830" height="10" rx="5" fill="#C6B9A9"/>
+          <rect x="86" y="456" width="14" height="74" rx="6" fill="#C6B9A9"/>
+          <rect x="800" y="456" width="14" height="74" rx="6" fill="#C6B9A9"/>
+
+          <!-- router / redes -->
+          <g class="spot" data-item="red"><title></title>
+            <rect class="halo" x="72" y="112" width="152" height="94" rx="16" fill="#3A4FE0" fill-opacity=".16"/>
+            <path d="M106 158 V126 M174 158 V126" stroke="#1B2340" stroke-width="6" stroke-linecap="round"/>
+            <rect x="88" y="156" width="104" height="40" rx="10" fill="#1B2340"/>
+            <circle cx="108" cy="176" r="5" fill="#2AC7E8"/><circle cx="126" cy="176" r="5" fill="#2AC7E8" opacity=".55"/>
+            <g class="pin" transform="translate(206,126)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- cables y accesorios -->
+          <g class="spot" data-item="cable"><title></title>
+            <rect class="halo" x="226" y="142" width="88" height="64" rx="14" fill="#3A4FE0" fill-opacity=".16"/>
+            <path d="M246 192 c-12 -20 12 -34 26 -20 c12 12 -8 28 -22 18 c-16 -12 8 -34 26 -22" fill="none" stroke="#7B2FF7" stroke-width="6" stroke-linecap="round"/>
+            <g class="pin" transform="translate(302,154)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- impresión -->
+          <g class="spot" data-item="impresora"><title></title>
+            <rect class="halo" x="54" y="244" width="200" height="202" rx="18" fill="#3A4FE0" fill-opacity=".16"/>
+            <rect x="96" y="254" width="110" height="38" rx="3" fill="#fff" stroke="#C9CEE0" stroke-width="2"/>
+            <rect x="80" y="286" width="150" height="16" rx="6" fill="#D3D8EA"/>
+            <rect x="70" y="300" width="170" height="130" rx="12" fill="#E8EAF2" stroke="#C9CEE0" stroke-width="2"/>
+            <rect x="92" y="316" width="42" height="16" rx="4" fill="#2AC7E8" opacity=".85"/>
+            <rect x="92" y="354" width="126" height="12" rx="6" fill="#B9C0D8"/>
+            <g class="pin" transform="translate(240,294)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- monitor -->
+          <g class="spot" data-item="monitor"><title></title>
+            <rect class="halo" x="312" y="106" width="366" height="296" rx="20" fill="#3A4FE0" fill-opacity=".16"/>
+            <rect x="478" y="330" width="34" height="56" fill="#2A3358"/>
+            <rect x="425" y="384" width="140" height="14" rx="7" fill="#2A3358"/>
+            <rect x="330" y="120" width="330" height="214" rx="14" fill="#1B2340"/>
+            <rect x="344" y="134" width="302" height="172" rx="8" fill="url(#gScreen)"/>
+            <rect x="364" y="158" width="120" height="10" rx="5" fill="#fff" opacity=".55"/>
+            <rect x="364" y="180" width="200" height="8" rx="4" fill="#fff" opacity=".3"/>
+            <rect x="364" y="200" width="160" height="8" rx="4" fill="#fff" opacity=".3"/>
+            <rect x="364" y="232" width="92" height="26" rx="8" fill="#2AC7E8" opacity=".85"/>
+            <g class="pin" transform="translate(646,134)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- cámara -->
+          <g class="spot" data-item="camara"><title></title>
+            <rect class="halo" x="452" y="80" width="118" height="46" rx="14" fill="#3A4FE0" fill-opacity=".16"/>
+            <rect x="470" y="98" width="60" height="22" rx="11" fill="#2A3358"/>
+            <circle cx="500" cy="109" r="6" fill="#2AC7E8"/>
+            <g class="pin" transform="translate(552,96)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- computadores -->
+          <g class="spot" data-item="computador"><title></title>
+            <rect class="halo" x="858" y="282" width="138" height="266" rx="18" fill="#3A4FE0" fill-opacity=".16"/>
+            <rect x="874" y="300" width="106" height="230" rx="12" fill="#1B2340"/>
+            <rect x="886" y="322" width="54" height="192" rx="8" fill="#3A4FE0" opacity=".35"/>
+            <circle cx="913" cy="372" r="15" fill="#7B2FF7" opacity=".85"/>
+            <circle cx="913" cy="440" r="11" fill="#2AC7E8" opacity=".6"/>
+            <rect x="950" y="340" width="20" height="6" rx="3" fill="#3A4FE0"/>
+            <rect x="950" y="356" width="20" height="6" rx="3" fill="#3A4FE0"/>
+            <rect x="950" y="372" width="20" height="6" rx="3" fill="#3A4FE0"/>
+            <circle cx="960" cy="316" r="5" fill="#2AC7E8"/>
+            <g class="pin" transform="translate(866,294)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- audio -->
+          <g class="spot" data-item="audio"><title></title>
+            <rect class="halo" x="738" y="344" width="122" height="100" rx="18" fill="#3A4FE0" fill-opacity=".16"/>
+            <path d="M768 392 a38 38 0 0 1 72 0" fill="none" stroke="#1B2340" stroke-width="10" stroke-linecap="round"/>
+            <rect x="754" y="388" width="26" height="42" rx="12" fill="#2A3358"/>
+            <rect x="828" y="388" width="26" height="42" rx="12" fill="#2A3358"/>
+            <g class="pin" transform="translate(852,360)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- teclado -->
+          <g class="spot" data-item="teclado"><title></title>
+            <rect class="halo" x="288" y="386" width="396" height="56" rx="16" fill="#3A4FE0" fill-opacity=".16"/>
+            <path d="M332 398 H640 L668 430 H304 Z" fill="#E8EAF2" stroke="#C9CEE0" stroke-width="2"/>
+            <path d="M346 407 H628 M338 417 H640 M330 425 H650" stroke="#C9CEE0" stroke-width="3" stroke-linecap="round"/>
+            <g class="pin" transform="translate(662,394)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- mouse -->
+          <g class="spot" data-item="mouse"><title></title>
+            <rect class="halo" x="686" y="364" width="74" height="80" rx="20" fill="#3A4FE0" fill-opacity=".16"/>
+            <rect x="700" y="378" width="46" height="52" rx="23" fill="#E8EAF2" stroke="#C9CEE0" stroke-width="2"/>
+            <path d="M723 380 V398" stroke="#C9CEE0" stroke-width="2"/>
+            <g class="pin" transform="translate(750,368)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+
+          <!-- memorias -->
+          <g class="spot" data-item="memoria"><title></title>
+            <rect class="halo" x="240" y="380" width="74" height="62" rx="14" fill="#3A4FE0" fill-opacity=".16"/>
+            <path d="M256 398 h30 l14 14 v18 h-44 z" fill="#3A4FE0"/>
+            <rect x="261" y="402" width="6" height="11" rx="2" fill="#fff" opacity=".75"/>
+            <rect x="272" y="402" width="6" height="11" rx="2" fill="#fff" opacity=".75"/>
+            <g class="pin" transform="translate(308,388)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+        </svg>
+        <p class="desk-caption" id="deskCaption">Toca cualquier equipo para ver esos productos</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
         <div><h2>Explora por categoría</h2><p>Todo lo que tu oficina, colegio o negocio necesita, organizado.</p></div>
         <a class="link-more" href="#/productos">Ver todo el catálogo</a>
       </div>
@@ -477,7 +618,7 @@ button{font-family:inherit}
     </div>
   </section>
 
-  <section class="section section-alt">
+  <section class="section">
     <div class="container">
       <div class="section-head">
         <div><h2>Productos destacados</h2><p>Disponibles para entrega inmediata.</p></div>
@@ -898,10 +1039,19 @@ function renderCategories() {
     grid.innerHTML = '<div class="no-products">' + (loadError ? esc(loadError) : 'Aún no hay productos publicados.') + '</div>';
     return;
   }
-  grid.innerHTML = cats.map(c =>
-    '<a class="cat-card" href="' + catUrl(c.nombre) + '"><div class="cat-icon">' + catIcon(c.nombre) + '</div><div><strong>' + esc(c.nombre) + '</strong><span>' +
+  // En la portada solo se muestran las categorías con más productos
+  // (7 en computador, 5 en celular) y una tarjeta para ver todas.
+  const MAX_HOME = 7, MAX_MOVIL = 5;
+  const top = cats.slice().sort((a, b) => b.total - a.total).slice(0, MAX_HOME);
+  grid.innerHTML = top.map((c, i) =>
+    '<a class="cat-card' + (i >= MAX_MOVIL ? ' cat-extra' : '') + '" href="' + catUrl(c.nombre) + '"><div class="cat-icon">' + catIcon(c.nombre) + '</div><div><strong>' + esc(c.nombre) + '</strong><span>' +
     c.total + (c.total === 1 ? ' producto' : ' productos') + '</span></div></a>'
-  ).join('');
+  ).join('') +
+  (cats.length > MAX_MOVIL
+    ? '<a class="cat-card cat-more" href="#/productos" onclick="setTimeout(openFilters, 60)"><div class="cat-icon">' +
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>' +
+      '</div><div><strong>Ver todas</strong><span>' + cats.length + ' categorías</span></div></a>'
+    : '');
 
   document.getElementById('footerCats').innerHTML = cats.slice(0, 6).map(c =>
     '<a href="' + catUrl(c.nombre) + '">' + esc(c.nombre) + '</a>').join('') + '<a href="#/productos">Ver todo</a>';
@@ -1006,6 +1156,8 @@ function renderFilterSummary(count) {
 
 // ---------- portada: destacados, atajos y marcas ----------
 function renderHome() {
+  renderDesk();
+
   // Atajos de categorías en la portada (las 5 con más productos)
   const top = getCategories().sort((a, b) => b.total - a.total).slice(0, 5);
   document.getElementById('heroChips').innerHTML = top.map(c => '<a class="hero-chip" href="' + catUrl(c.nombre) + '">' + esc(c.nombre) + '</a>').join('');
@@ -1027,6 +1179,53 @@ function renderHome() {
   document.getElementById('brandsList').innerHTML = names.map(b =>
     '<button class="brand-chip" type="button" data-brand="' + esc(b) + '">' + esc(b) + '<small>' + brands[b] + (brands[b] === 1 ? ' producto' : ' productos') + '</small></button>'
   ).join('');
+}
+
+// ---------- escritorio interactivo ----------
+// Cada objeto del dibujo busca una categoría que coincida; si no existe,
+// busca la palabra en los nombres de los productos, y si tampoco hay, se apaga.
+const DESK_ITEMS = {
+  monitor:    { label: 'Monitores y pantallas', re: /monitor|pantalla/, q: 'monitor' },
+  computador: { label: 'Computadores', re: /computador|portatil|laptop|\bpc\b|torre|cpu/, q: 'computador' },
+  teclado:    { label: 'Teclados', re: /teclado/, q: 'teclado' },
+  mouse:      { label: 'Mouse', re: /mouse|raton/, q: 'mouse' },
+  impresora:  { label: 'Impresión', re: /impres|toner|tinta|cartucho/, q: 'impresora' },
+  audio:      { label: 'Audio', re: /audio|audifono|diadema|parlante|sonido/, q: 'audifonos' },
+  memoria:    { label: 'Memorias y almacenamiento', re: /memoria|tarjeta|\bsd\b|usb|disco|almacenamiento/, q: 'memoria' },
+  red:        { label: 'Redes', re: /\bred(es)?\b|router|switch|wifi|antena/, q: 'router' },
+  camara:     { label: 'Cámaras', re: /camara|seguridad|cctv|webcam/, q: 'camara' },
+  cable:      { label: 'Cables y accesorios', re: /cable|cargador|adaptador|accesorio/, q: 'cable' },
+};
+const DESK_HINT = 'Toca cualquier equipo para ver esos productos';
+
+function deskCaption(t) { document.getElementById('deskCaption').textContent = t || DESK_HINT; }
+
+function renderDesk() {
+  const cats = getCategories();
+  document.querySelectorAll('.spot').forEach(g => {
+    const conf = DESK_ITEMS[g.dataset.item];
+    if (!conf) return;
+    const cat = cats.find(c => conf.re.test(norm(c.nombre)));
+    const total = cat ? cat.total : searchProducts(conf.q).length;
+    const nombre = cat ? cat.nombre : conf.label;
+    const texto = total
+      ? nombre + ' · ' + total + (total === 1 ? ' producto' : ' productos')
+      : nombre + ' · sin productos por ahora';
+
+    g.classList.toggle('off', total === 0);
+    g.setAttribute('role', 'button');
+    g.setAttribute('tabindex', total ? '0' : '-1');
+    g.setAttribute('aria-label', texto);
+    g.querySelector('title').textContent = texto;
+
+    const abrir = () => { if (!total) return; if (cat) location.hash = catUrl(cat.nombre); else goSearch(conf.q); };
+    g.onmouseenter = () => deskCaption(texto);
+    g.onmouseleave = () => deskCaption('');
+    g.onfocus = () => deskCaption(texto);
+    g.onblur = () => deskCaption('');
+    g.onclick = abrir;
+    g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); } };
+  });
 }
 
 // ---------- tarjeta de producto ----------
