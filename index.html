@@ -152,14 +152,17 @@ button{font-family:inherit}
 .desk-wrap{background:linear-gradient(180deg,#F5F6FF,#ECEFFB);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 16px 6px}
 .desk{width:100%;height:auto;display:block}
 .spot{cursor:pointer}
-.spot .halo{opacity:0;transition:opacity .2s}
+.spot .halo{opacity:0;transition:opacity .2s;pointer-events:all}
 .spot:hover .halo,.spot:focus .halo{opacity:1}
 .spot:focus{outline:none}
 .spot .pin circle{fill:var(--brand);transition:fill .2s}
 .spot .pin path{stroke:#fff;stroke-width:2.6;stroke-linecap:round}
 .spot:hover .pin circle,.spot:focus .pin circle{fill:var(--accent)}
-.spot.off{opacity:.4;pointer-events:none;filter:grayscale(.9)}
-.spot.off .pin{display:none}
+.spot .pin .pin-ring{fill:#fff;opacity:.9}
+.spot.ask .pin circle:not(.pin-ring){fill:#94A3B8}
+.spot.ask:hover .pin circle:not(.pin-ring){fill:#25D366}
+.spot .keys rect{transition:fill .2s}
+.spot:hover .keys rect{fill:#2AC7E8}
 .desk-caption{text-align:center;font-size:.86rem;font-weight:600;color:var(--ink2);padding:12px 4px 6px;min-height:26px}
 
 /* Product rails (carousels) */
@@ -491,116 +494,172 @@ button{font-family:inherit}
         <a class="link-more" href="#/productos">Ver todo el catálogo</a>
       </div>
       <div class="desk-wrap">
-        <svg class="desk" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Escritorio interactivo con nuestros productos">
+        <svg class="desk" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Escritorio interactivo con nuestros productos">
           <defs>
-            <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F6FF"/><stop offset="1" stop-color="#E7EAFB"/></linearGradient>
-            <linearGradient id="gScreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14205C"/><stop offset=".55" stop-color="#3A4FE0"/><stop offset="1" stop-color="#7B2FF7"/></linearGradient>
+            <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6F7FF"/><stop offset="1" stop-color="#E3E7F9"/></linearGradient>
+            <radialGradient id="gGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#7B2FF7" stop-opacity=".30"/><stop offset="1" stop-color="#7B2FF7" stop-opacity="0"/></radialGradient>
+            <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D3D8EF"/><stop offset="1" stop-color="#C3C9E6"/></linearGradient>
+            <linearGradient id="gDeskTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8C4AA"/><stop offset="1" stop-color="#C2A88B"/></linearGradient>
+            <linearGradient id="gDeskEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B0936F"/><stop offset="1" stop-color="#96795A"/></linearGradient>
+            <linearGradient id="gBezel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A3358"/><stop offset="1" stop-color="#131A36"/></linearGradient>
+            <linearGradient id="gScreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14205C"/><stop offset=".5" stop-color="#3A4FE0"/><stop offset="1" stop-color="#7B2FF7"/></linearGradient>
+            <linearGradient id="gSheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".55" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <linearGradient id="gMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBFCFF"/><stop offset=".55" stop-color="#E4E8F4"/><stop offset="1" stop-color="#CBD2E6"/></linearGradient>
+            <linearGradient id="gDark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#353F6E"/><stop offset="1" stop-color="#151B36"/></linearGradient>
+            <linearGradient id="gMat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#39406B"/><stop offset="1" stop-color="#262C4E"/></linearGradient>
+            <linearGradient id="gRGB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2AC7E8"/><stop offset=".5" stop-color="#7B2FF7"/><stop offset="1" stop-color="#D91FC4"/></linearGradient>
+            <filter id="fSoft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+            <filter id="fTiny" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
           </defs>
-          <rect width="1000" height="560" rx="18" fill="url(#gWall)"/>
 
-          <!-- repisa y escritorio -->
-          <rect x="60" y="196" width="250" height="12" rx="6" fill="#C6B9A9"/>
-          <rect x="0" y="528" width="1000" height="32" fill="#DCE0F2"/>
-          <rect x="30" y="430" width="830" height="16" rx="8" fill="#D9CFC2"/>
-          <rect x="30" y="446" width="830" height="10" rx="5" fill="#C6B9A9"/>
-          <rect x="86" y="456" width="14" height="74" rx="6" fill="#C6B9A9"/>
-          <rect x="800" y="456" width="14" height="74" rx="6" fill="#C6B9A9"/>
+          <rect width="1000" height="600" rx="18" fill="url(#gWall)"/>
+          <ellipse cx="500" cy="250" rx="400" ry="210" fill="url(#gGlow)"/>
+          <rect x="0" y="516" width="1000" height="84" fill="url(#gFloor)"/>
 
-          <!-- router / redes -->
+          <!-- repisa -->
+          <rect x="60" y="192" width="268" height="9" rx="4" fill="#D8C4AA"/>
+          <rect x="60" y="201" width="268" height="9" rx="3" fill="url(#gDeskEdge)"/>
+          <rect x="74" y="210" width="10" height="26" rx="4" fill="#A98C6B"/>
+          <rect x="304" y="210" width="10" height="26" rx="4" fill="#A98C6B"/>
+
+          <!-- escritorio -->
+          <ellipse cx="500" cy="566" rx="420" ry="16" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/>
+          <polygon points="80,396 920,396 972,466 28,466" fill="url(#gDeskTop)"/>
+          <polygon points="80,396 920,396 918,402 82,402" fill="#EBDCC7" opacity=".7"/>
+          <polygon points="28,466 972,466 972,488 28,488" fill="url(#gDeskEdge)"/>
+          <rect x="92" y="488" width="20" height="30" rx="5" fill="#8E7256"/>
+          <rect x="888" y="488" width="20" height="30" rx="5" fill="#8E7256"/>
+
+          <!-- tapete -->
+          <polygon points="292,404 706,404 748,460 258,460" fill="url(#gMat)"/>
+          <polygon points="292,404 706,404 704,408 294,408" fill="#4A5384" opacity=".8"/>
+
           <g class="spot" data-item="red"><title></title>
-            <rect class="halo" x="72" y="112" width="152" height="94" rx="16" fill="#3A4FE0" fill-opacity=".16"/>
-            <path d="M106 158 V126 M174 158 V126" stroke="#1B2340" stroke-width="6" stroke-linecap="round"/>
-            <rect x="88" y="156" width="104" height="40" rx="10" fill="#1B2340"/>
-            <circle cx="108" cy="176" r="5" fill="#2AC7E8"/><circle cx="126" cy="176" r="5" fill="#2AC7E8" opacity=".55"/>
-            <g class="pin" transform="translate(206,126)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="66" y="104" width="168" height="104" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="146" cy="200" rx="54" ry="7" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/>
+            <path d="M104 158 L92 122" stroke="#1B2340" stroke-width="6" stroke-linecap="round"/>
+            <path d="M180 158 L192 122" stroke="#1B2340" stroke-width="6" stroke-linecap="round"/>
+            <rect x="84" y="156" width="112" height="38" rx="12" fill="url(#gDark)"/>
+            <rect x="90" y="161" width="100" height="10" rx="5" fill="#fff" opacity=".10"/>
+            <circle cx="104" cy="182" r="4.5" fill="#2AC7E8"/><circle cx="120" cy="182" r="4.5" fill="#2AC7E8" opacity=".55"/><circle cx="136" cy="182" r="4.5" fill="#7CF2C8" opacity=".8"/>
+            <g class="pin" transform="translate(208,122)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
 
-          <!-- cables y accesorios -->
           <g class="spot" data-item="cable"><title></title>
-            <rect class="halo" x="226" y="142" width="88" height="64" rx="14" fill="#3A4FE0" fill-opacity=".16"/>
-            <path d="M246 192 c-12 -20 12 -34 26 -20 c12 12 -8 28 -22 18 c-16 -12 8 -34 26 -22" fill="none" stroke="#7B2FF7" stroke-width="6" stroke-linecap="round"/>
-            <g class="pin" transform="translate(302,154)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="226" y="138" width="96" height="70" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="272" cy="200" rx="30" ry="6" fill="#1B2340" opacity=".16" filter="url(#fSoft)"/>
+            <path d="M244 192 c-14 -22 14 -38 30 -22 c14 14 -10 32 -26 20 c-18 -14 10 -38 30 -24" fill="none" stroke="#7B2FF7" stroke-width="7" stroke-linecap="round"/>
+            <path d="M248 186 c-8 -12 6 -20 14 -14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+            <g class="pin" transform="translate(306,150)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
 
-          <!-- impresión -->
           <g class="spot" data-item="impresora"><title></title>
-            <rect class="halo" x="54" y="244" width="200" height="202" rx="18" fill="#3A4FE0" fill-opacity=".16"/>
-            <rect x="96" y="254" width="110" height="38" rx="3" fill="#fff" stroke="#C9CEE0" stroke-width="2"/>
-            <rect x="80" y="286" width="150" height="16" rx="6" fill="#D3D8EA"/>
-            <rect x="70" y="300" width="170" height="130" rx="12" fill="#E8EAF2" stroke="#C9CEE0" stroke-width="2"/>
-            <rect x="92" y="316" width="42" height="16" rx="4" fill="#2AC7E8" opacity=".85"/>
-            <rect x="92" y="354" width="126" height="12" rx="6" fill="#B9C0D8"/>
-            <g class="pin" transform="translate(240,294)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="58" y="238" width="214" height="176" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="166" cy="400" rx="92" ry="12" fill="#1B2340" opacity=".22" filter="url(#fSoft)"/>
+            <rect x="96" y="250" width="112" height="40" rx="3" fill="#fff" stroke="#D7DCEC" stroke-width="2"/>
+            <rect x="106" y="260" width="72" height="4" rx="2" fill="#D7DCEC"/>
+            <rect x="106" y="270" width="88" height="4" rx="2" fill="#D7DCEC"/>
+            <rect x="82" y="284" width="156" height="18" rx="7" fill="#C6CDE2"/>
+            <rect x="72" y="298" width="176" height="102" rx="14" fill="url(#gMetal)"/>
+            <rect x="72" y="298" width="176" height="20" rx="14" fill="#fff" opacity=".65"/>
+            <rect x="92" y="326" width="48" height="18" rx="5" fill="#2AC7E8"/>
+            <circle cx="156" cy="335" r="6" fill="#C6CDE2"/><circle cx="174" cy="335" r="6" fill="#C6CDE2"/>
+            <rect x="92" y="358" width="136" height="14" rx="7" fill="#B2BAD4"/>
+            <rect x="100" y="352" width="120" height="8" rx="3" fill="#fff" stroke="#D7DCEC" stroke-width="1.5"/>
+            <g class="pin" transform="translate(240,292)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
 
-          <!-- monitor -->
           <g class="spot" data-item="monitor"><title></title>
-            <rect class="halo" x="312" y="106" width="366" height="296" rx="20" fill="#3A4FE0" fill-opacity=".16"/>
-            <rect x="478" y="330" width="34" height="56" fill="#2A3358"/>
-            <rect x="425" y="384" width="140" height="14" rx="7" fill="#2A3358"/>
-            <rect x="330" y="120" width="330" height="214" rx="14" fill="#1B2340"/>
-            <rect x="344" y="134" width="302" height="172" rx="8" fill="url(#gScreen)"/>
-            <rect x="364" y="158" width="120" height="10" rx="5" fill="#fff" opacity=".55"/>
-            <rect x="364" y="180" width="200" height="8" rx="4" fill="#fff" opacity=".3"/>
-            <rect x="364" y="200" width="160" height="8" rx="4" fill="#fff" opacity=".3"/>
-            <rect x="364" y="232" width="92" height="26" rx="8" fill="#2AC7E8" opacity=".85"/>
-            <g class="pin" transform="translate(646,134)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="312" y="72" width="376" height="330" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="500" cy="398" rx="104" ry="13" fill="#1B2340" opacity=".22" filter="url(#fSoft)"/>
+            <path d="M478 320 h44 l10 58 h-64 z" fill="#232B4E"/>
+            <ellipse cx="500" cy="384" rx="92" ry="15" fill="#1C2344"/>
+            <ellipse cx="500" cy="380" rx="92" ry="15" fill="#2A3358"/>
+            <rect x="330" y="96" width="340" height="230" rx="16" fill="url(#gBezel)"/>
+            <rect x="344" y="110" width="312" height="188" rx="8" fill="url(#gScreen)"/>
+            <rect x="344" y="110" width="312" height="188" rx="8" fill="url(#gSheen)"/>
+            <rect x="362" y="130" width="130" height="12" rx="6" fill="#fff" opacity=".6"/>
+            <rect x="362" y="152" width="210" height="8" rx="4" fill="#fff" opacity=".32"/>
+            <rect x="362" y="168" width="170" height="8" rx="4" fill="#fff" opacity=".32"/>
+            <rect x="362" y="206" width="22" height="58" rx="5" fill="#fff" opacity=".45"/>
+            <rect x="392" y="224" width="22" height="40" rx="5" fill="#fff" opacity=".35"/>
+            <rect x="422" y="192" width="22" height="72" rx="5" fill="#2AC7E8" opacity=".9"/>
+            <rect x="452" y="214" width="22" height="50" rx="5" fill="#fff" opacity=".35"/>
+            <rect x="556" y="196" width="88" height="68" rx="10" fill="#fff" opacity=".18"/>
+            <rect x="330" y="306" width="340" height="20" rx="10" fill="#1A2140"/>
+            <circle cx="500" cy="316" r="3" fill="#2AC7E8"/>
+            <g class="pin" transform="translate(656,106)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
 
-          <!-- cámara -->
           <g class="spot" data-item="camara"><title></title>
-            <rect class="halo" x="452" y="80" width="118" height="46" rx="14" fill="#3A4FE0" fill-opacity=".16"/>
-            <rect x="470" y="98" width="60" height="22" rx="11" fill="#2A3358"/>
-            <circle cx="500" cy="109" r="6" fill="#2AC7E8"/>
-            <g class="pin" transform="translate(552,96)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="446" y="54" width="124" height="46" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            
+            <rect x="466" y="70" width="68" height="24" rx="12" fill="url(#gDark)"/>
+            <circle cx="500" cy="82" r="9" fill="#0D1330"/>
+            <circle cx="500" cy="82" r="5" fill="#2AC7E8"/>
+            <circle cx="497" cy="79" r="2" fill="#fff" opacity=".8"/>
+            <path d="M484 94 h32 l-4 6 h-24 z" fill="#232B4E"/>
+            <g class="pin" transform="translate(552,66)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
 
-          <!-- computadores -->
           <g class="spot" data-item="computador"><title></title>
-            <rect class="halo" x="858" y="282" width="138" height="266" rx="18" fill="#3A4FE0" fill-opacity=".16"/>
-            <rect x="874" y="300" width="106" height="230" rx="12" fill="#1B2340"/>
-            <rect x="886" y="322" width="54" height="192" rx="8" fill="#3A4FE0" opacity=".35"/>
-            <circle cx="913" cy="372" r="15" fill="#7B2FF7" opacity=".85"/>
-            <circle cx="913" cy="440" r="11" fill="#2AC7E8" opacity=".6"/>
-            <rect x="950" y="340" width="20" height="6" rx="3" fill="#3A4FE0"/>
-            <rect x="950" y="356" width="20" height="6" rx="3" fill="#3A4FE0"/>
-            <rect x="950" y="372" width="20" height="6" rx="3" fill="#3A4FE0"/>
-            <circle cx="960" cy="316" r="5" fill="#2AC7E8"/>
-            <g class="pin" transform="translate(866,294)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="846" y="268" width="142" height="266" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="912" cy="520" rx="60" ry="12" fill="#1B2340" opacity=".22" filter="url(#fSoft)"/>
+            <rect x="862" y="286" width="110" height="230" rx="14" fill="url(#gDark)"/>
+            <rect x="874" y="300" width="56" height="200" rx="9" fill="#0E1430"/>
+            <rect x="874" y="300" width="56" height="200" rx="9" fill="url(#gSheen)"/>
+            <circle cx="902" cy="342" r="17" fill="none" stroke="url(#gRGB)" stroke-width="5"/>
+            <circle cx="902" cy="342" r="6" fill="#7B2FF7"/>
+            <circle cx="902" cy="404" r="17" fill="none" stroke="url(#gRGB)" stroke-width="5"/>
+            <circle cx="902" cy="404" r="6" fill="#2AC7E8"/>
+            <rect x="884" y="452" width="36" height="6" rx="3" fill="#3A4FE0" opacity=".7"/>
+            <rect x="944" y="326" width="18" height="5" rx="2.5" fill="#4A5384"/>
+            <rect x="944" y="340" width="18" height="5" rx="2.5" fill="#4A5384"/>
+            <rect x="944" y="354" width="18" height="5" rx="2.5" fill="#4A5384"/>
+            <circle cx="953" cy="302" r="4.5" fill="#2AC7E8"/>
+            <g class="pin" transform="translate(856,280)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
 
-          <!-- audio -->
           <g class="spot" data-item="audio"><title></title>
-            <rect class="halo" x="738" y="344" width="122" height="100" rx="18" fill="#3A4FE0" fill-opacity=".16"/>
-            <path d="M768 392 a38 38 0 0 1 72 0" fill="none" stroke="#1B2340" stroke-width="10" stroke-linecap="round"/>
-            <rect x="754" y="388" width="26" height="42" rx="12" fill="#2A3358"/>
-            <rect x="828" y="388" width="26" height="42" rx="12" fill="#2A3358"/>
-            <g class="pin" transform="translate(852,360)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="752" y="330" width="128" height="106" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="816" cy="436" rx="50" ry="9" fill="#1B2340" opacity=".2" filter="url(#fSoft)"/>
+            <path d="M782 392 a34 34 0 0 1 68 0" fill="none" stroke="#1B2340" stroke-width="12" stroke-linecap="round"/>
+            <path d="M784 386 a32 32 0 0 1 64 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".25"/>
+            <rect x="766" y="386" width="30" height="48" rx="14" fill="url(#gDark)"/>
+            <rect x="836" y="386" width="30" height="48" rx="14" fill="url(#gDark)"/>
+            <rect x="772" y="394" width="18" height="32" rx="9" fill="#4A5384"/>
+            <rect x="842" y="394" width="18" height="32" rx="9" fill="#4A5384"/>
+            <g class="pin" transform="translate(770,336)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g></g>
           </g>
 
-          <!-- teclado -->
           <g class="spot" data-item="teclado"><title></title>
-            <rect class="halo" x="288" y="386" width="396" height="56" rx="16" fill="#3A4FE0" fill-opacity=".16"/>
-            <path d="M332 398 H640 L668 430 H304 Z" fill="#E8EAF2" stroke="#C9CEE0" stroke-width="2"/>
-            <path d="M346 407 H628 M338 417 H640 M330 425 H650" stroke="#C9CEE0" stroke-width="3" stroke-linecap="round"/>
-            <g class="pin" transform="translate(662,394)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="286" y="396" width="404" height="72" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="480" cy="458" rx="180" ry="10" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/>
+            <polygon points="330,404 630,404 662,456 300,456" fill="url(#gDark)"/>
+            <polygon points="330,404 630,404 628,410 332,410" fill="#fff" opacity=".18"/>
+            <g class="keys" fill="#fff" opacity=".95"><rect x="334.0" y="412" width="16.7" height="8" rx="3"/><rect x="353.7" y="412" width="16.7" height="8" rx="3"/><rect x="373.3" y="412" width="16.7" height="8" rx="3"/><rect x="393.0" y="412" width="16.7" height="8" rx="3"/><rect x="412.7" y="412" width="16.7" height="8" rx="3"/><rect x="432.3" y="412" width="16.7" height="8" rx="3"/><rect x="452.0" y="412" width="16.7" height="8" rx="3"/><rect x="471.7" y="412" width="16.7" height="8" rx="3"/><rect x="491.3" y="412" width="16.7" height="8" rx="3"/><rect x="511.0" y="412" width="16.7" height="8" rx="3"/><rect x="530.7" y="412" width="16.7" height="8" rx="3"/><rect x="550.3" y="412" width="16.7" height="8" rx="3"/><rect x="570.0" y="412" width="16.7" height="8" rx="3"/><rect x="589.7" y="412" width="16.7" height="8" rx="3"/><rect x="609.3" y="412" width="16.7" height="8" rx="3"/><rect x="327.0" y="422" width="17.6" height="8" rx="3"/><rect x="347.6" y="422" width="17.6" height="8" rx="3"/><rect x="368.2" y="422" width="17.6" height="8" rx="3"/><rect x="388.8" y="422" width="17.6" height="8" rx="3"/><rect x="409.4" y="422" width="17.6" height="8" rx="3"/><rect x="430.0" y="422" width="17.6" height="8" rx="3"/><rect x="450.6" y="422" width="17.6" height="8" rx="3"/><rect x="471.2" y="422" width="17.6" height="8" rx="3"/><rect x="491.8" y="422" width="17.6" height="8" rx="3"/><rect x="512.4" y="422" width="17.6" height="8" rx="3"/><rect x="533.0" y="422" width="17.6" height="8" rx="3"/><rect x="553.6" y="422" width="17.6" height="8" rx="3"/><rect x="574.2" y="422" width="17.6" height="8" rx="3"/><rect x="594.8" y="422" width="17.6" height="8" rx="3"/><rect x="615.4" y="422" width="17.6" height="8" rx="3"/><rect x="320.0" y="432" width="18.5" height="8" rx="3"/><rect x="341.5" y="432" width="18.5" height="8" rx="3"/><rect x="363.1" y="432" width="18.5" height="8" rx="3"/><rect x="384.6" y="432" width="18.5" height="8" rx="3"/><rect x="406.1" y="432" width="18.5" height="8" rx="3"/><rect x="427.7" y="432" width="18.5" height="8" rx="3"/><rect x="449.2" y="432" width="18.5" height="8" rx="3"/><rect x="470.7" y="432" width="18.5" height="8" rx="3"/><rect x="492.3" y="432" width="18.5" height="8" rx="3"/><rect x="513.8" y="432" width="18.5" height="8" rx="3"/><rect x="535.3" y="432" width="18.5" height="8" rx="3"/><rect x="556.9" y="432" width="18.5" height="8" rx="3"/><rect x="578.4" y="432" width="18.5" height="8" rx="3"/><rect x="599.9" y="432" width="18.5" height="8" rx="3"/><rect x="621.5" y="432" width="18.5" height="8" rx="3"/><rect x="383" y="442" width="194" height="8" rx="3"/><rect x="313" y="442" width="58" height="8" rx="3"/><rect x="589" y="442" width="58" height="8" rx="3"/></g>
+            <g class="pin" transform="translate(668,402)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
 
-          <!-- mouse -->
           <g class="spot" data-item="mouse"><title></title>
-            <rect class="halo" x="686" y="364" width="74" height="80" rx="20" fill="#3A4FE0" fill-opacity=".16"/>
-            <rect x="700" y="378" width="46" height="52" rx="23" fill="#E8EAF2" stroke="#C9CEE0" stroke-width="2"/>
-            <path d="M723 380 V398" stroke="#C9CEE0" stroke-width="2"/>
-            <g class="pin" transform="translate(750,368)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="668" y="378" width="80" height="86" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="704" cy="458" rx="26" ry="7" fill="#1B2340" opacity=".2" filter="url(#fSoft)"/>
+            <path d="M704 404 c16 0 26 14 26 30 c0 16 -12 24 -26 24 c-14 0 -26 -8 -26 -24 c0 -16 10 -30 26 -30 z" fill="url(#gMetal)"/>
+            <path d="M704 404 c-10 0 -18 6 -22 16 h44 c-4 -10 -12 -16 -22 -16 z" fill="#fff" opacity=".8"/>
+            <rect x="701" y="410" width="6" height="14" rx="3" fill="#3A4FE0"/>
+            <g class="pin" transform="translate(742,392)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
 
-          <!-- memorias -->
           <g class="spot" data-item="memoria"><title></title>
-            <rect class="halo" x="240" y="380" width="74" height="62" rx="14" fill="#3A4FE0" fill-opacity=".16"/>
-            <path d="M256 398 h30 l14 14 v18 h-44 z" fill="#3A4FE0"/>
-            <rect x="261" y="402" width="6" height="11" rx="2" fill="#fff" opacity=".75"/>
-            <rect x="272" y="402" width="6" height="11" rx="2" fill="#fff" opacity=".75"/>
-            <g class="pin" transform="translate(308,388)"><circle r="16"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="140" y="398" width="112" height="66" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <ellipse cx="196" cy="456" rx="40" ry="7" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/>
+            <path d="M150 418 h34 l14 14 v22 h-48 z" fill="#3A4FE0"/>
+            <path d="M150 418 h34 l14 14 h-48 z" fill="#fff" opacity=".18"/>
+            <rect x="155" y="422" width="6" height="12" rx="2" fill="#fff" opacity=".75"/>
+            <rect x="166" y="422" width="6" height="12" rx="2" fill="#fff" opacity=".75"/>
+            <rect x="206" y="430" width="42" height="22" rx="6" fill="url(#gDark)"/>
+            <rect x="196" y="435" width="16" height="12" rx="2" fill="url(#gMetal)"/>
+            <g class="pin" transform="translate(250,410)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
         </svg>
         <p class="desk-caption" id="deskCaption">Toca cualquier equipo para ver esos productos</p>
@@ -1186,7 +1245,8 @@ function renderHome() {
 // busca la palabra en los nombres de los productos, y si tampoco hay, se apaga.
 const DESK_ITEMS = {
   monitor:    { label: 'Monitores y pantallas', re: /monitor|pantalla/, q: 'monitor' },
-  computador: { label: 'Computadores', re: /computador|portatil|laptop|\bpc\b|torre|cpu/, q: 'computador' },
+  // 'no' evita que, por ejemplo, "Teclados para computadores" caiga en Computadores
+  computador: { label: 'Computadores', re: /computador|portatil|laptop|\bpc\b|torre|cpu/, no: /teclado|mouse|raton|impres|toner|tinta|memoria|tarjeta|cable|audifono|parlante|monitor|pantalla|camara/, q: 'computador' },
   teclado:    { label: 'Teclados', re: /teclado/, q: 'teclado' },
   mouse:      { label: 'Mouse', re: /mouse|raton/, q: 'mouse' },
   impresora:  { label: 'Impresión', re: /impres|toner|tinta|cartucho/, q: 'impresora' },
@@ -1205,20 +1265,25 @@ function renderDesk() {
   document.querySelectorAll('.spot').forEach(g => {
     const conf = DESK_ITEMS[g.dataset.item];
     if (!conf) return;
-    const cat = cats.find(c => conf.re.test(norm(c.nombre)));
+    const cat = cats.find(c => conf.re.test(norm(c.nombre)) && !(conf.no && conf.no.test(norm(c.nombre))));
     const total = cat ? cat.total : searchProducts(conf.q).length;
     const nombre = cat ? cat.nombre : conf.label;
     const texto = total
       ? nombre + ' · ' + total + (total === 1 ? ' producto' : ' productos')
-      : nombre + ' · sin productos por ahora';
+      : nombre + ' · escríbenos y te lo conseguimos';
 
-    g.classList.toggle('off', total === 0);
+    g.classList.toggle('ask', total === 0);
     g.setAttribute('role', 'button');
-    g.setAttribute('tabindex', total ? '0' : '-1');
+    g.setAttribute('tabindex', '0');
     g.setAttribute('aria-label', texto);
     g.querySelector('title').textContent = texto;
 
-    const abrir = () => { if (!total) return; if (cat) location.hash = catUrl(cat.nombre); else goSearch(conf.q); };
+    const abrir = () => {
+      if (!loaded) return;
+      if (cat) location.hash = catUrl(cat.nombre);
+      else if (total) goSearch(conf.q);
+      else window.open(waUrl('Hola, ¿tienen ' + nombre + '?'), '_blank');  // sin productos: preguntar
+    };
     g.onmouseenter = () => deskCaption(texto);
     g.onmouseleave = () => deskCaption('');
     g.onfocus = () => deskCaption(texto);
