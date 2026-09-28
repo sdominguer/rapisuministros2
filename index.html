@@ -494,172 +494,71 @@ button{font-family:inherit}
         <a class="link-more" href="#/productos">Ver todo el catálogo</a>
       </div>
       <div class="desk-wrap">
-        <svg class="desk" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Escritorio interactivo con nuestros productos">
+        <svg class="desk" viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Escritorio interactivo con nuestros productos">
           <defs>
             <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6F7FF"/><stop offset="1" stop-color="#E3E7F9"/></linearGradient>
-            <radialGradient id="gGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#7B2FF7" stop-opacity=".30"/><stop offset="1" stop-color="#7B2FF7" stop-opacity="0"/></radialGradient>
-            <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D3D8EF"/><stop offset="1" stop-color="#C3C9E6"/></linearGradient>
-            <linearGradient id="gDeskTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8C4AA"/><stop offset="1" stop-color="#C2A88B"/></linearGradient>
-            <linearGradient id="gDeskEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B0936F"/><stop offset="1" stop-color="#96795A"/></linearGradient>
-            <linearGradient id="gBezel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A3358"/><stop offset="1" stop-color="#131A36"/></linearGradient>
+            <radialGradient id="gGlow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#7B2FF7" stop-opacity=".26"/><stop offset="1" stop-color="#7B2FF7" stop-opacity="0"/></radialGradient>
+            <linearGradient id="gFloor" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E7EAF8"/><stop offset="1" stop-color="#D2D8EE"/></linearGradient>
             <linearGradient id="gScreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14205C"/><stop offset=".5" stop-color="#3A4FE0"/><stop offset="1" stop-color="#7B2FF7"/></linearGradient>
-            <linearGradient id="gSheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".55" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <linearGradient id="gSheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".6" stop-color="#fff" stop-opacity=".03"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
             <linearGradient id="gMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBFCFF"/><stop offset=".55" stop-color="#E4E8F4"/><stop offset="1" stop-color="#CBD2E6"/></linearGradient>
             <linearGradient id="gDark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#353F6E"/><stop offset="1" stop-color="#151B36"/></linearGradient>
-            <linearGradient id="gMat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#39406B"/><stop offset="1" stop-color="#262C4E"/></linearGradient>
             <linearGradient id="gRGB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2AC7E8"/><stop offset=".5" stop-color="#7B2FF7"/><stop offset="1" stop-color="#D91FC4"/></linearGradient>
-            <filter id="fSoft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
-            <filter id="fTiny" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+            <filter id="fSoft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
+            <filter id="fTiny" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4"/></filter>
           </defs>
-
-          <rect width="1000" height="600" rx="18" fill="url(#gWall)"/>
-          <ellipse cx="500" cy="250" rx="400" ry="210" fill="url(#gGlow)"/>
-          <rect x="0" y="516" width="1000" height="84" fill="url(#gFloor)"/>
-
-          <!-- repisa -->
-          <rect x="60" y="192" width="268" height="9" rx="4" fill="#D8C4AA"/>
-          <rect x="60" y="201" width="268" height="9" rx="3" fill="url(#gDeskEdge)"/>
-          <rect x="74" y="210" width="10" height="26" rx="4" fill="#A98C6B"/>
-          <rect x="304" y="210" width="10" height="26" rx="4" fill="#A98C6B"/>
-
-          <!-- escritorio -->
-          <ellipse cx="500" cy="566" rx="420" ry="16" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/>
-          <polygon points="80,396 920,396 972,466 28,466" fill="url(#gDeskTop)"/>
-          <polygon points="80,396 920,396 918,402 82,402" fill="#EBDCC7" opacity=".7"/>
-          <polygon points="28,466 972,466 972,488 28,488" fill="url(#gDeskEdge)"/>
-          <rect x="92" y="488" width="20" height="30" rx="5" fill="#8E7256"/>
-          <rect x="888" y="488" width="20" height="30" rx="5" fill="#8E7256"/>
-
-          <!-- tapete -->
-          <polygon points="292,404 706,404 748,460 258,460" fill="url(#gMat)"/>
-          <polygon points="292,404 706,404 704,408 294,408" fill="#4A5384" opacity=".8"/>
-
-          <g class="spot" data-item="red"><title></title>
-            <rect class="halo" x="66" y="104" width="168" height="104" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="146" cy="200" rx="54" ry="7" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/>
-            <path d="M104 158 L92 122" stroke="#1B2340" stroke-width="6" stroke-linecap="round"/>
-            <path d="M180 158 L192 122" stroke="#1B2340" stroke-width="6" stroke-linecap="round"/>
-            <rect x="84" y="156" width="112" height="38" rx="12" fill="url(#gDark)"/>
-            <rect x="90" y="161" width="100" height="10" rx="5" fill="#fff" opacity=".10"/>
-            <circle cx="104" cy="182" r="4.5" fill="#2AC7E8"/><circle cx="120" cy="182" r="4.5" fill="#2AC7E8" opacity=".55"/><circle cx="136" cy="182" r="4.5" fill="#7CF2C8" opacity=".8"/>
-            <g class="pin" transform="translate(208,122)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
-          </g>
-
-          <g class="spot" data-item="cable"><title></title>
-            <rect class="halo" x="226" y="138" width="96" height="70" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="272" cy="200" rx="30" ry="6" fill="#1B2340" opacity=".16" filter="url(#fSoft)"/>
-            <path d="M244 192 c-14 -22 14 -38 30 -22 c14 14 -10 32 -26 20 c-18 -14 10 -38 30 -24" fill="none" stroke="#7B2FF7" stroke-width="7" stroke-linecap="round"/>
-            <path d="M248 186 c-8 -12 6 -20 14 -14" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-            <g class="pin" transform="translate(306,150)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
-          </g>
-
+          <rect width="1000" height="620" rx="18" fill="url(#gWall)"/>
+          <ellipse cx="500" cy="280" rx="420" ry="230" fill="url(#gGlow)"/>
+          <g transform="translate(394.29,211.56) scale(1.3126)"><polygon points="-69.3,-420.0 1108.5,260.0 225.2,770.0 -952.6,90.0" fill="url(#gFloor)"/><ellipse cx="412.2" cy="191.5" rx="34" ry="17" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/><polygon points="412.2,146.0 441.7,163.0 413.9,179.0 384.5,162.0" fill="#D4A68A"/><polygon points="384.5,162.0 413.9,179.0 413.9,209.0 384.5,192.0" fill="#C98E6A"/><polygon points="441.7,163.0 413.9,179.0 413.9,209.0 441.7,193.0" fill="#90664C"/><g transform="translate(413.1,162.5)"><ellipse cx="-14" cy="-16" rx="13" ry="18" fill="#2A9D6E" transform="rotate(-24)"/><ellipse cx="14" cy="-18" rx="12" ry="17" fill="#35B87F" transform="rotate(22)"/><ellipse cx="0" cy="-30" rx="11" ry="20" fill="#2A9D6E"/></g><ellipse cx="90.9" cy="127.0" rx="300" ry="90" fill="#1B2340" opacity=".16" filter="url(#fSoft)"/><polygon points="0.0,-86.0 8.7,-81.0 0.0,-76.0 -8.7,-81.0" fill="#B0987C"/><polygon points="-8.7,-81.0 0.0,-76.0 0.0,18.0 -8.7,13.0" fill="#9A7C58"/><polygon points="8.7,-81.0 0.0,-76.0 0.0,18.0 8.7,13.0" fill="#6E593F"/><polygon points="289.2,81.0 297.9,86.0 289.2,91.0 280.6,86.0" fill="#B0987C"/><polygon points="280.6,86.0 289.2,91.0 289.2,185.0 280.6,180.0" fill="#9A7C58"/><polygon points="297.9,86.0 289.2,91.0 289.2,185.0 297.9,180.0" fill="#6E593F"/><polygon points="-107.4,-24.0 -98.7,-19.0 -107.4,-14.0 -116.0,-19.0" fill="#B0987C"/><polygon points="-116.0,-19.0 -107.4,-14.0 -107.4,80.0 -116.0,75.0" fill="#9A7C58"/><polygon points="-98.7,-19.0 -107.4,-14.0 -107.4,80.0 -98.7,75.0" fill="#6E593F"/><polygon points="181.9,143.0 190.5,148.0 181.9,153.0 173.2,148.0" fill="#B0987C"/><polygon points="173.2,148.0 181.9,153.0 181.9,247.0 173.2,242.0" fill="#9A7C58"/><polygon points="190.5,148.0 181.9,153.0 181.9,247.0 190.5,242.0" fill="#6E593F"/><polygon points="0.0,-105.0 311.8,75.0 181.9,150.0 -129.9,-30.0" fill="#D1B796"/><polygon points="-129.9,-30.0 181.9,150.0 181.9,161.0 -129.9,-19.0" fill="#C5A379"/><polygon points="311.8,75.0 181.9,150.0 181.9,161.0 311.8,86.0" fill="#8D7557"/><g transform="matrix(0.866,0.5,-0.866,0.5,0,-105.5)"><rect x="112" y="84" width="232" height="62" rx="6" fill="#39406B" opacity=".92"/></g></g>
           <g class="spot" data-item="impresora"><title></title>
-            <rect class="halo" x="58" y="238" width="214" height="176" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="166" cy="400" rx="92" ry="12" fill="#1B2340" opacity=".22" filter="url(#fSoft)"/>
-            <rect x="96" y="250" width="112" height="40" rx="3" fill="#fff" stroke="#D7DCEC" stroke-width="2"/>
-            <rect x="106" y="260" width="72" height="4" rx="2" fill="#D7DCEC"/>
-            <rect x="106" y="270" width="88" height="4" rx="2" fill="#D7DCEC"/>
-            <rect x="82" y="284" width="156" height="18" rx="7" fill="#C6CDE2"/>
-            <rect x="72" y="298" width="176" height="102" rx="14" fill="url(#gMetal)"/>
-            <rect x="72" y="298" width="176" height="20" rx="14" fill="#fff" opacity=".65"/>
-            <rect x="92" y="326" width="48" height="18" rx="5" fill="#2AC7E8"/>
-            <circle cx="156" cy="335" r="6" fill="#C6CDE2"/><circle cx="174" cy="335" r="6" fill="#C6CDE2"/>
-            <rect x="92" y="358" width="136" height="14" rx="7" fill="#B2BAD4"/>
-            <rect x="100" y="352" width="120" height="8" rx="3" fill="#fff" stroke="#D7DCEC" stroke-width="1.5"/>
-            <g class="pin" transform="translate(240,292)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="287" y="21" width="222" height="199" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="0.0" cy="-45.0" rx="92" ry="46" fill="#6B5B45" opacity=".18" filter="url(#fTiny)"/><polygon points="-5.2,-136.0 77.9,-88.0 10.4,-49.0 -72.7,-97.0" fill="#EDF0F8"/><polygon points="-72.7,-97.0 10.4,-49.0 10.4,-3.0 -72.7,-51.0" fill="#E8ECF7"/><polygon points="77.9,-88.0 10.4,-49.0 10.4,-3.0 77.9,-42.0" fill="#A7A9B1"/><polygon points="-5.2,-133.0 50.2,-101.0 10.4,-78.0 -45.0,-110.0" fill="#DEE1E9"/><polygon points="-45.0,-110.0 10.4,-78.0 10.4,-69.0 -45.0,-101.0" fill="#D5D9E3"/><polygon points="50.2,-101.0 10.4,-78.0 10.4,-69.0 50.2,-92.0" fill="#999CA3"/><g transform="matrix(0.866,0.5,-0.866,0.5,0,-160)"><rect x="30" y="34" width="52" height="40" rx="2" fill="#fff"/><rect x="36" y="42" width="40" height="3" fill="#D7DCEC"/><rect x="36" y="50" width="34" height="3" fill="#D7DCEC"/></g><g transform="matrix(0.866,0.5,-0.866,0.5,0,-151)"><rect x="26" y="74" width="30" height="12" rx="3" fill="#2AC7E8"/><circle cx="70" cy="80" r="4" fill="#C6CDE2"/><circle cx="82" cy="80" r="4" fill="#C6CDE2"/></g><g transform="matrix(0.866,0.5,0,-1,-83.136,48.000)"><rect x="24" y="116" width="70" height="9" rx="4" fill="#AEB6D0"/><rect x="30" y="125" width="58" height="5" rx="2" fill="#fff"/></g></g>
+            <g class="pin" transform="translate(291,27)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
-
           <g class="spot" data-item="monitor"><title></title>
-            <rect class="halo" x="312" y="72" width="376" height="330" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="500" cy="398" rx="104" ry="13" fill="#1B2340" opacity=".22" filter="url(#fSoft)"/>
-            <path d="M478 320 h44 l10 58 h-64 z" fill="#232B4E"/>
-            <ellipse cx="500" cy="384" rx="92" ry="15" fill="#1C2344"/>
-            <ellipse cx="500" cy="380" rx="92" ry="15" fill="#2A3358"/>
-            <rect x="330" y="96" width="340" height="230" rx="16" fill="url(#gBezel)"/>
-            <rect x="344" y="110" width="312" height="188" rx="8" fill="url(#gScreen)"/>
-            <rect x="344" y="110" width="312" height="188" rx="8" fill="url(#gSheen)"/>
-            <rect x="362" y="130" width="130" height="12" rx="6" fill="#fff" opacity=".6"/>
-            <rect x="362" y="152" width="210" height="8" rx="4" fill="#fff" opacity=".32"/>
-            <rect x="362" y="168" width="170" height="8" rx="4" fill="#fff" opacity=".32"/>
-            <rect x="362" y="206" width="22" height="58" rx="5" fill="#fff" opacity=".45"/>
-            <rect x="392" y="224" width="22" height="40" rx="5" fill="#fff" opacity=".35"/>
-            <rect x="422" y="192" width="22" height="72" rx="5" fill="#2AC7E8" opacity=".9"/>
-            <rect x="452" y="214" width="22" height="50" rx="5" fill="#fff" opacity=".35"/>
-            <rect x="556" y="196" width="88" height="68" rx="10" fill="#fff" opacity=".18"/>
-            <rect x="330" y="306" width="340" height="20" rx="10" fill="#1A2140"/>
-            <circle cx="500" cy="316" r="3" fill="#2AC7E8"/>
-            <g class="pin" transform="translate(656,106)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="450" y="30" width="185" height="272" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="102.2" cy="32.0" rx="96" ry="40" fill="#6B5B45" opacity=".18" filter="url(#fTiny)"/><polygon points="83.1,-1.0 147.2,36.0 116.0,54.0 52.0,17.0" fill="#535974"/><polygon points="52.0,17.0 116.0,54.0 116.0,60.0 52.0,23.0" fill="#232B4E"/><polygon points="147.2,36.0 116.0,54.0 116.0,60.0 147.2,42.0" fill="#191E38"/><polygon points="98.7,-24.0 110.8,-17.0 102.2,-12.0 90.1,-19.0" fill="#585F7C"/><polygon points="90.1,-19.0 102.2,-12.0 102.2,32.0 90.1,25.0" fill="#2A3358"/><polygon points="110.8,-17.0 102.2,-12.0 102.2,32.0 110.8,27.0" fill="#1E243F"/><polygon points="64.1,-129.0 174.9,-65.0 165.4,-59.5 54.6,-123.5" fill="#535974"/><polygon points="54.6,-123.5 165.4,-59.5 165.4,20.5 54.6,-43.5" fill="#232B4E"/><polygon points="174.9,-65.0 165.4,-59.5 165.4,20.5 174.9,15.0" fill="#191E38"/><g transform="matrix(0.866,0.5,0,-1,-66.682,38.500)"><rect x="146" y="158" width="116" height="68" rx="3" fill="url(#gScreen)"/><rect x="146" y="158" width="116" height="68" rx="3" fill="url(#gSheen)"/><rect x="153" y="214" width="46" height="5" rx="2.5" fill="#fff" opacity=".6"/><rect x="153" y="204" width="74" height="4" rx="2" fill="#fff" opacity=".3"/><rect x="153" y="196" width="60" height="4" rx="2" fill="#fff" opacity=".3"/><rect x="153" y="166" width="9" height="22" rx="2" fill="#fff" opacity=".45"/><rect x="166" y="166" width="9" height="14" rx="2" fill="#fff" opacity=".35"/><rect x="179" y="166" width="9" height="28" rx="2" fill="#2AC7E8"/><rect x="192" y="166" width="9" height="16" rx="2" fill="#fff" opacity=".35"/><rect x="216" y="170" width="40" height="26" rx="4" fill="#fff" opacity=".18"/></g></g>
+            <g class="pin" transform="translate(632,36)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
-
           <g class="spot" data-item="camara"><title></title>
-            <rect class="halo" x="446" y="54" width="124" height="46" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            
-            <rect x="466" y="70" width="68" height="24" rx="12" fill="url(#gDark)"/>
-            <circle cx="500" cy="82" r="9" fill="#0D1330"/>
-            <circle cx="500" cy="82" r="5" fill="#2AC7E8"/>
-            <circle cx="497" cy="79" r="2" fill="#fff" opacity=".8"/>
-            <path d="M484 94 h32 l-4 6 h-24 z" fill="#232B4E"/>
-            <g class="pin" transform="translate(552,66)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="512" y="51" width="67" height="61" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><polygon points="107.4,-113.0 131.6,-99.0 123.0,-94.0 98.7,-108.0" fill="#585F7C"/><polygon points="98.7,-108.0 123.0,-94.0 123.0,-85.0 98.7,-99.0" fill="#2A3358"/><polygon points="131.6,-99.0 123.0,-94.0 123.0,-85.0 131.6,-90.0" fill="#1E243F"/><g transform="matrix(0.866,0.5,0,-1,-65.816,38.000)"><circle cx="204" cy="236" r="4" fill="#0D1330"/><circle cx="204" cy="236" r="2" fill="#2AC7E8"/></g></g>
+            <g class="pin" transform="translate(575,57)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
-
-          <g class="spot" data-item="computador"><title></title>
-            <rect class="halo" x="846" y="268" width="142" height="266" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="912" cy="520" rx="60" ry="12" fill="#1B2340" opacity=".22" filter="url(#fSoft)"/>
-            <rect x="862" y="286" width="110" height="230" rx="14" fill="url(#gDark)"/>
-            <rect x="874" y="300" width="56" height="200" rx="9" fill="#0E1430"/>
-            <rect x="874" y="300" width="56" height="200" rx="9" fill="url(#gSheen)"/>
-            <circle cx="902" cy="342" r="17" fill="none" stroke="url(#gRGB)" stroke-width="5"/>
-            <circle cx="902" cy="342" r="6" fill="#7B2FF7"/>
-            <circle cx="902" cy="404" r="17" fill="none" stroke="url(#gRGB)" stroke-width="5"/>
-            <circle cx="902" cy="404" r="6" fill="#2AC7E8"/>
-            <rect x="884" y="452" width="36" height="6" rx="3" fill="#3A4FE0" opacity=".7"/>
-            <rect x="944" y="326" width="18" height="5" rx="2.5" fill="#4A5384"/>
-            <rect x="944" y="340" width="18" height="5" rx="2.5" fill="#4A5384"/>
-            <rect x="944" y="354" width="18" height="5" rx="2.5" fill="#4A5384"/>
-            <circle cx="953" cy="302" r="4.5" fill="#2AC7E8"/>
-            <g class="pin" transform="translate(856,280)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
-          </g>
-
-          <g class="spot" data-item="audio"><title></title>
-            <rect class="halo" x="752" y="330" width="128" height="106" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="816" cy="436" rx="50" ry="9" fill="#1B2340" opacity=".2" filter="url(#fSoft)"/>
-            <path d="M782 392 a34 34 0 0 1 68 0" fill="none" stroke="#1B2340" stroke-width="12" stroke-linecap="round"/>
-            <path d="M784 386 a32 32 0 0 1 64 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".25"/>
-            <rect x="766" y="386" width="30" height="48" rx="14" fill="url(#gDark)"/>
-            <rect x="836" y="386" width="30" height="48" rx="14" fill="url(#gDark)"/>
-            <rect x="772" y="394" width="18" height="32" rx="9" fill="#4A5384"/>
-            <rect x="842" y="394" width="18" height="32" rx="9" fill="#4A5384"/>
-            <g class="pin" transform="translate(770,336)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g></g>
-          </g>
-
           <g class="spot" data-item="teclado"><title></title>
-            <rect class="halo" x="286" y="396" width="404" height="72" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="480" cy="458" rx="180" ry="10" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/>
-            <polygon points="330,404 630,404 662,456 300,456" fill="url(#gDark)"/>
-            <polygon points="330,404 630,404 628,410 332,410" fill="#fff" opacity=".18"/>
-            <g class="keys" fill="#fff" opacity=".95"><rect x="334.0" y="412" width="16.7" height="8" rx="3"/><rect x="353.7" y="412" width="16.7" height="8" rx="3"/><rect x="373.3" y="412" width="16.7" height="8" rx="3"/><rect x="393.0" y="412" width="16.7" height="8" rx="3"/><rect x="412.7" y="412" width="16.7" height="8" rx="3"/><rect x="432.3" y="412" width="16.7" height="8" rx="3"/><rect x="452.0" y="412" width="16.7" height="8" rx="3"/><rect x="471.7" y="412" width="16.7" height="8" rx="3"/><rect x="491.3" y="412" width="16.7" height="8" rx="3"/><rect x="511.0" y="412" width="16.7" height="8" rx="3"/><rect x="530.7" y="412" width="16.7" height="8" rx="3"/><rect x="550.3" y="412" width="16.7" height="8" rx="3"/><rect x="570.0" y="412" width="16.7" height="8" rx="3"/><rect x="589.7" y="412" width="16.7" height="8" rx="3"/><rect x="609.3" y="412" width="16.7" height="8" rx="3"/><rect x="327.0" y="422" width="17.6" height="8" rx="3"/><rect x="347.6" y="422" width="17.6" height="8" rx="3"/><rect x="368.2" y="422" width="17.6" height="8" rx="3"/><rect x="388.8" y="422" width="17.6" height="8" rx="3"/><rect x="409.4" y="422" width="17.6" height="8" rx="3"/><rect x="430.0" y="422" width="17.6" height="8" rx="3"/><rect x="450.6" y="422" width="17.6" height="8" rx="3"/><rect x="471.2" y="422" width="17.6" height="8" rx="3"/><rect x="491.8" y="422" width="17.6" height="8" rx="3"/><rect x="512.4" y="422" width="17.6" height="8" rx="3"/><rect x="533.0" y="422" width="17.6" height="8" rx="3"/><rect x="553.6" y="422" width="17.6" height="8" rx="3"/><rect x="574.2" y="422" width="17.6" height="8" rx="3"/><rect x="594.8" y="422" width="17.6" height="8" rx="3"/><rect x="615.4" y="422" width="17.6" height="8" rx="3"/><rect x="320.0" y="432" width="18.5" height="8" rx="3"/><rect x="341.5" y="432" width="18.5" height="8" rx="3"/><rect x="363.1" y="432" width="18.5" height="8" rx="3"/><rect x="384.6" y="432" width="18.5" height="8" rx="3"/><rect x="406.1" y="432" width="18.5" height="8" rx="3"/><rect x="427.7" y="432" width="18.5" height="8" rx="3"/><rect x="449.2" y="432" width="18.5" height="8" rx="3"/><rect x="470.7" y="432" width="18.5" height="8" rx="3"/><rect x="492.3" y="432" width="18.5" height="8" rx="3"/><rect x="513.8" y="432" width="18.5" height="8" rx="3"/><rect x="535.3" y="432" width="18.5" height="8" rx="3"/><rect x="556.9" y="432" width="18.5" height="8" rx="3"/><rect x="578.4" y="432" width="18.5" height="8" rx="3"/><rect x="599.9" y="432" width="18.5" height="8" rx="3"/><rect x="621.5" y="432" width="18.5" height="8" rx="3"/><rect x="383" y="442" width="194" height="8" rx="3"/><rect x="313" y="442" width="58" height="8" rx="3"/><rect x="589" y="442" width="58" height="8" rx="3"/></g>
-            <g class="pin" transform="translate(668,402)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="353" y="190" width="276" height="179" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="72.7" cy="55.0" rx="108" ry="34" fill="#6B5B45" opacity=".18" filter="url(#fTiny)"/><polygon points="26.0,-7.0 169.7,76.0 121.2,104.0 -22.5,21.0" fill="#5B6384"/><polygon points="-22.5,21.0 121.2,104.0 121.2,111.0 -22.5,28.0" fill="#2E3762"/><polygon points="169.7,76.0 121.2,104.0 121.2,111.0 169.7,83.0" fill="#212746"/><g class="keys" transform="matrix(0.866,0.5,-0.866,0.5,0,-112)" fill="#EEF1FF"><rect x="126" y="96" width="9" height="9" rx="2"/><rect x="137" y="96" width="9" height="9" rx="2"/><rect x="148" y="96" width="9" height="9" rx="2"/><rect x="159" y="96" width="9" height="9" rx="2"/><rect x="170" y="96" width="9" height="9" rx="2"/><rect x="181" y="96" width="9" height="9" rx="2"/><rect x="192" y="96" width="9" height="9" rx="2"/><rect x="203" y="96" width="9" height="9" rx="2"/><rect x="214" y="96" width="9" height="9" rx="2"/><rect x="225" y="96" width="9" height="9" rx="2"/><rect x="236" y="96" width="9" height="9" rx="2"/><rect x="247" y="96" width="9" height="9" rx="2"/><rect x="258" y="96" width="9" height="9" rx="2"/><rect x="269" y="96" width="9" height="9" rx="2"/><rect x="126" y="108" width="9" height="9" rx="2"/><rect x="137" y="108" width="9" height="9" rx="2"/><rect x="148" y="108" width="9" height="9" rx="2"/><rect x="159" y="108" width="9" height="9" rx="2"/><rect x="170" y="108" width="9" height="9" rx="2"/><rect x="181" y="108" width="9" height="9" rx="2"/><rect x="192" y="108" width="9" height="9" rx="2"/><rect x="203" y="108" width="9" height="9" rx="2"/><rect x="214" y="108" width="9" height="9" rx="2"/><rect x="225" y="108" width="9" height="9" rx="2"/><rect x="236" y="108" width="9" height="9" rx="2"/><rect x="247" y="108" width="9" height="9" rx="2"/><rect x="258" y="108" width="9" height="9" rx="2"/><rect x="269" y="108" width="9" height="9" rx="2"/><rect x="126" y="120" width="9" height="9" rx="2"/><rect x="137" y="120" width="9" height="9" rx="2"/><rect x="148" y="120" width="9" height="9" rx="2"/><rect x="159" y="120" width="9" height="9" rx="2"/><rect x="170" y="120" width="9" height="9" rx="2"/><rect x="181" y="120" width="9" height="9" rx="2"/><rect x="192" y="120" width="9" height="9" rx="2"/><rect x="203" y="120" width="9" height="9" rx="2"/><rect x="214" y="120" width="9" height="9" rx="2"/><rect x="225" y="120" width="9" height="9" rx="2"/><rect x="236" y="120" width="9" height="9" rx="2"/><rect x="247" y="120" width="9" height="9" rx="2"/><rect x="258" y="120" width="9" height="9" rx="2"/><rect x="269" y="120" width="9" height="9" rx="2"/><rect x="128" y="132" width="26" height="9" rx="2"/><rect x="176" y="132" width="60" height="9" rx="2"/><rect x="250" y="132" width="26" height="9" rx="2"/></g></g>
+            <g class="pin" transform="translate(625,196)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
-
           <g class="spot" data-item="mouse"><title></title>
-            <rect class="halo" x="668" y="378" width="80" height="86" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="704" cy="458" rx="26" ry="7" fill="#1B2340" opacity=".2" filter="url(#fSoft)"/>
-            <path d="M704 404 c16 0 26 14 26 30 c0 16 -12 24 -26 24 c-14 0 -26 -8 -26 -24 c0 -16 10 -30 26 -30 z" fill="url(#gMetal)"/>
-            <path d="M704 404 c-10 0 -18 6 -22 16 h44 c-4 -10 -12 -16 -22 -16 z" fill="#fff" opacity=".8"/>
-            <rect x="701" y="410" width="6" height="14" rx="3" fill="#3A4FE0"/>
-            <g class="pin" transform="translate(742,392)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="614" y="322" width="24" height="49" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="174.9" cy="110.0" rx="26" ry="14" fill="#6B5B45" opacity=".18" filter="url(#fTiny)"/><g transform="translate(176.7,109.0)"><ellipse cx="0" cy="-6" rx="22" ry="13" fill="#BEC1CA"/><ellipse cx="0" cy="-11" rx="22" ry="13" fill="url(#gMetal)"/><path d="M-9 -16 a22 13 0 0 1 18 0" fill="none" stroke="#C7CEE2" stroke-width="1.6"/><rect x="-2" y="-19" width="4" height="7" rx="2" fill="#3A4FE0"/></g></g>
+            <g class="pin" transform="translate(634,328)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
-
           <g class="spot" data-item="memoria"><title></title>
-            <rect class="halo" x="140" y="398" width="112" height="66" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
-            <ellipse cx="196" cy="456" rx="40" ry="7" fill="#1B2340" opacity=".18" filter="url(#fSoft)"/>
-            <path d="M150 418 h34 l14 14 v22 h-48 z" fill="#3A4FE0"/>
-            <path d="M150 418 h34 l14 14 h-48 z" fill="#fff" opacity=".18"/>
-            <rect x="155" y="422" width="6" height="12" rx="2" fill="#fff" opacity=".75"/>
-            <rect x="166" y="422" width="6" height="12" rx="2" fill="#fff" opacity=".75"/>
-            <rect x="206" y="430" width="42" height="22" rx="6" fill="url(#gDark)"/>
-            <rect x="196" y="435" width="16" height="12" rx="2" fill="url(#gMetal)"/>
-            <g class="pin" transform="translate(250,410)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+            <rect class="halo" x="289" y="147" width="106" height="77" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="-52.0" cy="-23.0" rx="26" ry="13" fill="#6B5B45" opacity=".18" filter="url(#fTiny)"/><polygon points="-55.4,-40.0 -34.6,-28.0 -50.2,-19.0 -71.0,-31.0" fill="#6575E6"/><polygon points="-71.0,-31.0 -50.2,-19.0 -50.2,-16.0 -71.0,-28.0" fill="#3A4FE0"/><polygon points="-34.6,-28.0 -50.2,-19.0 -50.2,-16.0 -34.6,-25.0" fill="#2938A1"/><polygon points="-31.2,-25.0 -8.7,-12.0 -19.1,-6.0 -41.6,-19.0" fill="#585F7C"/><polygon points="-41.6,-19.0 -19.1,-6.0 -19.1,0.0 -41.6,-13.0" fill="#2A3358"/><polygon points="-8.7,-12.0 -19.1,-6.0 -19.1,0.0 -8.7,-6.0" fill="#1E243F"/><polygon points="-39.8,-27.0 -31.2,-22.0 -38.1,-18.0 -46.8,-23.0" fill="#DADDE5"/><polygon points="-46.8,-23.0 -38.1,-18.0 -38.1,-14.0 -46.8,-19.0" fill="#D0D4DE"/><polygon points="-31.2,-22.0 -38.1,-18.0 -38.1,-14.0 -31.2,-18.0" fill="#95989F"/></g>
+            <g class="pin" transform="translate(293,153)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+          <g class="spot" data-item="audio"><title></title>
+            <rect class="halo" x="641" y="215" width="106" height="141" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="228.6" cy="83.0" rx="34" ry="18" fill="#6B5B45" opacity=".18" filter="url(#fTiny)"/><polygon points="225.2,59.0 259.8,79.0 232.1,95.0 197.4,75.0" fill="#7B82A7"/><polygon points="197.4,75.0 232.1,95.0 232.1,101.0 197.4,81.0" fill="#57608F"/><polygon points="259.8,79.0 232.1,95.0 232.1,101.0 259.8,85.0" fill="#3E4566"/><polygon points="227.8,11.5 233.8,15.0 228.6,18.0 222.6,14.5" fill="#888EB0"/><polygon points="222.6,14.5 228.6,18.0 228.6,80.0 222.6,76.5" fill="#676F9A"/><polygon points="233.8,15.0 228.6,18.0 228.6,80.0 233.8,77.0" fill="#4A4F6E"/><g transform="translate(227.8,14.5)"><path d="M-20 4 a20 16 0 0 1 40 0" fill="none" stroke="#676F9A" stroke-width="7" stroke-linecap="round"/><path d="M-20 2 a20 16 0 0 1 40 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".35"/><path d="M-27 10 a27 22 0 0 1 54 0" fill="none" stroke="#1B2340" stroke-width="9" stroke-linecap="round"/><path d="M-27 7 a27 22 0 0 1 54 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".22"/><g transform="translate(-27,12)"><ellipse cx="0" cy="12" rx="11" ry="15" fill="url(#gDark)"/><ellipse cx="2" cy="12" rx="6" ry="10" fill="#4A5384"/></g><g transform="translate(27,12)"><ellipse cx="0" cy="12" rx="11" ry="15" fill="#19213D"/><ellipse cx="-2" cy="12" rx="6" ry="10" fill="#3D456F"/></g><path d="M14 34 c10 18 22 22 30 20" fill="none" stroke="#1B2340" stroke-width="3.5" stroke-linecap="round" opacity=".85"/></g></g>
+            <g class="pin" transform="translate(743,221)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+          <g class="spot" data-item="red"><title></title>
+            <rect class="halo" x="14" y="270" width="138" height="111" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="-237.3" cy="94.5" rx="44" ry="22" fill="#1B2340" opacity=".2" filter="url(#fSoft)"/><polygon points="-242.5,54.0 -194.0,82.0 -232.1,104.0 -280.6,76.0" fill="#555D7E"/><polygon points="-280.6,76.0 -232.1,104.0 -232.1,120.0 -280.6,92.0" fill="#26305A"/><polygon points="-194.0,82.0 -232.1,104.0 -232.1,120.0 -194.0,98.0" fill="#1B2240"/><g transform="matrix(0.866,0.5,0,-1,-219.964,127.000)"><circle cx="-62" cy="7" r="3.2" fill="#2AC7E8"/><circle cx="-50" cy="7" r="3.2" fill="#2AC7E8" opacity=".6"/><circle cx="-38" cy="7" r="3.2" fill="#7CF2C8"/></g><path d="M-242.5 60.0 l-10 -38" stroke="#1B2340" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M-204.4 82.0 l10 -38" stroke="#1B2340" stroke-width="5" stroke-linecap="round" fill="none"/></g>
+            <g class="pin" transform="translate(18,276)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+          <g class="spot" data-item="cable"><title></title>
+            <rect class="halo" x="84" y="348" width="47" height="71" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="-218.2" cy="137.5" rx="28" ry="13" fill="#1B2340" opacity=".16" filter="url(#fSoft)"/><g transform="translate(-218.2,136.0)"><ellipse cx="0" cy="-6" rx="24" ry="13" fill="none" stroke="#7B2FF7" stroke-width="7"/><ellipse cx="4" cy="-11" rx="20" ry="11" fill="none" stroke="#9450FF" stroke-width="6"/><path d="M-16 -16 a20 11 0 0 1 14 -5" fill="none" stroke="#fff" stroke-width="2" opacity=".45" stroke-linecap="round"/></g></g>
+            <g class="pin" transform="translate(88,354)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
+          </g>
+          <g class="spot" data-item="computador"><title></title>
+            <rect class="halo" x="662" y="311" width="199" height="288" rx="18" fill="#3A4FE0" fill-opacity=".18"/>
+            <g transform="translate(394.29,211.56) scale(1.3126)"><ellipse cx="279.7" cy="247.0" rx="60" ry="30" fill="#1B2340" opacity=".26" filter="url(#fSoft)"/><polygon points="303.1,85.0 346.4,110.0 256.3,162.0 213.0,137.0" fill="#4F5670"/><polygon points="213.0,137.0 256.3,162.0 256.3,286.0 213.0,261.0" fill="#1E2748"/><polygon points="346.4,110.0 256.3,162.0 256.3,286.0 346.4,234.0" fill="#151C33"/><g transform="matrix(0.866,0.5,0,-1,-119.508,69.000)"><rect x="391" y="12" width="36" height="104" rx="5" fill="#0E1430"/><rect x="391" y="12" width="36" height="104" rx="5" fill="url(#gSheen)"/><circle cx="409" cy="88" r="12" fill="none" stroke="url(#gRGB)" stroke-width="4.5"/><circle cx="409" cy="88" r="4.5" fill="#7B2FF7"/><circle cx="409" cy="54" r="12" fill="none" stroke="url(#gRGB)" stroke-width="4.5"/><circle cx="409" cy="54" r="4.5" fill="#2AC7E8"/><rect x="396" y="22" width="26" height="5" rx="2.5" fill="#3A4FE0" opacity=".8"/></g><g transform="matrix(-0.866,0.5,0,-1,375.844,217.000)"><rect x="48" y="86" width="14" height="5" rx="2" fill="#39406B"/><rect x="48" y="74" width="14" height="5" rx="2" fill="#39406B"/><rect x="48" y="62" width="14" height="5" rx="2" fill="#39406B"/><circle cx="56" cy="108" r="3.5" fill="#2AC7E8"/></g></g>
+            <g class="pin" transform="translate(857,317)"><circle class="pin-ring" r="19"/><circle r="15"/><path d="M-6 0h12M0 -6v12"/></g>
           </g>
         </svg>
         <p class="desk-caption" id="deskCaption">Toca cualquier equipo para ver esos productos</p>
